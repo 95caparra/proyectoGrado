@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee">
+    <!-- Controlador principal -->
+    <servlet>
+        <servlet-name>Controlador</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.Controlador</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controlador</servlet-name>
+        <url-pattern>/controlador</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador para la subida de archivos(Paquetes) -->
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.UploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/controladorCargaArchivo</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador para actualizar archivos(Paquetes) -->
+    <servlet>
+        <servlet-name>ControladorActualizarPaquetes</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorActualizarPaquetes</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ControladorActualizarPaquetes</servlet-name>
+        <url-pattern>/controladorActPaquetes</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador para la subida de archivos(Catálogos) -->
+    <servlet>
+        <servlet-name>UploadServlet2</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.UploadServlet2</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadServlet2</servlet-name>
+        <url-pattern>/controladorCargaArchivo2</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador para actualizar archivos(Catálogos) -->
+    <servlet>
+        <servlet-name>ControladorActualizarProductos</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorActualizarProductos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ControladorActualizarProductos</servlet-name>
+        <url-pattern>/controladorActProductos</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de productos -->
+    <servlet>
+        <servlet-name>Servlet1</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorProductos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet1</servlet-name>
+        <url-pattern>/controladorProductos</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de categorias -->
+    <servlet>
+        <servlet-name>Servlet2</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorCategoria</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet2</servlet-name>
+        <url-pattern>/controladorCategoria</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Clientes -->
+    <servlet>
+        <servlet-name>ServletClientes</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorClientes</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletClientes</servlet-name>
+        <url-pattern>/controladorClientes</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Empleados -->
+    <servlet>
+        <servlet-name>Servlet3</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorEmpleados</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet3</servlet-name>
+        <url-pattern>/controladorEmpleados</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Proveedores -->
+    <servlet>
+        <servlet-name>Servlet4</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorProveedores</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet4</servlet-name>
+        <url-pattern>/controladorProveedores</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Paquetes -->
+    <servlet>
+        <servlet-name>Servlet5</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorPaquetes</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet5</servlet-name>
+        <url-pattern>/controladorPaquetes</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Catálogos -->
+    <servlet>
+        <servlet-name>Servlet6</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorCatalogos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Servlet6</servlet-name>
+        <url-pattern>/controladorCatalogos</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Solicitudes -->
+    <servlet>
+        <servlet-name>ServletSolicitudes</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorSolicitudes</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletSolicitudes</servlet-name>
+        <url-pattern>/controladorSolicitudes</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Ingreso -->
+    <servlet>
+        <servlet-name>ServletLogin</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletLogin</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Cotizacion -->
+    <servlet>
+        <servlet-name>ServletCotizacion</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorCotizacion</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletCotizacion</servlet-name>
+        <url-pattern>/cotizacion</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Eventos -->
+    <servlet>
+        <servlet-name>ServletEvento</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorEventos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletEvento</servlet-name>
+        <url-pattern>/controladorEventos</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de usuarios -->
+    <servlet>
+        <servlet-name>ServletUsuarios</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorUsuarios</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletUsuarios</servlet-name>
+        <url-pattern>/controladorUsuarios</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de reportes -->
+    <servlet>
+        <servlet-name>ServletReportes</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorReportes</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletReportes</servlet-name>
+        <url-pattern>/controladorReportes</url-pattern>
+    </servlet-mapping>
+    <!-- Controlador de Pedidos -->
+    <servlet>
+        <servlet-name>ServletPedido</servlet-name>
+        <servlet-class>co.com.blummer.quotevent.controlador.ControladorPedidos</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ServletPedido</servlet-name>
+        <url-pattern>/controladorPedidos</url-pattern>
+    </servlet-mapping>
+</web-app>
