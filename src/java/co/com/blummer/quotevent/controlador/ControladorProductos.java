@@ -113,7 +113,7 @@ public class ControladorProductos extends PrincipalControl {
     
     public void listarSegun() throws Exception {
         int tipo = Integer.parseInt(this.request.getParameter("tipo").toString());
-        response.getWriter().write(new Gson().toJson(new ProductoService().listarSegun(tipo)));
+//        response.getWriter().write(new Gson().toJson(new ProductoService().listarSegun(tipo)));
     }
     
 }

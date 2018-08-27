@@ -6,20 +6,15 @@ public class ProductoVO {
     private String nombre;
     private String foto;
     private TipoProductoVO tipoProductoVO;
-    private int cantidad;
     private int cantidadMinima;
     private MedidaProductoVO medidaProductoVO;
     private double precioUnidad;
-    private EstadoProductoVO estadoProductoVO;
     private String observaciones;
     private String estado;
-    private CategoriaPaqueteVO categoriaPaqueteVO;
 
     public ProductoVO(){        
         this.tipoProductoVO = new TipoProductoVO();
         this.medidaProductoVO = new MedidaProductoVO();
-        this.estadoProductoVO = new EstadoProductoVO();
-        this.categoriaPaqueteVO = new CategoriaPaqueteVO();
     }
     
     public int getIdProducto() {
@@ -48,13 +43,6 @@ public class ProductoVO {
         this.tipoProductoVO = tipoProductoVO;
     }
     
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
     
     public int getCantidadMinima() {
         return cantidadMinima;
@@ -80,13 +68,6 @@ public class ProductoVO {
         this.precioUnidad = precioUnidad;
     }
 
-    public EstadoProductoVO getEstadoProductoVO() {
-        return estadoProductoVO;
-    }
-
-    public void setEstadoProductoVO(EstadoProductoVO estadoProductoVO) {
-        this.estadoProductoVO = estadoProductoVO;
-    }
 
     public String getObservaciones() {
         return observaciones;
@@ -108,8 +89,8 @@ public class ProductoVO {
     
      public String toString() {
         return "IdProducto "+"\t"+ idProducto+"\n"+"Nombre "+"\t"+nombre+"\n"+"Tipo "+"\t"+tipoProductoVO.getNombre()
-                +"\n"+"Cantidad "+cantidad+"\n"+"\n"+"CamtidadMinima"+"\t"+cantidadMinima+"Gramaje "+medidaProductoVO.getNombreMedida()+"\t"
-                +"\n"+"Precio Unidad "+precioUnidad+"\n"+"Estado Producto"+"\t"+estadoProductoVO.getDescripcion()+"\t"
+                +"\n"+"Cantidad "+"\n"+"\n"+"CamtidadMinima"+"\t"+cantidadMinima+"Gramaje "+medidaProductoVO.getNombreMedida()+"\t"
+                +"\n"+"Precio Unidad "+precioUnidad+"\n"+"Estado Producto"+"\t"+"\t"
                 +"\n"+"Estado A/I "+"\t"+estado;
             
      } 
@@ -128,19 +109,6 @@ public class ProductoVO {
         this.foto = foto;
     }
 
-    /**
-     * @return the categoriaPaqueteVO
-     */
-    public CategoriaPaqueteVO getCategoriaPaqueteVO() {
-        return categoriaPaqueteVO;
-    }
-
-    /**
-     * @param categoriaPaqueteVO the categoriaPaqueteVO to set
-     */
-    public void setCategoriaPaqueteVO(CategoriaPaqueteVO categoriaPaqueteVO) {
-        this.categoriaPaqueteVO = categoriaPaqueteVO;
-    }
 
   
    

@@ -151,7 +151,7 @@ public class ControladorPaquetes extends PrincipalControl {
     
     public void listarSegun() throws Exception {
         int tipo = Integer.parseInt(this.request.getParameter("tipo").toString());
-        response.getWriter().write(new Gson().toJson(new ProductoService().listarSegun(tipo)));
+   //     response.getWriter().write(new Gson().toJson(new ProductoService().listarSegun(tipo)));
     }
 
     //Descripcion Paquete
@@ -215,7 +215,7 @@ public class ControladorPaquetes extends PrincipalControl {
     public void formularioInsertarPaquete() throws Exception {
 
         productoService = new ProductoService();
-        listaProductos = productoService.listarTodo();
+//        listaProductos = productoService.listarTodo();
 
         this.request.setAttribute("productos", listaProductos);
 
