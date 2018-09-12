@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <link rel="stylesheet" type="text/css"
+              href="../../resources/css/style.css"></link>
+        <title>Proyecto</title>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" showDetail="true" sticky="true" />
+
+        <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        template="../../resources/templates/templateGestion.xhtml">
+
+            <ui:define name="content">
+                <p:panel id="pnlConteido">
+                    <c:if test="#{opcionBean.opcionPaquete == 1 }">
+                        <ui:include src="../paquete/insertarPaquete.xhtml" />
+                    </c:if>
+
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form id="frmOpciones">
+                    <p:menu toggleable="true">
+                        <p:submenu label="Paquetes">
+                            <p:menuitem value="Insertar Paquete" actionListener="#{opcionBean.verPaquete}" 
+                            update="growl" icon="ui-icon-disk" />                            
+                        </p:submenu>
+                        
+                        <p:submenu label="Non-Ajax">
+                            
+                        </p:submenu>
+                        
+                        <p:submenu label="Navigations">
+                            
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

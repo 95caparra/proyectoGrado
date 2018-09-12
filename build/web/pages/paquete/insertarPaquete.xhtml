@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <body>        
+        <h:form enctype="multipart/form-data" id="insertarPaquete">
+            <p:panel id="pnlInsertarPaquete">
+                <f:facet name="header">
+                    <h:outputText value="Insertar Paquete" />
+                </f:facet>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Nombre: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{paqueteBean.nombre}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Clasificación: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{paqueteBean.selectedClasificacion}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione clasificacion" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="c"
+                                           value="#{paqueteBean.clasificaciones}"
+                                           itemValue="#{c.idClasificacion}"
+                                           itemLabel="#{c.nombre}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Descripción: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{paqueteBean.descripcion}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Lugar: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{paqueteBean.selectedLugar}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione el lugar" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="l"
+                                           value="#{paqueteBean.lugares}"
+                                           itemValue="#{l.idLugar}"
+                                           itemLabel="#{l.nombre}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Cantidad personas: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputNumber value="#{paqueteBean.cantidadPersonas}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Precio: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputNumber value="#{paqueteBean.precio}" 
+                                       decimalPlaces="0"/>
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="PDF: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:fileUpload value="#{paqueteBean.pdf}"
+                                      auto="true"
+                                      mode="advanced"
+                                      fileUploadListener="#{paqueteBean.fileUploadListener}"
+                                      skinSimple="true" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Foto: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:fileUpload value="#{paqueteBean.foto}"
+                                      auto="true"
+                                      mode="advanced"
+                                      fileUploadListener="#{paqueteBean.fileUploadListener}"
+                                      skinSimple="true" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+                
+
+                <p:commandButton value="Guardar" 
+                                 action="#{paqueteBean.insertarPaquete}"
+                                 ajax="false" 
+                                 update="growl" icon="ui-icon-disk" />
+            </p:panel>
+        </h:form>
+    </body>
+</html>
