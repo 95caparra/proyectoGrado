@@ -4,17 +4,20 @@ public class PaqueteVO {
     
     private int idPaquete;
     private String nombre;
-    private int idClasificacion;
+    private ClasificacionVO  clasificacionVO;
     private String descripcion;
-    private int idLugar;
+    private LugarVO lugarVO;
     private int cantidadPersonas;
+
+  
     private double precio;
     private String pdf;
     private String foto;
     private String estado;
     
     public PaqueteVO(){
-        
+        clasificacionVO = new ClasificacionVO();
+        lugarVO = new LugarVO();
     }
 
     /**
@@ -45,20 +48,7 @@ public class PaqueteVO {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the clasificacionVO
-     */
-    public int getIdClasificacion() {
-        return idClasificacion;
-    }
-
-    /**
-     * @param clasificacionVO the clasificacionVO to set
-     */
-    public void setIdClasificacion(int idClasificacion) {
-        this.idClasificacion = idClasificacion;
-    }
-
+    
     /**
      * @return the descripcion
      */
@@ -73,32 +63,15 @@ public class PaqueteVO {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @return the lugarVO
-     */
-    public int getIdLugar() {
-        return idLugar;
-    }
-
-    /**
-     * @param idLugar the lugarVO to set
-     */
-    public void setIdLugar(int idLugar) {
-        this.idLugar = idLugar;
-    }
-
-    /**
-     * @return the cantidadPersonas
-     */
-    public int getCantidadPersonas() {
-        return cantidadPersonas;
-    }
 
     /**
      * @param cantidadPersonas the cantidadPersonas to set
      */
     public void setCantidadPersonas(int cantidadPersonas) {
         this.cantidadPersonas = cantidadPersonas;
+    }
+      public int getCantidadPersonas() {
+        return cantidadPersonas;
     }
 
     /**
@@ -156,5 +129,23 @@ public class PaqueteVO {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public ClasificacionVO getClasificacionVO() {
+        return clasificacionVO;
+    }
+
+    public void setClasificacionVO(ClasificacionVO clasificacionVO) {
+        this.clasificacionVO = clasificacionVO;
+    }
+
+    public LugarVO getLugarVO() {
+        return lugarVO;
+    }
+
+    public void setLugarVO(LugarVO lugarVO) {
+        this.lugarVO = lugarVO;
+    }
+    
+    
     
 }

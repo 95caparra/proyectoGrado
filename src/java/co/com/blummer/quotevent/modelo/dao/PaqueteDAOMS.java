@@ -12,16 +12,24 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
         int resultado = -1;
         try {
             this.conectar();
-            String consulta = "INSERT INTO paquete(nombre, descripcion, foto, estado) "
-                    + "VALUES(?,?,?,'Activo')";
+            String consulta = "INSERT INTO paquete(nombre, clasificacion, descripcion, "
+                    + " lugar,cantidad_personas,precio,pdf,foto, estado) "
+                    + "VALUES(?,?,?,?,?,?,?,?,'Activo')";
 
             PreparedStatement pstm = this.conection.prepareStatement(consulta);
 
-              pstm.setString(1, paqueteVO.getNombre());
-              pstm.setString(2, paqueteVO.getDescripcion());
-              pstm.setString(3, paqueteVO.getFoto());
+            int t = 1;
+            pstm.setString(t++, paqueteVO.getNombre());
+            pstm.setInt(t++, paqueteVO.getClasificacionVO().getIdClasificacion());
+            pstm.setString(t++, paqueteVO.getDescripcion());
+            pstm.setInt(t++, paqueteVO.getLugarVO().getIdLugar());
+            pstm.setInt(t++, paqueteVO.getCantidadPersonas());
+            pstm.setDouble(t++, paqueteVO.getPrecio());
+            pstm.setString(t++, paqueteVO.getPdf());
+            pstm.setString(t++, paqueteVO.getFoto());
 
             resultado = pstm.executeUpdate();
+            
         } catch (Exception e) {
             System.out.println("PaqueteDAOMS: Se presento un error al insertar "
                     + "un paquete "
@@ -46,10 +54,10 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
 
             PreparedStatement pstm = this.conection.prepareStatement(consulta);
 
-              pstm.setString(1, paqueteVO.getNombre());
-              pstm.setString(2, paqueteVO.getDescripcion());
-              pstm.setString(3, paqueteVO.getFoto());
-              pstm.setInt(4, paqueteVO.getIdPaquete());
+            pstm.setString(1, paqueteVO.getNombre());
+            pstm.setString(2, paqueteVO.getDescripcion());
+            pstm.setString(3, paqueteVO.getFoto());
+            pstm.setInt(4, paqueteVO.getIdPaquete());
 
             resultado = pstm.executeUpdate();
         } catch (Exception e) {
@@ -93,12 +101,12 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
         try {
             this.conectar();
             String consulta = "SELECT pq.id_paquete, pq.nombre, pq.foto, pq.estado "
-                    +" FROM paquete pq "
-                    +" WHERE pq.estado = 'Activo' ";
+                    + " FROM paquete pq "
+                    + " WHERE pq.estado = 'Activo' ";
             PreparedStatement pstm = this.conection.prepareStatement(consulta);
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
-                cont=1;
+                cont = 1;
                 paqueteVO = new PaqueteVO();
 
                 paqueteVO.setIdPaquete(rs.getInt(cont++));
@@ -163,9 +171,9 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
         PaqueteVO paqueteVO = null;
         try {
             this.conectar();
-            String consulta = "SELECT pq.id_paquete, pq.nombre, pq.descripcion, pq.foto , pq.estado " 
-                    +" FROM paquete pq "
-                    +" WHERE pq.id_paquete = ? ";
+            String consulta = "SELECT pq.id_paquete, pq.nombre, pq.descripcion, pq.foto , pq.estado "
+                    + " FROM paquete pq "
+                    + " WHERE pq.id_paquete = ? ";
 
             PreparedStatement pstm = this.conection.prepareStatement(consulta);
 
@@ -231,21 +239,20 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
         String nombrePaquete = "";
         try {
             this.conectar();
-            
+
             String consulta = "SELECT nombre "
                     + "FROM paquete "
-                    + "WHERE nombre = '"+nombreP+"' ";
+                    + "WHERE nombre = '" + nombreP + "' ";
 
             PreparedStatement pstm = this.conection.prepareStatement(consulta);
 
             //pstm.setString(1, nombre);
-
-             ResultSet rs = pstm.executeQuery();
+            ResultSet rs = pstm.executeQuery();
 
             while (rs.next()) {
                 nombrePaquete = rs.getString(1);
             }
-            
+
         } catch (Exception e) {
             System.out.println("ProductoDAOMS: ocurrio un error al validar producto"
                     + e.getMessage());
@@ -258,7 +265,7 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
 
     @Override
     public int ultimoId() throws Exception {
-       int idPaquete = -1;
+        int idPaquete = -1;
         try {
             this.conectar();
             String consulta = "SELECT id_paquete "
@@ -288,11 +295,11 @@ public class PaqueteDAOMS extends ConexionMySQL implements PaqueteDAO {
         try {
             this.conectar();
             String consulta = "SELECT pq.id_paquete, pq.nombre, pq.descripcion, pq.foto, pq.estado "
-                    +" FROM paquete pq "
-                    +" WHERE pq.estado = 'Activo' AND pq.id_paquete ";
-            PreparedStatement pstm = this.conection.prepareStatement(consulta);            
+                    + " FROM paquete pq "
+                    + " WHERE pq.estado = 'Activo' AND pq.id_paquete ";
+            PreparedStatement pstm = this.conection.prepareStatement(consulta);
             pstm.setInt(1, idPaquete);
-            
+
             ResultSet rs = pstm.executeQuery();
             while (rs.next()) {
                 paqueteVO = new PaqueteVO();

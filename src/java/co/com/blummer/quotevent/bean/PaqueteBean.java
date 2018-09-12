@@ -6,6 +6,9 @@ import co.com.blummer.quotevent.modelo.service.PaqueteService;
 import co.com.blummer.quotevent.modelo.vo.ClasificacionVO;
 import co.com.blummer.quotevent.modelo.vo.LugarVO;
 import co.com.blummer.quotevent.modelo.vo.PaqueteVO;
+import co.com.blummer.quotevent.util.Path;
+import static groovy.xml.Entity.reg;
+import java.io.IOException;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
@@ -17,11 +20,14 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean(name = "paqueteBean")
-@RequestScoped
+@ViewScoped
 public class PaqueteBean implements Serializable {
 
     private static long serialVersionUID = 4545919119678482516L;
@@ -34,8 +40,11 @@ public class PaqueteBean implements Serializable {
     private Double precio;
     private UploadedFile pdf;
     private UploadedFile foto;
+    private String nombreFoto;
+    private String nombrePdf;
 
     private PaqueteVO paqueteVO;
+    
     private PaqueteService paqueteService;
 
     private ClasificacionService clasificacionService;
@@ -52,8 +61,10 @@ public class PaqueteBean implements Serializable {
         if (FacesContext.getCurrentInstance() != null) {
             FacesContext context = FacesContext.getCurrentInstance();
             Application application = context.getApplication();
-            setLogin(application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class));
-            setClasificacion(application.evaluateExpressionGet(context, "#{clasificacionBean}", ClasificacionBean.class));
+            
+            login = application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class);
+            clasificacionBean = application.evaluateExpressionGet(context, "#{clasificacionBean}", ClasificacionBean.class);
+           
             try {
                 clasificacionService = new ClasificacionService();
                 lugarService = new LugarService();
@@ -74,19 +85,13 @@ public class PaqueteBean implements Serializable {
             paqueteVO = new PaqueteVO();
 
             paqueteVO.setNombre(nombre);
-            paqueteVO.setIdClasificacion(selectedClasificacion);
+            paqueteVO.getClasificacionVO().setIdClasificacion(selectedClasificacion);
             paqueteVO.setDescripcion(descripcion);
-            paqueteVO.setIdLugar(selectedLugar);
+            paqueteVO.getLugarVO().setIdLugar(selectedLugar);
             paqueteVO.setCantidadPersonas(cantidadPersonas);
             paqueteVO.setPrecio(precio);
-
-            if (pdf != null) {
-                paqueteVO.setPdf(pdf.getFileName());
-            }
-
-            if (foto != null) {
-                paqueteVO.setFoto(foto.getFileName());
-            }
+            paqueteVO.setPdf(nombrePdf);
+            paqueteVO.setFoto(nombreFoto);
 
             paqueteService.insertar(paqueteVO);
 
@@ -99,15 +104,6 @@ public class PaqueteBean implements Serializable {
 
         }
 
-    }
-
-    public void fileUploadListener(FileUploadEvent e) {
-        // Get uploaded file from the FileUploadEvent
-        foto = e.getFile();
-        pdf = e.getFile();
-        // Print out the information of the file
-        System.out.println("PDF " + pdf.getFileName() + " :: Uploaded File Size :: " + pdf.getSize());
-        System.out.println("FOTO " + foto.getFileName() + " :: Uploaded File Size :: " + foto.getSize());
     }
 
     /**
@@ -332,6 +328,34 @@ public class PaqueteBean implements Serializable {
      */
     public void setPaqueteService(PaqueteService paqueteService) {
         this.paqueteService = paqueteService;
+    }
+
+    /**
+     * @return the nombreFoto
+     */
+    public String getNombreFoto() {
+        return nombreFoto;
+    }
+
+    /**
+     * @param nombreFoto the nombreFoto to set
+     */
+    public void setNombreFoto(String nombreFoto) {
+        this.nombreFoto = nombreFoto;
+    }
+
+    /**
+     * @return the nombrePdf
+     */
+    public String getNombrePdf() {
+        return nombrePdf;
+    }
+
+    /**
+     * @param nombrePdf the nombrePdf to set
+     */
+    public void setNombrePdf(String nombrePdf) {
+        this.nombrePdf = nombrePdf;
     }
 
 }

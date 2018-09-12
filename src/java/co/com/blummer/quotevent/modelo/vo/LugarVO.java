@@ -11,7 +11,7 @@ package co.com.blummer.quotevent.modelo.vo;
  */
 public class LugarVO {
     
-    private long idLugar;
+    private int idLugar;
     private String nombre;
     private String descripcion;
     private int cantidadMaxPersonas;
@@ -25,14 +25,14 @@ public class LugarVO {
     /**
      * @return the idLugar
      */
-    public long getIdLugar() {
+    public int getIdLugar() {
         return idLugar;
     }
 
     /**
      * @param idLugar the idLugar to set
      */
-    public void setIdLugar(long idLugar) {
+    public void setIdLugar(int idLugar) {
         this.idLugar = idLugar;
     }
 

@@ -6,6 +6,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
     <body>        
         <h:form enctype="multipart/form-data" id="insertarPaquete">
             <p:panel id="pnlInsertarPaquete">
@@ -28,7 +29,7 @@
 
                 <p:row>
                     <p:column>
-                        <h:outputText value="Clasificación: " />
+                        <h:outputText value="Clasificaciï¿½n: " />
                     </p:column>
                     <br/>
                     <p:column>
@@ -50,7 +51,7 @@
 
                 <p:row>
                     <p:column>
-                        <h:outputText value="Descripción: " />
+                        <h:outputText value="Descripciï¿½n: " />
                     </p:column>
                     <br/>
                     <p:column>
@@ -119,7 +120,7 @@
                         <p:fileUpload value="#{paqueteBean.pdf}"
                                       auto="true"
                                       mode="advanced"
-                                      fileUploadListener="#{paqueteBean.fileUploadListener}"
+                                      fileUploadListener="#{archivoBean.fileUploadListenerPdf}"
                                       skinSimple="true" />
                     </p:column>                
                 </p:row>
@@ -136,7 +137,7 @@
                         <p:fileUpload value="#{paqueteBean.foto}"
                                       auto="true"
                                       mode="advanced"
-                                      fileUploadListener="#{paqueteBean.fileUploadListener}"
+                                      fileUploadListener="#{archivoBean.fileUploadListenerFoto}"
                                       skinSimple="true" />
                     </p:column>                
                 </p:row>
@@ -146,7 +147,7 @@
                 
 
                 <p:commandButton value="Guardar" 
-                                 action="#{paqueteBean.insertarPaquete}"
+                                 actionListener="#{paqueteBean.insertarPaquete}"
                                  ajax="false" 
                                  update="growl" icon="ui-icon-disk" />
             </p:panel>
