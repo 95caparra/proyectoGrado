@@ -2,10 +2,18 @@ package co.com.blummer.quotevent.bean;
 
 import co.com.blummer.quotevent.modelo.service.ClasificacionService;
 import co.com.blummer.quotevent.modelo.service.LugarService;
+import co.com.blummer.quotevent.modelo.service.MedidaService;
 import co.com.blummer.quotevent.modelo.service.PaqueteService;
+import co.com.blummer.quotevent.modelo.service.ProductoService;
+import co.com.blummer.quotevent.modelo.service.SuministroService;
+import co.com.blummer.quotevent.modelo.service.TipoProductoService;
 import co.com.blummer.quotevent.modelo.vo.ClasificacionVO;
 import co.com.blummer.quotevent.modelo.vo.LugarVO;
+import co.com.blummer.quotevent.modelo.vo.MedidaProductoVO;
 import co.com.blummer.quotevent.modelo.vo.PaqueteVO;
+import co.com.blummer.quotevent.modelo.vo.ProductoVO;
+import co.com.blummer.quotevent.modelo.vo.SuministroVO;
+import co.com.blummer.quotevent.modelo.vo.TipoProductoVO;
 import co.com.blummer.quotevent.util.Path;
 import static groovy.xml.Entity.reg;
 import java.io.IOException;
@@ -33,19 +41,26 @@ public class ProductoBean implements Serializable {
     private static long serialVersionUID = 4545919119678482516L;
 
     private String nombre;
-    private Integer selectedClasificacion;
-    private Integer selectedLugar;
-    private String descripcion;
-    private Integer cantidadPersonas;
-    private Double precio;
-    private UploadedFile pdf;
     private UploadedFile foto;
     private String nombreFoto;
-    private String nombrePdf;
-
-    private PaqueteVO paqueteVO;
+    private TipoProductoVO tipoProductoVO;
+    private int cantidadMinima;
+    private MedidaProductoVO medidaProductoVO;
+    private double precioUnidad;
+    private String observaciones;
+    private String estado;
     
-    private PaqueteService paqueteService;
+    private ProductoVO productoVO;    
+    private ProductoService productoService;
+    
+    private MedidaService medidaService;
+    private List<MedidaProductoVO> medidas;
+    
+    private TipoProductoService tipoProductoService;
+    private List<TipoProductoVO> tiposProducto;
+    
+    private SuministroVO suministroVO;    
+    private SuministroService suministroService;
 
     private ClasificacionService clasificacionService;
     private List<ClasificacionVO> clasificaciones;
@@ -62,16 +77,15 @@ public class ProductoBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             Application application = context.getApplication();
             
-            login = application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class);
-            clasificacionBean = application.evaluateExpressionGet(context, "#{clasificacionBean}", ClasificacionBean.class);
-           
+            setLogin(application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class));
+          
             try {
-                clasificacionService = new ClasificacionService();
-                lugarService = new LugarService();
-                paqueteService = new PaqueteService();
-
-                lugares = lugarService.listarLugar();
-                clasificaciones = clasificacionService.listarClasificacion();
+                medidaService = new MedidaService();
+                tipoProductoService = new TipoProductoService();
+                productoService = new ProductoService();
+                
+                medidas = medidaService.listar();
+                tiposProducto = tipoProductoService.listar();
 
             } catch (Exception e) {
                 // TODO Auto-generated catch block
@@ -82,18 +96,7 @@ public class ProductoBean implements Serializable {
 
     public void insertarPaquete() throws Exception {
         try {
-            paqueteVO = new PaqueteVO();
-
-            paqueteVO.setNombre(nombre);
-            paqueteVO.getClasificacionVO().setIdClasificacion(selectedClasificacion);
-            paqueteVO.setDescripcion(descripcion);
-            paqueteVO.getLugarVO().setIdLugar(selectedLugar);
-            paqueteVO.setCantidadPersonas(cantidadPersonas);
-            paqueteVO.setPrecio(precio);
-            paqueteVO.setPdf(nombrePdf);
-            paqueteVO.setFoto(nombreFoto);
-
-            paqueteService.insertar(paqueteVO);
+           
 
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -135,90 +138,6 @@ public class ProductoBean implements Serializable {
     }
 
     /**
-     * @return the selectedClasificacion
-     */
-    public Integer getSelectedClasificacion() {
-        return selectedClasificacion;
-    }
-
-    /**
-     * @param selectedClasificacion the selectedClasificacion to set
-     */
-    public void setSelectedClasificacion(Integer selectedClasificacion) {
-        this.selectedClasificacion = selectedClasificacion;
-    }
-
-    /**
-     * @return the descripcion
-     */
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    /**
-     * @param descripcion the descripcion to set
-     */
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    /**
-     * @return the selectedLugar
-     */
-    public Integer getSelectedLugar() {
-        return selectedLugar;
-    }
-
-    /**
-     * @param selectedLugar the selectedLugar to set
-     */
-    public void setSelectedLugar(Integer selectedLugar) {
-        this.selectedLugar = selectedLugar;
-    }
-
-    /**
-     * @return the cantidadPersonas
-     */
-    public Integer getCantidadPersonas() {
-        return cantidadPersonas;
-    }
-
-    /**
-     * @param cantidadPersonas the cantidadPersonas to set
-     */
-    public void setCantidadPersonas(Integer cantidadPersonas) {
-        this.cantidadPersonas = cantidadPersonas;
-    }
-
-    /**
-     * @return the precio
-     */
-    public Double getPrecio() {
-        return precio;
-    }
-
-    /**
-     * @param precio the precio to set
-     */
-    public void setPrecio(Double precio) {
-        this.precio = precio;
-    }
-
-    /**
-     * @return the pdf
-     */
-    public UploadedFile getPdf() {
-        return pdf;
-    }
-
-    /**
-     * @param pdf the pdf to set
-     */
-    public void setPdf(UploadedFile pdf) {
-        this.pdf = pdf;
-    }
-
-    /**
      * @return the foto
      */
     public UploadedFile getFoto() {
@@ -233,31 +152,213 @@ public class ProductoBean implements Serializable {
     }
 
     /**
-     * @return the login
+     * @return the nombreFoto
      */
-    public LoginBean getLogin() {
-        return login;
+    public String getNombreFoto() {
+        return nombreFoto;
     }
 
     /**
-     * @param login the login to set
+     * @param nombreFoto the nombreFoto to set
      */
-    public void setLogin(LoginBean login) {
-        this.login = login;
+    public void setNombreFoto(String nombreFoto) {
+        this.nombreFoto = nombreFoto;
     }
 
     /**
-     * @return the clasificacion
+     * @return the tipoProductoVO
      */
-    public ClasificacionBean getClasificacion() {
-        return clasificacionBean;
+    public TipoProductoVO getTipoProductoVO() {
+        return tipoProductoVO;
     }
 
     /**
-     * @param clasificacion the clasificacion to set
+     * @param tipoProductoVO the tipoProductoVO to set
      */
-    public void setClasificacion(ClasificacionBean clasificacionBean) {
-        this.clasificacionBean = clasificacionBean;
+    public void setTipoProductoVO(TipoProductoVO tipoProductoVO) {
+        this.tipoProductoVO = tipoProductoVO;
+    }
+
+    /**
+     * @return the cantidadMinima
+     */
+    public int getCantidadMinima() {
+        return cantidadMinima;
+    }
+
+    /**
+     * @param cantidadMinima the cantidadMinima to set
+     */
+    public void setCantidadMinima(int cantidadMinima) {
+        this.cantidadMinima = cantidadMinima;
+    }
+
+    /**
+     * @return the medidaProductoVO
+     */
+    public MedidaProductoVO getMedidaProductoVO() {
+        return medidaProductoVO;
+    }
+
+    /**
+     * @param medidaProductoVO the medidaProductoVO to set
+     */
+    public void setMedidaProductoVO(MedidaProductoVO medidaProductoVO) {
+        this.medidaProductoVO = medidaProductoVO;
+    }
+
+    /**
+     * @return the precioUnidad
+     */
+    public double getPrecioUnidad() {
+        return precioUnidad;
+    }
+
+    /**
+     * @param precioUnidad the precioUnidad to set
+     */
+    public void setPrecioUnidad(double precioUnidad) {
+        this.precioUnidad = precioUnidad;
+    }
+
+    /**
+     * @return the observaciones
+     */
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    /**
+     * @param observaciones the observaciones to set
+     */
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    /**
+     * @return the estado
+     */
+    public String getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    /**
+     * @return the productoVO
+     */
+    public ProductoVO getProductoVO() {
+        return productoVO;
+    }
+
+    /**
+     * @param productoVO the productoVO to set
+     */
+    public void setProductoVO(ProductoVO productoVO) {
+        this.productoVO = productoVO;
+    }
+
+    /**
+     * @return the productoService
+     */
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    /**
+     * @param productoService the productoService to set
+     */
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    /**
+     * @return the medidaService
+     */
+    public MedidaService getMedidaService() {
+        return medidaService;
+    }
+
+    /**
+     * @param medidaService the medidaService to set
+     */
+    public void setMedidaService(MedidaService medidaService) {
+        this.medidaService = medidaService;
+    }
+
+    /**
+     * @return the medidas
+     */
+    public List<MedidaProductoVO> getMedidas() {
+        return medidas;
+    }
+
+    /**
+     * @param medidas the medidas to set
+     */
+    public void setMedidas(List<MedidaProductoVO> medidas) {
+        this.medidas = medidas;
+    }
+
+    /**
+     * @return the tipoProductoService
+     */
+    public TipoProductoService getTipoProductoService() {
+        return tipoProductoService;
+    }
+
+    /**
+     * @param tipoProductoService the tipoProductoService to set
+     */
+    public void setTipoProductoService(TipoProductoService tipoProductoService) {
+        this.tipoProductoService = tipoProductoService;
+    }
+
+    /**
+     * @return the tiposProducto
+     */
+    public List<TipoProductoVO> getTiposProducto() {
+        return tiposProducto;
+    }
+
+    /**
+     * @param tiposProducto the tiposProducto to set
+     */
+    public void setTiposProducto(List<TipoProductoVO> tiposProducto) {
+        this.tiposProducto = tiposProducto;
+    }
+
+    /**
+     * @return the suministroVO
+     */
+    public SuministroVO getSuministroVO() {
+        return suministroVO;
+    }
+
+    /**
+     * @param suministroVO the suministroVO to set
+     */
+    public void setSuministroVO(SuministroVO suministroVO) {
+        this.suministroVO = suministroVO;
+    }
+
+    /**
+     * @return the suministroService
+     */
+    public SuministroService getSuministroService() {
+        return suministroService;
+    }
+
+    /**
+     * @param suministroService the suministroService to set
+     */
+    public void setSuministroService(SuministroService suministroService) {
+        this.suministroService = suministroService;
     }
 
     /**
@@ -317,45 +418,32 @@ public class ProductoBean implements Serializable {
     }
 
     /**
-     * @return the paqueteService
+     * @return the login
      */
-    public PaqueteService getPaqueteService() {
-        return paqueteService;
+    public LoginBean getLogin() {
+        return login;
     }
 
     /**
-     * @param paqueteService the paqueteService to set
+     * @param login the login to set
      */
-    public void setPaqueteService(PaqueteService paqueteService) {
-        this.paqueteService = paqueteService;
+    public void setLogin(LoginBean login) {
+        this.login = login;
     }
 
     /**
-     * @return the nombreFoto
+     * @return the clasificacionBean
      */
-    public String getNombreFoto() {
-        return nombreFoto;
+    public ClasificacionBean getClasificacionBean() {
+        return clasificacionBean;
     }
 
     /**
-     * @param nombreFoto the nombreFoto to set
+     * @param clasificacionBean the clasificacionBean to set
      */
-    public void setNombreFoto(String nombreFoto) {
-        this.nombreFoto = nombreFoto;
+    public void setClasificacionBean(ClasificacionBean clasificacionBean) {
+        this.clasificacionBean = clasificacionBean;
     }
 
-    /**
-     * @return the nombrePdf
-     */
-    public String getNombrePdf() {
-        return nombrePdf;
-    }
-
-    /**
-     * @param nombrePdf the nombrePdf to set
-     */
-    public void setNombrePdf(String nombrePdf) {
-        this.nombrePdf = nombrePdf;
-    }
 
 }
