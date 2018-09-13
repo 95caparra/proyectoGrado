@@ -23,23 +23,14 @@ public class SuministroDAOMS extends ConexionMySQL implements SuministroDAO {
         int inserto = -1;
         try {
             this.conectar();
-            StringBuffer sql = new StringBuffer();
+            String consulta = "INSERT INTO suministro "
+                    + " (nombre,foto,cantidad,cantidad_minima, medida,precio_unidad,observaciones,estado)"
+                    + " VALUES (?,?,?,?,?,?,?,'Activo')";
 
-            sql.append(" INSERT INTO suministro ( ");
-            sql.append(" nombre, ");
-            sql.append(" foto, ");
-            sql.append(" cantidad, ");
-            sql.append(" cantidad_minima, ");
-            sql.append(" medida, ");
-            sql.append(" precio_unidad, ");
-            sql.append(" observaciones, ");
-            sql.append(" estado ");
-            sql.append(" )");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?) ");
-
-            PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
+            PreparedStatement pstm = this.conection.prepareStatement(consulta);
+            
             int c = 1;
-
+            
             pstm.setString(c++, suministroVO.getNombre());
             pstm.setString(c++, suministroVO.getFoto());
             pstm.setInt(c++, suministroVO.getCantidad());
@@ -47,7 +38,6 @@ public class SuministroDAOMS extends ConexionMySQL implements SuministroDAO {
             pstm.setInt(c++, suministroVO.getMedidaProductoVO().getMedidaProducto());
             pstm.setDouble(c++, suministroVO.getPrecioUnidad());
             pstm.setString(c++, suministroVO.getObservaciones());
-            pstm.setString(c++, suministroVO.getEstado());
 
             inserto = pstm.executeUpdate();
 

@@ -22,7 +22,7 @@ public class SuministroVO {
     private String estado;
     
     public SuministroVO(){
-        this.medidaProductoVO = new MedidaProductoVO();
+        medidaProductoVO = new MedidaProductoVO();
     }
 
 

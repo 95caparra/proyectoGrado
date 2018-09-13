@@ -28,7 +28,6 @@ import org.primefaces.model.UploadedFile;
 
 @ManagedBean(name = "archivoBean")
 @RequestScoped
-@ViewScoped
 public class ArchivosBean implements Serializable {
 
     private static long serialVersionUID = 4545919119678482516L;
@@ -36,6 +35,7 @@ public class ArchivosBean implements Serializable {
     private UploadedFile pdf;
     private UploadedFile foto;
     private PaqueteBean paqueteBean;
+    private SuministroBean suministroBean;
 
     @PostConstruct
     public void init() {
@@ -43,6 +43,7 @@ public class ArchivosBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             Application application = context.getApplication();
             paqueteBean = application.evaluateExpressionGet(context, "#{paqueteBean}", PaqueteBean.class);
+            suministroBean =application.evaluateExpressionGet(context, "#{suministroBean}", SuministroBean.class);
             try {
 
             } catch (Exception e) {
@@ -55,6 +56,7 @@ public class ArchivosBean implements Serializable {
     public void fileUploadListenerFoto(FileUploadEvent e) throws IOException {
         foto = e.getFile();
         paqueteBean.setNombreFoto(e.getFile().getFileName());
+        suministroBean.setNombreFoto(e.getFile().getFileName());
         Path.copyFileImagenes(e.getFile().getFileName(), getFoto().getInputstream());
     }
 
@@ -98,6 +100,20 @@ public class ArchivosBean implements Serializable {
 
     public void setPaqueteBean(PaqueteBean paqueteBean) {
         this.paqueteBean = paqueteBean;
+    }
+
+    /**
+     * @return the suministroBean
+     */
+    public SuministroBean getSuministroBean() {
+        return suministroBean;
+    }
+
+    /**
+     * @param suministroBean the suministroBean to set
+     */
+    public void setSuministroBean(SuministroBean suministroBean) {
+        this.suministroBean = suministroBean;
     }
 
 }

@@ -22,6 +22,8 @@ public class OpcionBean implements Serializable {
     private static long serialVersionUID = 4545919119678482516L;
 
     private int opcionPaquete;
+    private int opcionProducto;
+    private int opcionSuministro;
 
     @PostConstruct
     public void init() {
@@ -34,8 +36,22 @@ public class OpcionBean implements Serializable {
         RequestContext.getCurrentInstance().update("pnlConteido");
     }
 
+    public void verProducto() {
+        setearOpciones();
+        opcionProducto = 1;
+        RequestContext.getCurrentInstance().update("pnlConteido");
+    }
+
+    public void verSuministro() {
+        setearOpciones();
+        opcionSuministro = 1;
+        RequestContext.getCurrentInstance().update("pnlConteido");
+    }
+
     public void setearOpciones() {
         opcionPaquete = 0;
+        opcionProducto = 0;
+        opcionSuministro = 0;
     }
 
     /**
@@ -64,6 +80,34 @@ public class OpcionBean implements Serializable {
      */
     public void setOpcionPaquete(int opcionPaquete) {
         this.opcionPaquete = opcionPaquete;
+    }
+
+    /**
+     * @return the opcionProducto
+     */
+    public int getOpcionProducto() {
+        return opcionProducto;
+    }
+
+    /**
+     * @param opcionProducto the opcionProducto to set
+     */
+    public void setOpcionProducto(int opcionProducto) {
+        this.opcionProducto = opcionProducto;
+    }
+
+    /**
+     * @return the opcionSuministro
+     */
+    public int getOpcionSuministro() {
+        return opcionSuministro;
+    }
+
+    /**
+     * @param opcionSuministro the opcionSuministro to set
+     */
+    public void setOpcionSuministro(int opcionSuministro) {
+        this.opcionSuministro = opcionSuministro;
     }
 
 }
