@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+  <name>Axis Tools Maven Plugin</name>
+  <description>This plugin supports the wsdl2java and java2wsdl tools from the Apache Axis (1) project.</description>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>axistools-maven-plugin</artifactId>
+  <version>1.4</version>
+  <goalPrefix>axistools</goalPrefix>
+  <isolatedRealm>false</isolatedRealm>
+  <inheritedByDefault>true</inheritedByDefault>
+  <mojos>
+    <mojo>
+      <goal>java2wsdl</goal>
+      <description>A Plugin for generating WSDL files using Axis Java2WSDL.</description>
+      <requiresDependencyResolution>compile</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>process-classes</phase>
+      <implementation>org.codehaus.mojo.axistools.Java2WSDLMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>all</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Look for allowed methods in inherited class.
+
+Corresponds to the &lt;code&gt;-a, --all&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>bindingName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicates the name to use for the binding element. 
+If not specified, the value of the {@linkplain #servicePortName} + &quot;SoapBinding&quot; is used.
+
+Corresponds to the &lt;code&gt;-b, --bindingName&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>classOfPortType</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The class-of-portType.</description>
+        </parameter>
+        <parameter>
+          <name>classesDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The directory the compile objects will be located for java2wsdl to source from.</description>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of methods not to export.
+
+Corresponds to the &lt;code&gt;-x, --exclude&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>extraClasses</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Specify a list of class names which should be included in the types
+section of the WSDL document.
+This is useful in the case where your service interface references a base
+class and you would like your WSDL to contain XML Schema type definitions
+for these other classes. 
+
+Corresponds to the &lt;code&gt;-e, --extraClasses&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>filename</name>
+          <type>java.lang.String</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>Indicates the name of the output WSDL file.
+
+Corresponds to the &lt;code&gt;-o, --output&lt;/code&gt; option in the Java2WSDL command line tool,
+together with the {@linkplain #outputDirectory} parameter.</description>
+        </parameter>
+        <parameter>
+          <name>implClass</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Sometimes extra information is available in the implementation class file. 
+Use this option to specify the implementation class.
+
+Corresponds to the &lt;code&gt;-i, --implClass&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>importSchema</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>A file or URL to an XML Schema that should be physically imported into the generated WSDL.
+
+Corresponds to the &lt;code&gt;-C, --importSchema&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>input</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Optional parameter that indicates the name of the input wsdl file. 
+The output wsdl file will contain everything from the input wsdl file plus the new constructs. 
+If a new construct is already present in the input wsdl file, it is not added. 
+This option is useful for constructing a wsdl file with multiple ports, bindings, or portTypes.
+
+Corresponds to the &lt;code&gt;-I, --input&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>location</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicates the url of the location of the service. 
+The name after the last slash or backslash is the name of the service port 
+(unless overridden by the servicePortName option). 
+The service port address location attribute is assigned the specified value.
+
+Corresponds to the &lt;code&gt;-l, --location&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>locationImport</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Used to indicate the location of the interface WSDL when generating an implementation WSDL.
+
+Corresponds to the &lt;code&gt;-L, --locationImport&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>methods</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Methods to export.
+
+Corresponds to the &lt;code&gt;-m, --methods&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>namespace</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicates the name of the target namespace of the WSDL.
+
+Corresponds to the &lt;code&gt;-n, --namespace&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>namespaceImpl</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Namespace of the implementation WSDL.
+
+Corresponds to the &lt;code&gt;-N, --namespaceImpl&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Directory for generated content.
+
+Corresponds to the &lt;code&gt;-o, --output&lt;/code&gt; option in the Java2WSDL command line tool,
+together with the {@linkplain #filename} parameter.</description>
+        </parameter>
+        <parameter>
+          <name>outputImpl</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Use this option to indicate the name of the output implementation WSDL file. 
+If specified, Java2WSDL will produce interface and implementation WSDL files. 
+If this option is used, the {@linkplain #outputWSDLMode} option is ignored.
+
+Corresponds to the &lt;code&gt;-O, --outputImpl&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>outputWSDLMode</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicates the kind of WSDL to generate. Accepted values are:
+&lt;ul&gt;
+  &lt;li&gt;All --- (default) Generates wsdl containing both interface and
+      implementation WSDL constructs.&lt;/li&gt;
+  &lt;li&gt;Interface --- Generates a WSDL containing the interface constructs
+      (no service element).&lt;/li&gt;
+  &lt;li&gt;Implementation -- Generates a WSDL containing the implementation.
+      The interface WSDL is imported via the {@linkplain #locationImport}
+      option.&lt;/li&gt;
+&lt;/ul&gt;
+
+Corresponds to the &lt;code&gt;-w, --outputWsdlMode&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>packageToNamespace</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Package=namespace, name value pair.
+The plugin currently only supports one name value pair.
+
+Corresponds to the &lt;code&gt;-p, --PkgtoNS&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>portTypeName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicates the name to use for the portType element. If not specified, the
+{@linkplain #classOfPortType} name is used.
+
+Corresponds to the &lt;code&gt;-P, --portTypeName&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>serviceElementName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Service element name (defaults to servicePortName value + &quot;Service&quot;).
+
+Corresponds to the &lt;code&gt;-S, --serviceElementName&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>servicePortName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicates the name of the service port. 
+If not specified, the service port name is derived from the location value. 
+
+Corresponds to the &lt;code&gt;-s, --servicePortName&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>soapAction</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The value of the operations soapAction field. 
+Values are DEFAULT, OPERATION or NONE. 
+OPERATION forces soapAction to the name of the operation. 
+DEFAULT causes the soapAction to be set according to the operation&apos;s meta data (usually &quot;&quot;). 
+NONE forces the soapAction to &quot;&quot;. The default is DEFAULT.
+
+Corresponds to the &lt;code&gt;-A, --soapAction&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>stopClasses</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of classes which stop the Java2WSDL inheritance search.
+
+Corresponds to the &lt;code&gt;-c, --stopClasses&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>style</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The style of the WSDL document: RPC, DOCUMENT or WRAPPED. 
+The default is RPC. If RPC is specified, an rpc wsdl is generated. 
+If DOCUMENT is specified, a document wsdl is generated. 
+If WRAPPED is specified, a document/literal wsdl is generated using the wrapped approach. 
+Wrapped style forces the use attribute to be literal.
+
+Corresponds to the &lt;code&gt;-y, --style&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>typeMappingVersion</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Choose the default type mapping registry to use. Either 1.1 or 1.2.
+
+Corresponds to the &lt;code&gt;-T, --typeMappingVersion&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>use</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The use of the WSDL document: LITERAL or ENCODED. 
+If LITERAL is specified, the XML Schema defines the representation of the XML for the request. 
+If ENCODED is specified, SOAP encoding is specified in the generated WSDL.
+
+Corresponds to the &lt;code&gt;-u, --use&lt;/code&gt; option in the Java2WSDL command line tool.</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <all implementation="boolean">false</all>
+        <bindingName implementation="java.lang.String">${bindingName}</bindingName>
+        <classOfPortType implementation="java.lang.String">${classOfPortType}</classOfPortType>
+        <classesDirectory implementation="java.io.File" default-value="${project.build.outputDirectory}"/>
+        <excludes implementation="java.util.ArrayList">${exclude}</excludes>
+        <extraClasses implementation="java.util.ArrayList">${extraClasses}</extraClasses>
+        <filename implementation="java.lang.String">${fileName}</filename>
+        <implClass implementation="java.lang.String">${implClass}</implClass>
+        <importSchema implementation="java.lang.String">${importSchema}</importSchema>
+        <input implementation="java.lang.String">${input}</input>
+        <location implementation="java.lang.String">${location}</location>
+        <locationImport implementation="java.lang.String">${locationImport}</locationImport>
+        <methods implementation="java.util.ArrayList">${methods}</methods>
+        <namespace implementation="java.lang.String">${namespace}</namespace>
+        <namespaceImpl implementation="java.lang.String">${namespaceImpl}</namespaceImpl>
+        <outputDirectory implementation="java.io.File" default-value="${project.build.directory}/generated-sources/axistools/java2wsdl"/>
+        <outputImpl implementation="java.lang.String">${outputImpl}</outputImpl>
+        <outputWSDLMode implementation="java.lang.String">${outputWSDLMode}</outputWSDLMode>
+        <packageToNamespace implementation="java.lang.String">${packageToNamespace}</packageToNamespace>
+        <portTypeName implementation="java.lang.String">${portTypeName}</portTypeName>
+        <project implementation="org.apache.maven.project.MavenProject">${project}</project>
+        <serviceElementName implementation="java.lang.String">${serviceElementName}</serviceElementName>
+        <servicePortName implementation="java.lang.String">${servicePortName}</servicePortName>
+        <soapAction implementation="java.lang.String">${soapAction}</soapAction>
+        <stopClasses implementation="java.util.ArrayList">${stopClasses}</stopClasses>
+        <style implementation="java.lang.String">${style}</style>
+        <typeMappingVersion implementation="java.lang.String">${typeMappingVersion}</typeMappingVersion>
+        <use implementation="java.lang.String">${use}</use>
+      </configuration>
+      <requirements>
+        <requirement>
+          <role>org.apache.maven.project.MavenProjectHelper</role>
+          <field-name>projectHelper</field-name>
+        </requirement>
+      </requirements>
+    </mojo>
+    <mojo>
+      <goal>help</goal>
+      <description>Display help information on axistools-maven-plugin.&lt;br/&gt; Call &lt;pre&gt;  mvn axistools:help -Ddetail=true -Dgoal=&amp;lt;goal-name&amp;gt;&lt;/pre&gt; to display parameter details.</description>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>false</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <implementation>org.codehaus.mojo.axistools.HelpMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>If &lt;code&gt;true&lt;/code&gt;, display all settable properties for each goal.</description>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The name of the goal for which to show help. If unspecified, all goals will be displayed.</description>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <type>int</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The number of spaces per indentation level, should be positive.</description>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <type>int</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The maximum length of a display line, should be positive.</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <detail implementation="boolean" default-value="false">${detail}</detail>
+        <goal implementation="java.lang.String">${goal}</goal>
+        <indentSize implementation="int" default-value="2">${indentSize}</indentSize>
+        <lineLength implementation="int" default-value="80">${lineLength}</lineLength>
+      </configuration>
+    </mojo>
+    <mojo>
+      <goal>wsdl2java</goal>
+      <description>A Plugin for generating stubs for WSDL files using Axis WSDL2Java.</description>
+      <requiresDependencyResolution>test</requiresDependencyResolution>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>generate-sources</phase>
+      <implementation>org.codehaus.mojo.axistools.WSDL2JavaMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>allElements</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Generate code for all elements, even unreferenced ones.
+By default, WSDL2Java only generates code for those elements in the WSDL file that are referenced.
+A note about what it means to be referenced.
+We cannot simply say: start with the services, generate all bindings referenced by the service,
+generate all portTypes referenced by the referenced bindings, etc.
+What if we&apos;re generating code from a WSDL file that only contains portTypes, messages, and types?
+If WSDL2Java used service as an anchor, and there&apos;s no service in the file, then nothing will be generated.
+So the anchor is the lowest element that exists in the WSDL file in the order:
+&lt;ol&gt;
+  &lt;li&gt;types
+  &lt;li&gt;portTypes
+  &lt;li&gt;bindings
+  &lt;li&gt;services
+&lt;/ol&gt;
+For example, if a WSDL file only contained types, then all the listed
+types would be generated. But if a WSDL file contained types and a
+portType, then that portType will be generated and only those types that
+are referenced by that portType. Note that the anchor is searched for in
+the WSDL file appearing on the command line, not in imported WSDL files.
+This allows one WSDL file to import constructs defined in another WSDL
+file without the nuisance of having all the imported WSDL file&apos;s
+constructs generated.
+
+Corresponds to the &lt;code&gt;-a, --all&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>debug</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Print debug information, which currently is WSDL2Java&apos;s symbol table.
+Note that this is only printed after the symbol table is complete, ie., after the WSDL is parsed successfully.
+
+Corresponds to the &lt;code&gt;-D, --Debug&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>deployScope</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Add scope to deploy.xml: &quot;Application&quot;, &quot;Request&quot;, &quot;Session&quot;.
+
+Corresponds to the &lt;code&gt;-d, --deployScope&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>factory</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Name of a custom class that implements GeneratorFactory interface
+(for extending Java generation functions).
+
+Corresponds to the &lt;code&gt;-F, --factory&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>fileNamespaceToPackage</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>File containing namespace to package mappings.
+
+Corresponds to the &lt;code&gt;-f, --fileNStoPkg&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>helperGen</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Emits separate Helper classes for meta data.
+
+Corresponds to the &lt;code&gt;-H, --helperGen&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>implementationClassName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Use this as the implementation class.
+
+Corresponds to the &lt;code&gt;-c, --implementationClassName&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>localRepository</name>
+          <type>org.apache.maven.artifact.repository.ArtifactRepository</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>mappings</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Mappings of &amp;lt;namespace&amp;gt; to &amp;lt;targetPackage&amp;gt;.</description>
+        </parameter>
+        <parameter>
+          <name>namespaceToPackage</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Mapping of namespace to package.
+This is only used when &lt;code&gt;useEmitter&lt;/code&gt; is set to &lt;code&gt;true&lt;/code&gt;.
+If &lt;code&gt;useEmitter&lt;/code&gt; is set to &lt;code&gt;false&lt;/code&gt; you should use {@linkplain #mappings} instead.
+
+Corresponds to the &lt;code&gt;-N, --NStoPkg&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>noImports</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Only generate code for the immediate WSDL document.
+
+Corresponds to the &lt;code&gt;-n, --noImports&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>noWrapped</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Turn off support for &quot;wrapped&quot; document/literal.
+
+Corresponds to the &lt;code&gt;-W, --noWrapped&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>nsExcludes</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Namespace to specifically exclude from the generated code (defaults to
+none excluded until first namespace included with {@linkplain #nsIncludes} option).
+
+Corresponds to the &lt;code&gt;-x, --nsExclude&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>nsIncludes</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Namescape to specifically include in the generated code (defaults to
+all namespaces unless specifically excluded with the {@linkplain #nsExcludes} option).
+
+Corresponds to the &lt;code&gt;-i, --nsInclude&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>Location to place generated java source files.
+
+Corresponds to the &lt;code&gt;-o, --output&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>packageSpace</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Package to create the java files under, for example &lt;code&gt;com.company.wsdl&lt;/code&gt;.
+
+Corresponds to the &lt;code&gt;-p, --package&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Password to access the WSDL-URI.
+
+Corresponds to the &lt;code&gt;-P, --password&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>pluginArtifacts</name>
+          <type>java.util.List</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>runTestCasesAsUnitTests</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Copy the generated test cases to a generated-sources test directory to be
+compiled and run as normal Surefire unit tests.</description>
+        </parameter>
+        <parameter>
+          <name>serverSide</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Emit server-side bindings for web service.
+
+Corresponds to the &lt;code&gt;-s, --server-side&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>skeletonDeploy</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Deploy skeleton (true) or implementation (false) in deploy.wsdd.
+
+Corresponds to the &lt;code&gt;-S, --skeletonDeploy&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>sourceDependencies</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of source dependencies in the format groupId:artifactId:version:file.</description>
+        </parameter>
+        <parameter>
+          <name>sourceDependencyDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Cache directory for WSDLs from sourceDependencies.</description>
+        </parameter>
+        <parameter>
+          <name>sourceDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Source directory that contains .wsdl files.</description>
+        </parameter>
+        <parameter>
+          <name>staleMillis</name>
+          <type>int</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>The granularity in milliseconds of the last modification
+date for testing whether a source needs recompilation.</description>
+        </parameter>
+        <parameter>
+          <name>subPackageByFileName</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>load.wsdl would further subpackage into load.*</description>
+        </parameter>
+        <parameter>
+          <name>testCases</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Generate the test cases.
+
+Corresponds to the &lt;code&gt;-t, --testCase&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>testSourceDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Location to place generated test source files.</description>
+        </parameter>
+        <parameter>
+          <name>timeout</name>
+          <type>java.lang.Integer</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Timeout in seconds (default is 45, specify -1 to disable).
+
+Corresponds to the &lt;code&gt;-O, --timeout&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>timestampDirectory</name>
+          <type>java.io.File</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>Directory used when evaluating whether files are up to date or stale.</description>
+        </parameter>
+        <parameter>
+          <name>typeMappingVersion</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Indicate either 1.1 or 1.2, where 1.1 means SOAP 1.1 JAX-RPC compliant
+and 1.2 indicates SOAP 1.1 encoded.
+
+Corresponds to the &lt;code&gt;-T, --typeMappingVersion&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>urlDownloadDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Cache directory for WSDLs from URLs.</description>
+        </parameter>
+        <parameter>
+          <name>urls</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of URLs to process.</description>
+        </parameter>
+        <parameter>
+          <name>useEmitter</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Use the Emitter for generating the java files as opposed to the commandline wsdl2java tool.</description>
+        </parameter>
+        <parameter>
+          <name>username</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Username to access the WSDL-URI.
+
+Corresponds to the &lt;code&gt;-U, --user&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>See what the tool is generating as it is generating it.
+
+Corresponds to the &lt;code&gt;-v, --verbose&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>wrapArrays</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Prefer generating JavaBean classes like &quot;ArrayOfString&quot; for certain
+schema array patterns.
+
+Corresponds to the &lt;code&gt;-w, --wrapArrays&lt;/code&gt; option in the WSDL2Java command line tool.</description>
+        </parameter>
+        <parameter>
+          <name>wsdlFiles</name>
+          <type>java.util.ArrayList</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>List of WSDL files from {@link #sourceDirectory} to process.
+The files will be processed in the order they appear in your configuration.</description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <allElements implementation="boolean">${allElements}</allElements>
+        <debug implementation="boolean" default-value="false"/>
+        <deployScope implementation="java.lang.String">${deployScope}</deployScope>
+        <factory implementation="java.lang.String">${factory}</factory>
+        <fileNamespaceToPackage implementation="java.io.File">${fileNamespaceToPackage}</fileNamespaceToPackage>
+        <helperGen implementation="boolean" default-value="false"/>
+        <implementationClassName implementation="java.lang.String">${implementationClassName}</implementationClassName>
+        <localRepository implementation="org.apache.maven.artifact.repository.ArtifactRepository">${localRepository}</localRepository>
+        <namespaceToPackage implementation="java.lang.String">${namespaceToPackage}</namespaceToPackage>
+        <noImports implementation="boolean" default-value="false"/>
+        <noWrapped implementation="boolean" default-value="false"/>
+        <outputDirectory implementation="java.io.File" default-value="${project.build.directory}/generated-sources/axistools/wsdl2java"/>
+        <packageSpace implementation="java.lang.String">${packageSpace}</packageSpace>
+        <password implementation="java.lang.String">${password}</password>
+        <pluginArtifacts implementation="java.util.List">${plugin.artifacts}</pluginArtifacts>
+        <project implementation="org.apache.maven.project.MavenProject">${project}</project>
+        <runTestCasesAsUnitTests implementation="boolean" default-value="false"/>
+        <serverSide implementation="boolean">${serverSide}</serverSide>
+        <skeletonDeploy implementation="boolean" default-value="false"/>
+        <sourceDependencyDirectory implementation="java.io.File" default-value="${project.build.directory}/axistools/wsdl2java/sourceDependencies"/>
+        <sourceDirectory implementation="java.io.File" default-value="${basedir}/src/main/wsdl"/>
+        <staleMillis implementation="int" default-value="0">${lastModGranularityMs}</staleMillis>
+        <subPackageByFileName implementation="boolean">${subPackageByFileName}</subPackageByFileName>
+        <testCases implementation="boolean">${testCases}</testCases>
+        <testSourceDirectory implementation="java.io.File" default-value="${project.build.directory}/generated-test-sources/wsdl"/>
+        <timeout implementation="java.lang.Integer">${timeout}</timeout>
+        <timestampDirectory implementation="java.io.File" default-value="${project.build.directory}"/>
+        <typeMappingVersion implementation="java.lang.String" default-value="1.1">${typeMappingVersion}</typeMappingVersion>
+        <urlDownloadDirectory implementation="java.io.File" default-value="${project.build.directory}/axistools/wsdl2java/urlDownloads"/>
+        <useEmitter implementation="boolean" default-value="false"/>
+        <username implementation="java.lang.String">${username}</username>
+        <verbose implementation="boolean">${verbose}</verbose>
+        <wrapArrays implementation="boolean" default-value="true"/>
+      </configuration>
+      <requirements>
+        <requirement>
+          <role>org.apache.maven.artifact.factory.ArtifactFactory</role>
+          <field-name>artifactFactory</field-name>
+        </requirement>
+      </requirements>
+    </mojo>
+    <mojo>
+      <goal>admin</goal>
+      <description>Utility for turning xml into Axis deployment operations
+(wraps org.apache.axis.utils.Admin)</description>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>process-classes</phase>
+      <implementation>org.codehaus.mojo.axistools.AdminMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <parameters>
+        <parameter>
+          <name>configOutputDirectory</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>Where the server-config.wsdd or client-config.wsdd should go.</description>
+        </parameter>
+        <parameter>
+          <name>inputFiles</name>
+          <type>java.util.ArrayList</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>Files used to create deployment file.</description>
+        </parameter>
+        <parameter>
+          <name>isServerConfig</name>
+          <type>boolean</type>
+          <required>true</required>
+          <editable>true</editable>
+          <description>Generate a server or client deployment file.</description>
+        </parameter>
+        <parameter>
+          <name>project</name>
+          <type>org.apache.maven.project.MavenProject</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <configOutputDirectory implementation="java.io.File" default-value="${basedir}/src/main/webapp/WEB-INF"/>
+        <inputFiles implementation="java.util.ArrayList">${inputFile}</inputFiles>
+        <isServerConfig implementation="boolean" default-value="true"/>
+        <project implementation="org.apache.maven.project.MavenProject" default-value="${project}"/>
+      </configuration>
+    </mojo>
+  </mojos>
+  <dependencies>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-compiler-api</artifactId>
+      <type>jar</type>
+      <version>1.5.3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-container-default</artifactId>
+      <type>jar</type>
+      <version>1.0-alpha-8</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.plexus</groupId>
+      <artifactId>plexus-utils</artifactId>
+      <type>jar</type>
+      <version>1.5.6</version>
+    </dependency>
+    <dependency>
+      <groupId>classworlds</groupId>
+      <artifactId>classworlds</artifactId>
+      <type>jar</type>
+      <version>1.1-alpha-2</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <type>jar</type>
+      <version>2.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-project</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-settings</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-model</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-profile</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-artifact-manager</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-repository-metadata</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven.wagon</groupId>
+      <artifactId>wagon-provider-api</artifactId>
+      <type>jar</type>
+      <version>1.0-beta-2</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-registry</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.maven</groupId>
+      <artifactId>maven-plugin-api</artifactId>
+      <type>jar</type>
+      <version>2.0.6</version>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+      <type>jar</type>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis-jaxrpc</artifactId>
+      <type>jar</type>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.axis</groupId>
+      <artifactId>axis-saaj</artifactId>
+      <type>jar</type>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis-wsdl4j</artifactId>
+      <type>jar</type>
+      <version>1.5.1</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <type>jar</type>
+      <version>1.0.4</version>
+    </dependency>
+    <dependency>
+      <groupId>commons-discovery</groupId>
+      <artifactId>commons-discovery</artifactId>
+      <type>jar</type>
+      <version>0.2</version>
+    </dependency>
+  </dependencies>
+</plugin>

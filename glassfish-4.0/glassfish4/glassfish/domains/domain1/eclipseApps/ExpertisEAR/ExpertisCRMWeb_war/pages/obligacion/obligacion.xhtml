@@ -1,0 +1,95 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="../../resources/templates/templateGestion.xhtml">
+
+
+	<ui:define name="top">
+		<div
+			style="position: relative; top: -14px; left: 182px; margin-top: -2%; width: 13%;">
+			<center>
+				<p:commandButton value="Colgar" onclick="fun_include_haup('haup');"></p:commandButton>
+				<p:commandButton value="Mute" onclick="fun_include_mute('mute');"></p:commandButton>
+				<p:commandButton value="Espera" onclick="fun_include_hold('hold');"></p:commandButton>
+			</center>
+		</div>
+	</ui:define>
+
+	<ui:define name="left">
+		<p:dialog dynamic="true" modal="true" resizable="false"
+			header="Advertencia" hideEffect="fade" showEffect="fade"
+			widgetVar="dlg1" minHeight="40" styleClass="dialog"
+			position="center center" onShow="PF('dlg1').initPosition()"
+			responsive="true">
+			<h:outputText value="#{clienteBean.mesajeError}" />
+		</p:dialog>
+
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="obligaciones">
+			<p:messages id="messages" showDetail="true" closable="true">
+
+			</p:messages>
+			<p:dataTable var="obligacion"
+				value="#{clienteBean.cliente.obligaciones}"
+				emptyMessage="Las Obligaciones de este deudor no cumplen las condiciones para ser gestionadas">
+
+				<p:column headerText="Id">
+					<h:outputText value="#{obligacion.idObligacion}" />
+				</p:column>
+
+				<p:column headerText="Documento">
+					<h:outputText value="#{obligacion.idObligacion}" />
+				</p:column>
+
+				<p:column headerText="Código Obligación">
+					<h:outputText value="#{obligacion.codObligacion}" />
+				</p:column>
+
+			</p:dataTable>
+
+
+			<p:panel style="border:none;float:right" id="totalCobro">
+				<p:outputLabel value="Total: " style=" font-size: 1.5em;"></p:outputLabel>
+				<p:outputLabel value="#{clienteBean.valorCobro}"
+					style="    font-size: 1.5em;     color: limegreen;">
+					<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+				</p:outputLabel>
+			</p:panel>
+
+		</h:form>
+		<br></br>
+		<br></br>
+
+		<h:form id="tipificacionesNivel1">
+			<p:tabMenu>			
+				<p:menuitem value="TIPIFICACIONES" />
+				<p:menuitem value="CONTACTO EFECTIVO" 
+					icon="ui-icon-star" actionListener="#{tipificarBean.consultarTipificacion(1,'CONTACTO EFECTIVO')}">					
+				</p:menuitem>
+				<p:menuitem value="CONTACTO NO EFECTIVO" 
+					icon="ui-icon-search" actionListener="#{tipificarBean.consultarTipificacion(2,'CONTACTO NO EFECTIVO')}">
+				</p:menuitem>
+				<p:menuitem value="NO CONTACTO" 
+					icon="ui-icon-document" actionListener="#{tipificarBean.consultarTipificacion(3,'NO CONTACTO')}">			
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+
+
+		<p:panel id="panelTipificaciones">
+			<c:if test="#{tipificarBean.opcionComboTipificacion == 1}">
+				<ui:include src="/pages/tipificacion/tipificar.xhtml" />
+			</c:if>
+		</p:panel>
+
+
+	</ui:define>
+</ui:composition>
+

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+	<h:form id="frmMemo">
+		<p:panel id="pnlMemo">
+			<c:choose>
+				<c:when test="#{fn:length(clienteBean.gestiones) > 0}">
+					<p:dataScroller value="#{clienteBean.gestiones}" var="gestion">
+
+						<h:panelGrid columns="2" style="width:100%">
+							<p:outputPanel style="border-bottom: 1px solid grey">
+								<h:panelGrid>
+									<h:panelGrid columns="2" cellpadding="5">
+										<h:outputText value="Idgestion:" />
+										<h:outputText value="#{gestion.idgestion}"
+											style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.fechainicio != null}"
+											value="Fecha Inicio:" />
+										<h:outputText rendered="#{gestion.fechainicio != null}"
+											value="#{gestion.fechainicio}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.nombreAsesor != null}"
+											value="Nombre Asesor:" />
+										<h:outputText rendered="#{gestion.nombreAsesor != null}"
+											value="#{gestion.nombreAsesor}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.usuarioAsesor != null}"
+											value="Usuario Asesor:" />
+										<h:outputText rendered="#{gestion.usuarioAsesor != null}"
+											value="#{gestion.usuarioAsesor}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.telefonoMarcado != null}"
+											value="Telefono Marcado:" />
+										<h:outputText rendered="#{gestion.telefonoMarcado != null}"
+											value="#{gestion.telefonoMarcado}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.fechaAgendamiento != null}"
+											value="Fecha Agendamiento:" />
+										<h:outputText rendered="#{gestion.fechaAgendamiento != null}"
+											value="#{gestion.fechaAgendamiento}"
+											style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.nombreTercero  != null}"
+											value="Nombre Tercero:" />
+										<h:outputText rendered="#{gestion.nombreTercero  != null}"
+											value="#{gestion.nombreTercero}" style="font-weight: bold" />
+										<h:outputText
+											rendered="#{gestion.telefonoAgendamiento  != null}"
+											value="Telefono Agendamiento:" />
+										<h:outputText
+											rendered="#{gestion.telefonoAgendamiento  != null}"
+											value="#{gestion.telefonoAgendamiento}"
+											style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.valorPromesa != null}"
+											value="Valor Promesa:" />
+										<h:outputText rendered="#{gestion.valorPromesa  != null}"
+											value="#{gestion.valorPromesa}" style="font-weight: bold">
+											<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+										</h:outputText>
+										<h:outputText rendered="#{gestion.campanaAltitude  != null}"
+											value="Campaña de Gestion:" />
+										<h:outputText rendered="#{gestion.campanaAltitude  != null}"
+											value="#{gestion.campanaAltitude}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.pagoValor  != null}"
+											value="Pago Valor:" />
+										<h:outputText rendered="#{gestion.pagoValor  != null}"
+											value="#{gestion.pagoValor}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.pagoFecha  != null}"
+											value="Pago Fecha:" />
+										<h:outputText rendered="#{gestion.pagoFecha  != null}"
+											value="#{gestion.pagoFecha}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.pagoLugar  != null}"
+											value="Pago Lugar:" />
+										<h:outputText rendered="#{gestion.pagoLugar  != null}"
+											value="#{gestion.pagoLugar}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.pagoCodigo  != null}"
+											value="Pago Codigo:" />
+										<h:outputText rendered="#{gestion.pagoCodigo  != null}"
+											value="#{gestion.pagoCodigo}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.tipificacion != null}"
+											value="Tipificacion:" />
+										<h:outputText rendered="#{gestion.tipificacion != null}"
+											value="#{gestion.tipificacion}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.numeroCuotas > 0}"
+											value="Número de Cuotas:" />
+										<h:outputText rendered="#{gestion.numeroCuotas > 0}"
+											value="#{gestion.numeroCuotas}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.ultimaCuota != null}"
+											value="Ultima Cuota:" />
+										<h:outputText rendered="#{gestion.ultimaCuota != null}"
+											value="#{gestion.ultimaCuota}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.identificacion != null}"
+											value="Identificacion:" />
+										<h:outputText rendered="#{gestion.identificacion != null}"
+											value="#{gestion.identificacion}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.nombre != null}"
+											value="Nombre:" />
+										<h:outputText rendered="#{gestion.nombre != null}"
+											value="#{gestion.nombre}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.nombreMotivo != null}"
+											value="Nombre Motivo:" />
+										<h:outputText rendered="#{gestion.nombreMotivo != null}"
+											value="#{gestion.nombreMotivo}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.parentesco != null}"
+											value="Parentezco :" />
+										<h:outputText rendered="#{gestion.parentesco != null}"
+											value="#{gestion.parentesco}" style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.porcentajeCapital != null}"
+											value="Porcentaje Capital :" />
+										<h:outputText rendered="#{gestion.porcentajeCapital != null}"
+											value="#{gestion.porcentajeCapital}"
+											style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.porcentajeInteres != null}"
+											value="Porcentaje Interes :" />
+										<h:outputText rendered="#{gestion.porcentajeInteres != null}"
+											value="#{gestion.porcentajeInteres}"
+											style="font-weight: bold" />
+										<h:outputText rendered="#{gestion.observacion != null}"
+											value="Observacion:" />
+										<h:outputText rendered="#{gestion.observacion != null}"
+											value="#{gestion.observacion}" style="font-weight: bold" />
+									</h:panelGrid>
+									<p:panelGrid columns="6"
+										rendered="${gestion.idTipificacion == 9 || gestion.idTipificacion == 10}">
+										<p:dataTable var="compromisos" value="#{gestion.facturas}">
+											<f:facet name="header"> Historico de compromisos  </f:facet>
+
+											<p:column headerText="Factura">
+												<h:outputText value="#{compromisos.factura}" />
+											</p:column>
+
+											<p:column headerText="Capital Inicial">
+												<h:outputText value="#{compromisos.valorCapitalI}">
+													<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+												</h:outputText>
+											</p:column>
+
+											<p:column headerText="Descuento de Capital">
+												<h:outputText value="#{compromisos.capitalDescuentoI}">
+													<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+												</h:outputText>
+											</p:column>
+
+											<p:column headerText="% Desc. Capital">
+												<h:outputText value="#{compromisos.porcentajeCapital}" />
+											</p:column>
+
+											<p:column headerText="Intereses Inicial">
+												<h:outputText value="#{compromisos.valorInteresI}">
+													<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+												</h:outputText>
+
+											</p:column>
+
+											<p:column headerText="Descuento de Intereses">
+												<h:outputText value="#{compromisos.interesDescuentoI}">
+													<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+												</h:outputText>
+											</p:column>
+
+											<p:column headerText="% Desc. Capital">
+												<h:outputText value="#{compromisos.porcentajeInteres}" />
+											</p:column>
+
+											<p:column headerText="Total Promesa">
+												<h:outputText value="#{compromisos.totalCobroI}">
+													<f:convertNumber pattern="S/#,##0.00" currencySymbol="$" />
+												</h:outputText>
+											</p:column>
+
+
+
+
+										</p:dataTable>
+									</p:panelGrid>
+								</h:panelGrid>
+							</p:outputPanel>
+						</h:panelGrid>
+					</p:dataScroller>
+
+				</c:when>
+				<c:otherwise>
+					<p>No hay Gestiones para este Deudor</p>
+				</c:otherwise>
+			</c:choose>
+
+
+
+		</p:panel>
+	</h:form>
+
+
+
+
+
+</ui:composition>

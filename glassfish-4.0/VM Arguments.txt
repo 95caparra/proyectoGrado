@@ -1,0 +1,1 @@
+ -Doracle.mds.cache=simple 
