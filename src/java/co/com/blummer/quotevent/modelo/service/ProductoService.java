@@ -55,7 +55,7 @@ public class ProductoService {
             return lista;
         }
     }
-    
+
     public ProductoVO consultarPorId(long idProducto) throws Exception {
 
         ProductoVO productoVO = null;
@@ -67,6 +67,18 @@ public class ProductoService {
 
         } finally {
             return productoVO;
+        }
+    }
+
+    public int consultarUltimoId() throws Exception {
+        int id = 0;
+        try {
+            id = productoDAO.consultarUltimoId();
+        } catch (Exception e) {
+            System.out.println("ProductoService: Se presento un error al "
+                    + "listar la tabla producto: " + e.getMessage());
+        } finally {
+            return id;
         }
     }
 }

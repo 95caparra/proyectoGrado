@@ -6,7 +6,7 @@ public class ProductoVO {
     private String nombre;
     private String foto;
     private TipoProductoVO tipoProductoVO;
-    private int cantidadMinima;
+    private int cantidad;
     private MedidaProductoVO medidaProductoVO;
     private double precioUnidad;
     private String observaciones;
@@ -44,12 +44,12 @@ public class ProductoVO {
     }
     
     
-    public int getCantidadMinima() {
-        return cantidadMinima;
+    public int getCantidad() {
+        return cantidad;
     }
 
-    public void setCantidadMinima(int cantidadMinima) {
-        this.cantidadMinima = cantidadMinima;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public MedidaProductoVO getMedidaProductoVO() {
@@ -89,7 +89,7 @@ public class ProductoVO {
     
      public String toString() {
         return "IdProducto "+"\t"+ idProducto+"\n"+"Nombre "+"\t"+nombre+"\n"+"Tipo "+"\t"+tipoProductoVO.getNombre()
-                +"\n"+"Cantidad "+"\n"+"\n"+"CamtidadMinima"+"\t"+cantidadMinima+"Gramaje "+medidaProductoVO.getNombreMedida()+"\t"
+                +"\n"+"Cantidad "+"\n"+"\n"+"CamtidadMinima"+"\t"+cantidad+"Gramaje "+medidaProductoVO.getNombreMedida()+"\t"
                 +"\n"+"Precio Unidad "+precioUnidad+"\n"+"Estado Producto"+"\t"+"\t"
                 +"\n"+"Estado A/I "+"\t"+estado;
             

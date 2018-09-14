@@ -69,7 +69,7 @@ public class SuministroDAOMS extends ConexionMySQL implements SuministroDAO {
             sql.append("	precio_unidad, ");
             sql.append("	observaciones, ");
             sql.append("	estado ");
-            sql.append(" FROM suinistro order by 1 ");
+            sql.append(" FROM   suministro order by 1 ");
             PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
 
             ResultSet rs = pstm.executeQuery();

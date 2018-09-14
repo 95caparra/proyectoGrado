@@ -36,6 +36,7 @@ public class ArchivosBean implements Serializable {
     private UploadedFile foto;
     private PaqueteBean paqueteBean;
     private SuministroBean suministroBean;
+    private ProductoBean productoBean;
 
     @PostConstruct
     public void init() {
@@ -43,7 +44,8 @@ public class ArchivosBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             Application application = context.getApplication();
             paqueteBean = application.evaluateExpressionGet(context, "#{paqueteBean}", PaqueteBean.class);
-            suministroBean =application.evaluateExpressionGet(context, "#{suministroBean}", SuministroBean.class);
+            suministroBean = application.evaluateExpressionGet(context, "#{suministroBean}", SuministroBean.class);
+            productoBean = application.evaluateExpressionGet(context, "#{productoBean}", ProductoBean.class);
             try {
 
             } catch (Exception e) {
@@ -57,6 +59,8 @@ public class ArchivosBean implements Serializable {
         foto = e.getFile();
         paqueteBean.setNombreFoto(e.getFile().getFileName());
         suministroBean.setNombreFoto(e.getFile().getFileName());
+        productoBean.setNombreFoto(e.getFile().getFileName());
+        
         Path.copyFileImagenes(e.getFile().getFileName(), getFoto().getInputstream());
     }
 

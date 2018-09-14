@@ -51,7 +51,7 @@ public class Path {
     public static String getPathArchivos() {
         try {
 
-            String path = getPath() + "archivos";
+            String path = getPath() + "resources";
             return path;
         } catch (Exception e) {
             System.out.print("getPathFotosClinica() " + e.getLocalizedMessage());

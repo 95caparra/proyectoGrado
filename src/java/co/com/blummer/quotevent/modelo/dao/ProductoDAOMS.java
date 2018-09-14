@@ -21,13 +21,13 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
             sql.append(" nombre, ");
             sql.append(" foto, ");
             sql.append(" tipo, ");
-            sql.append(" cantidad_minima, ");
+            sql.append(" cantidad, ");
             sql.append(" medida, ");
             sql.append(" precio_unidad, ");
             sql.append(" observaciones, ");
             sql.append(" estado ");
             sql.append(" )");
-            sql.append(" VALUES (?,?,?,?,?,?,?,?) ");
+            sql.append(" VALUES (?,?,?,?,?,?,?,'Activo') ");
 
             PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
             int c = 1;
@@ -35,11 +35,10 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
             pstm.setString(c++, productoVO.getNombre());
             pstm.setString(c++, productoVO.getFoto());
             pstm.setInt(c++, productoVO.getTipoProductoVO().getIdTipoPriducto());
-            pstm.setInt(c++, productoVO.getCantidadMinima());
+            pstm.setInt(c++, productoVO.getCantidad());
             pstm.setInt(c++, productoVO.getMedidaProductoVO().getMedidaProducto());
             pstm.setDouble(c++, productoVO.getPrecioUnidad());
             pstm.setString(c++, productoVO.getObservaciones());
-            pstm.setString(c++, productoVO.getEstado());
 
             inserto = pstm.executeUpdate();
 
@@ -62,14 +61,14 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
             StringBuffer sql = new StringBuffer();
             sql.append(" SELECT ");
             sql.append(" id_producto,");
-            sql.append("	nombre,");
-            sql.append("	foto, ");
-            sql.append("	tipo, ");
-            sql.append("	cantidad_minima,");
-            sql.append("	medida,");
-            sql.append("	precio_unidad, ");
-            sql.append("	observaciones, ");
-            sql.append("	estado ");
+            sql.append(" nombre,");
+            sql.append(" foto, ");
+            sql.append(" tipo, ");
+            sql.append(" cantidad, ");
+            sql.append(" medida,");
+            sql.append(" precio_unidad, ");
+            sql.append(" observaciones, ");
+            sql.append(" estado ");
             sql.append(" FROM producto order by 1 ");
             PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
 
@@ -82,7 +81,7 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
                 productoVO.setNombre(rs.getString(c++));
                 productoVO.setFoto(rs.getString(c++));
                 productoVO.getTipoProductoVO().setIdTipoPriducto(rs.getInt(c++));
-                productoVO.setCantidadMinima(rs.getInt(c++));
+                productoVO.setCantidad(rs.getInt(c++));
                 productoVO.getMedidaProductoVO().setMedidaProducto(rs.getInt(c++));
                 productoVO.setPrecioUnidad(rs.getDouble(c++));
                 productoVO.setObservaciones(rs.getString(c++));
@@ -125,7 +124,7 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
             pstm.setString(c++, productoVO.getNombre());
             pstm.setString(c++, productoVO.getFoto());
             pstm.setInt(c++, productoVO.getTipoProductoVO().getIdTipoPriducto());
-            pstm.setInt(c++, productoVO.getCantidadMinima());
+            pstm.setInt(c++, productoVO.getCantidad());
             pstm.setInt(c++, productoVO.getMedidaProductoVO().getMedidaProducto());
             pstm.setDouble(c++, productoVO.getPrecioUnidad());
             pstm.setString(c++, productoVO.getObservaciones());
@@ -178,7 +177,7 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
                 productoVO.setNombre(rs.getString(c++));
                 productoVO.setFoto(rs.getString(c++));
                 productoVO.getTipoProductoVO().setIdTipoPriducto(rs.getInt(c++));
-                productoVO.setCantidadMinima(rs.getInt(c++));
+                productoVO.setCantidad(rs.getInt(c++));
                 productoVO.getMedidaProductoVO().setMedidaProducto(rs.getInt(c++));
                 productoVO.setPrecioUnidad(rs.getDouble(c++));
                 productoVO.setObservaciones(rs.getString(c++));
@@ -193,6 +192,31 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
             this.desconectar();
         }
         return productoVO;
+    }
+
+    @Override
+    public int consultarUltimoId() throws Exception {
+        int id = 0;
+        int c = 0;
+        try {
+            this.conectar();
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT id_producto FROM producto order by 1 desc LIMIT 1 " );
+            PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
+
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                c = 1;                
+                id = rs.getInt(c++);
+            }
+
+        } catch (Exception e) {
+            System.out.println("ProductoDAOMS : se presento un error al listar: " + e.getMessage());
+            Archivos.escribirLog("Se presnto un error " + e.getMessage());
+        } finally {
+            this.desconectar();
+        }
+        return id;
     }
 
 }

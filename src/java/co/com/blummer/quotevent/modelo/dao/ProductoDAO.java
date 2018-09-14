@@ -12,4 +12,6 @@ public interface ProductoDAO {
     public int actualizarProducto(ProductoVO productoVO) throws Exception;
     
     public ProductoVO consultarProductoPorId(long idProducto) throws Exception;
+    
+    public int consultarUltimoId() throws Exception;
 }

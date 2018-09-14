@@ -29,11 +29,11 @@ public class DetalleProductoSuministroVO {
         this.productoVO = productoVO;
     }
 
-    public SuministroVO getIngredienteVO() {
+    public SuministroVO getSuministroVO() {
         return suministroVO;
     }
 
-    public void setIngredienteVO(SuministroVO suministroVO) {
+    public void setSuministroVO(SuministroVO suministroVO) {
         this.suministroVO = suministroVO;
     }
 

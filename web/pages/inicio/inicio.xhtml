@@ -20,28 +20,27 @@
 
             <ui:define name="content">
                 <p:panel id="pnlConteido">
-                    <c:if test="#{opcionBean.opcionPaquete == 1 }">
-                        <ui:include src="../paquete/insertarPaquete.xhtml" />
-                    </c:if>
-
-                    <c:if test="#{opcionBean.opcionProducto == 1 }">
-                        <ui:include src="../producto/insertarProducto.xhtml" />
-                    </c:if>
                     
                     <c:if test="#{opcionBean.opcionSuministro == 1 }">
                         <ui:include src="../suministro/insertarSuministro.xhtml" />
                     </c:if>
+                    
+                    <c:if test="#{opcionBean.opcionPaquete == 1 }">
+                        <ui:include src="../paquete/insertarPaquete.xhtml" />
+                    </c:if>
+                    
+                    <c:if test="#{opcionBean.opcionProducto == 1 }">
+                        <ui:include src="../producto/insertarProducto.xhtml" />
+                    </c:if>
+                    
+                   
 
                 </p:panel>
             </ui:define>
 
             <ui:define name="left">
                 <h:form id="frmOpciones">
-                    <p:menu toggleable="true">
-                        <p:submenu label="Paquetes">
-                            <p:menuitem value="Insertar Paquete" actionListener="#{opcionBean.verPaquete}" 
-                                        update="growl" icon="ui-icon-disk" />                            
-                        </p:submenu>
+                    <p:menu toggleable="true">                       
 
                         <p:submenu label="Suministros">
                             <p:menuitem value="Insertar Suministro" actionListener="#{opcionBean.verSuministro}" 
@@ -50,6 +49,11 @@
 
                         <p:submenu label="Productos">
                             <p:menuitem value="Insertar Producto" actionListener="#{opcionBean.verProducto}" 
+                                        update="growl" icon="ui-icon-disk" />                            
+                        </p:submenu>
+                        
+                        <p:submenu label="Paquetes">
+                            <p:menuitem value="Insertar Paquete" actionListener="#{opcionBean.verPaquete}" 
                                         update="growl" icon="ui-icon-disk" />                            
                         </p:submenu>
 

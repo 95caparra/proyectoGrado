@@ -29,7 +29,7 @@
 
                 <p:row>
                     <p:column>
-                        <h:outputText value="Clasificaciï¿½n: " />
+                        <h:outputText value="Clasificación: " />
                     </p:column>
                     <br/>
                     <p:column>
@@ -51,7 +51,7 @@
 
                 <p:row>
                     <p:column>
-                        <h:outputText value="Descripciï¿½n: " />
+                        <h:outputText value="Descripción: " />
                     </p:column>
                     <br/>
                     <p:column>
@@ -144,31 +144,6 @@
 
                 <br/>
                 <br/>
-
-                <p:carousel value="#{carouselView.cars}" headerText="Responsive" var="car" itemStyle="text-align:center" responsive="true">
-                    <p:panelGrid columns="2" style="width:100%;margin:10px 0px" columnClasses="label,value" layout="grid" styleClass="ui-panelgrid-blank">
-                        <f:facet name="header">
-                            <p:graphicImage name="demo/images/car/#{car.brand}.gif"/>
-                        </f:facet>
-
-                        <h:outputText value="Id:" />
-                        <h:outputText value="#{car.id}" />
-
-                        <h:outputText value="Year" />
-                        <h:outputText value="#{car.year}" />
-
-                        <h:outputText value="Color:" />
-                        <h:outputText value="#{car.color}" style="color:#{car.color}"/>
-
-                        <h:outputText value="Price" />
-                        <h:outputText value="$#{car.price}" />
-                    </p:panelGrid>
-
-                    <f:facet name="footer">
-                        In total there are #{fn:length(carouselView.cars)} cars.
-                    </f:facet>
-                </p:carousel>
-
 
                 <p:commandButton value="Guardar" 
                                  actionListener="#{paqueteBean.insertarPaquete}"
