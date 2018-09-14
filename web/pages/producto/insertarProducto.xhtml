@@ -136,8 +136,8 @@
                 <br/>
                 <br/>
 
-                <p:fieldset id="availableSuministrosField" legend="Suministros">
-                    <p:dataGrid id="availableSuministros" var="suministro" value="#{productoBean.suministros}" columns="3">
+                <p:fieldset id="availableSuministrosField" legend="Suministros" >
+                    <p:dataGrid paginator="true"  rows="6" id="availableSuministros" var="suministro" value="#{productoBean.suministros}" columns="3">
                         <p:panel id="pnl" header="#{suministro.nombre}" style="text-align:center">
                             <h:panelGrid columns="1" style="width:100%">
                                 <p:graphicImage library="imagenesProductos" name="#{suministro.foto}"
