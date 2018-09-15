@@ -39,47 +39,49 @@ public class SuministroBean implements Serializable {
     private Integer idSuministro;
     private String nombre;
     private UploadedFile foto;
-    private String nombreFoto;   
+    private String nombreFoto;
     private Integer cantidad;
     private Integer cantidadMinima;
     private MedidaProductoVO medidaProductoVO;
     private Double precioUnidad;
     private String observaciones;
     private String estado;
-    
+
     private Integer selectedMedida;
-    
-    private SuministroVO suministroVO;    
+
+    private SuministroVO suministroVO;
     private SuministroService suministroService;
-    
+
     private ClasificacionService clasificacionService;
     private List<ClasificacionVO> clasificaciones;
-    
+
     private MedidaService medidaService;
     private List<MedidaProductoVO> medidas;
-    
+    private List<SuministroVO> suministros;
 
     private LugarService lugarService;
     private List<LugarVO> lugares;
 
     private LoginBean login;
     private ClasificacionBean clasificacionBean;
+    private OpcionBean opcionBean;
 
     @PostConstruct
     public void init() {
         if (FacesContext.getCurrentInstance() != null) {
             FacesContext context = FacesContext.getCurrentInstance();
             Application application = context.getApplication();
-            
+
             setLogin(application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class));
             setClasificacionBean(application.evaluateExpressionGet(context, "#{clasificacionBean}", ClasificacionBean.class));
-           
+            opcionBean = application.evaluateExpressionGet(context, "#{opcionBean}", OpcionBean.class);
             try {
                 medidaService = new MedidaService();
                 suministroService = new SuministroService();
-                
+
                 medidas = medidaService.listar();
-                
+                suministros = suministroService.listar();
+
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -90,7 +92,7 @@ public class SuministroBean implements Serializable {
     public void insertarSuministro() throws Exception {
         try {
             suministroVO = new SuministroVO();
-            
+
             suministroVO.setNombre(nombre);
             suministroVO.setFoto(nombreFoto);
             suministroVO.setCantidad(cantidad);
@@ -98,9 +100,9 @@ public class SuministroBean implements Serializable {
             suministroVO.getMedidaProductoVO().setMedidaProducto(selectedMedida);
             suministroVO.setPrecioUnidad(precioUnidad);
             suministroVO.setObservaciones(observaciones);
-            
+
             suministroService.insertar(suministroVO);
-                    
+
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
                             "se guardó "));
@@ -109,7 +111,26 @@ public class SuministroBean implements Serializable {
         } finally {
 
         }
+    }
 
+    public void verInformacionSuministro(Integer id) throws Exception {
+        try {
+           suministroVO = suministroService.consultarPorId(id);
+           
+           nombre = suministroVO.getNombre();
+           nombreFoto = suministroVO.getFoto();
+           cantidad = suministroVO.getCantidad();
+           cantidadMinima = suministroVO.getCantidadMinima();
+           selectedMedida = suministroVO.getMedidaProductoVO().getMedidaProducto();
+           precioUnidad = suministroVO.getPrecioUnidad();
+           observaciones = suministroVO.getObservaciones();
+           
+           opcionBean.verInfoSuministro();
+        } catch (Exception e) {
+            e.getStackTrace();
+        } finally {
+
+        }
     }
 
     /**
@@ -405,10 +426,33 @@ public class SuministroBean implements Serializable {
     public void setSelectedMedida(Integer selectedMedida) {
         this.selectedMedida = selectedMedida;
     }
-    
-    
-    
 
-  
+    /**
+     * @return the suministros
+     */
+    public List<SuministroVO> getSuministros() {
+        return suministros;
+    }
+
+    /**
+     * @param suministros the suministros to set
+     */
+    public void setSuministros(List<SuministroVO> suministros) {
+        this.suministros = suministros;
+    }
+
+    /**
+     * @return the opcionBean
+     */
+    public OpcionBean getOpcionBean() {
+        return opcionBean;
+    }
+
+    /**
+     * @param opcionBean the opcionBean to set
+     */
+    public void setOpcionBean(OpcionBean opcionBean) {
+        this.opcionBean = opcionBean;
+    }
 
 }

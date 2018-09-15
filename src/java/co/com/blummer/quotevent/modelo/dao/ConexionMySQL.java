@@ -20,8 +20,8 @@ public class ConexionMySQL extends Conexion {
             //usamos el driver de MySQL para la conexion 
             Class.forName("com.mysql.jdbc.Driver");
             //Ponemos el nombre de nuestra base de datos asi como el usuario y contraseña
-            //this.conection=DriverManager.getConnection("jdbc:mysql://localhost/quotevent","root","");           
-            this.conection=DriverManager.getConnection("jdbc:mysql://localhost/quotevent","proyecto","1234");           
+            this.conection=DriverManager.getConnection("jdbc:mysql://localhost/quotevent","root","");           
+            //this.conection=DriverManager.getConnection("jdbc:mysql://localhost/quotevent","proyecto","1234");           
             
         }catch(Exception e){
             System.out.println("ConexionMySQL - ERROR: "+ e.getMessage());

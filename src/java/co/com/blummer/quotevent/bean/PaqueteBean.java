@@ -1,15 +1,20 @@
 package co.com.blummer.quotevent.bean;
 
 import co.com.blummer.quotevent.modelo.service.ClasificacionService;
+import co.com.blummer.quotevent.modelo.service.DetallePaqueteProductoService;
 import co.com.blummer.quotevent.modelo.service.LugarService;
 import co.com.blummer.quotevent.modelo.service.PaqueteService;
+import co.com.blummer.quotevent.modelo.service.ProductoService;
 import co.com.blummer.quotevent.modelo.vo.ClasificacionVO;
+import co.com.blummer.quotevent.modelo.vo.DetallePaqueteProductoVO;
 import co.com.blummer.quotevent.modelo.vo.LugarVO;
 import co.com.blummer.quotevent.modelo.vo.PaqueteVO;
+import co.com.blummer.quotevent.modelo.vo.ProductoVO;
 import co.com.blummer.quotevent.util.Path;
 import static groovy.xml.Entity.reg;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.Application;
@@ -23,6 +28,7 @@ import javax.faces.bean.ViewScoped;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -49,7 +55,14 @@ public class PaqueteBean implements Serializable {
 
     private ClasificacionService clasificacionService;
     private List<ClasificacionVO> clasificaciones;
-
+    
+    private List<ProductoVO> productos;    
+    private ProductoVO productoVO;
+    private ProductoService productoService;
+    private List<ProductoVO> droppedProductos;
+    private DetallePaqueteProductoVO detallePaqueteProductoVO;
+    private DetallePaqueteProductoService detallePaqueteProductoService;
+    
     private LugarService lugarService;
     private List<LugarVO> lugares;
 
@@ -69,15 +82,28 @@ public class PaqueteBean implements Serializable {
                 clasificacionService = new ClasificacionService();
                 lugarService = new LugarService();
                 paqueteService = new PaqueteService();
-
+                productoService = new ProductoService();
+                detallePaqueteProductoService = new DetallePaqueteProductoService();
+                
                 lugares = lugarService.listarLugar();
                 clasificaciones = clasificacionService.listarClasificacion();
+                productos = productoService.listar();
+                
+                droppedProductos = new ArrayList<ProductoVO>();
 
+                
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+    }
+    
+    public void onDrop(DragDropEvent ddEvent) {
+        productoVO = ((ProductoVO) ddEvent.getData());
+
+        droppedProductos.add(productoVO);
+        productos.remove(productoVO);
     }
 
     public void insertarPaquete() throws Exception {
@@ -94,6 +120,19 @@ public class PaqueteBean implements Serializable {
             paqueteVO.setFoto(nombreFoto);
 
             paqueteService.insertar(paqueteVO);
+            
+            int ultimoId = paqueteService.ultimoIdPaquete();
+            
+            for(ProductoVO p : droppedProductos) {   
+                
+                detallePaqueteProductoVO = new DetallePaqueteProductoVO();
+                
+                detallePaqueteProductoVO.getPaqueteVO().setIdPaquete(ultimoId);
+                detallePaqueteProductoVO.getProductoVO().setIdProducto(p.getIdProducto());
+                detallePaqueteProductoVO.setCantidad(5);
+                
+                detallePaqueteProductoService.insertar(detallePaqueteProductoVO);
+            }
 
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -356,6 +395,90 @@ public class PaqueteBean implements Serializable {
      */
     public void setNombrePdf(String nombrePdf) {
         this.nombrePdf = nombrePdf;
+    }
+
+    /**
+     * @return the productos
+     */
+    public List<ProductoVO> getProductos() {
+        return productos;
+    }
+
+    /**
+     * @param productos the productos to set
+     */
+    public void setProductos(List<ProductoVO> productos) {
+        this.productos = productos;
+    }
+
+    /**
+     * @return the productoService
+     */
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    /**
+     * @param productoService the productoService to set
+     */
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    /**
+     * @return the productoVO
+     */
+    public ProductoVO getProductoVO() {
+        return productoVO;
+    }
+
+    /**
+     * @param productoVO the productoVO to set
+     */
+    public void setProductoVO(ProductoVO productoVO) {
+        this.productoVO = productoVO;
+    }
+
+    /**
+     * @return the droppedProductos
+     */
+    public List<ProductoVO> getDroppedProductos() {
+        return droppedProductos;
+    }
+
+    /**
+     * @param droppedProductos the droppedProductos to set
+     */
+    public void setDroppedProductos(List<ProductoVO> droppedProductos) {
+        this.droppedProductos = droppedProductos;
+    }
+
+    /**
+     * @return the detallePaqueteProductoVO
+     */
+    public DetallePaqueteProductoVO getDetallePaqueteProductoVO() {
+        return detallePaqueteProductoVO;
+    }
+
+    /**
+     * @param detallePaqueteProductoVO the detallePaqueteProductoVO to set
+     */
+    public void setDetallePaqueteProductoVO(DetallePaqueteProductoVO detallePaqueteProductoVO) {
+        this.detallePaqueteProductoVO = detallePaqueteProductoVO;
+    }
+
+    /**
+     * @return the detallePaqueteProductoService
+     */
+    public DetallePaqueteProductoService getDetallePaqueteProductoService() {
+        return detallePaqueteProductoService;
+    }
+
+    /**
+     * @param detallePaqueteProductoService the detallePaqueteProductoService to set
+     */
+    public void setDetallePaqueteProductoService(DetallePaqueteProductoService detallePaqueteProductoService) {
+        this.detallePaqueteProductoService = detallePaqueteProductoService;
     }
 
 }

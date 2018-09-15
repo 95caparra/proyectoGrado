@@ -13,13 +13,13 @@
         <title>Proyecto</title>
     </h:head>
     <h:body>
-        <p:growl id="growl" showDetail="true" sticky="true" />
+        
 
         <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                         template="../../resources/templates/templateGestion.xhtml">
 
             <ui:define name="content">
-                <p:panel id="pnlConteido">
+                <p:panel id="pnlContenido">
                     
                     <c:if test="#{opcionBean.opcionSuministro == 1 }">
                         <ui:include src="../suministro/insertarSuministro.xhtml" />
@@ -33,18 +33,30 @@
                         <ui:include src="../producto/insertarProducto.xhtml" />
                     </c:if>
                     
-                   
-
+                    <c:if test="#{opcionBean.opcionVerSuministro == 1 }">
+                        <ui:include src="../suministro/listarSuministro.xhtml" />
+                    </c:if>
+                </p:panel>
+                
+                <p:panel id="pnlDetalles">
+                    <c:if test="#{opcionBean.opcionInfoSuministro == 1 }">
+                        <ui:include src="../suministro/informacionSuministro.xhtml" />
+                    </c:if>
+                    
                 </p:panel>
             </ui:define>
 
             <ui:define name="left">
                 <h:form id="frmOpciones">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
                     <p:menu toggleable="true">                       
 
                         <p:submenu label="Suministros">
                             <p:menuitem value="Insertar Suministro" actionListener="#{opcionBean.verSuministro}" 
-                                        update="growl" icon="ui-icon-disk" />                            
+                                        update="growl" icon="ui-icon-disk" />   
+                            
+                            <p:menuitem value="Listar Suministro" actionListener="#{opcionBean.verListaSuministro}" 
+                                        update="growl" icon="ui-icon-disk" />
                         </p:submenu>
 
                         <p:submenu label="Productos">

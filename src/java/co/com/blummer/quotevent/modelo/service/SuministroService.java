@@ -60,6 +60,7 @@ public class SuministroService {
         SuministroVO suministroVO = null;
         try {
             suministroVO = suministroDAO.consultarSuministroPorId(idSuministro);
+            
         } catch (Exception e) {
             System.out.println("SuministroService: Se presento un error al realizar la"
                     + "consulta: " + e.getMessage());

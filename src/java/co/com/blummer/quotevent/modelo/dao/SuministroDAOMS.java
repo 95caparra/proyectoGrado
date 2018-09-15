@@ -151,7 +151,6 @@ public class SuministroDAOMS extends ConexionMySQL implements SuministroDAO {
             this.conectar();
             StringBuffer sql = new StringBuffer();
             sql.append(" SELECT ");
-            sql.append(" id_suministro,");
             sql.append("	nombre,");
             sql.append("	foto, ");
             sql.append("	cantidad,");
@@ -160,7 +159,7 @@ public class SuministroDAOMS extends ConexionMySQL implements SuministroDAO {
             sql.append("	precio_unidad, ");
             sql.append("	observaciones, ");
             sql.append("	estado ");
-            sql.append(" FROM suinistro ");
+            sql.append(" FROM suministro ");
             sql.append(" WHERE ");
             sql.append(" id_suministro = ? ");
             sql.append(" order by 1 ");

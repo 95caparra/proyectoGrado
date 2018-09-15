@@ -23,6 +23,9 @@ public class OpcionBean implements Serializable {
 
     private int opcionPaquete;
     private int opcionProducto;
+    private int opcionVerProducto;
+    private int opcionVerSuministro;
+    private int opcionInfoSuministro;
     private int opcionSuministro;
 
     @PostConstruct
@@ -32,26 +35,60 @@ public class OpcionBean implements Serializable {
 
     public void verPaquete() {
         setearOpciones();
+        setearDetalles();
         opcionPaquete = 1;
-        RequestContext.getCurrentInstance().update("pnlConteido");
+        RequestContext.getCurrentInstance().update("pnlContenido");
+        RequestContext.getCurrentInstance().update("pnlDetalles");
     }
 
     public void verProducto() {
         setearOpciones();
+        setearDetalles();
         opcionProducto = 1;
-        RequestContext.getCurrentInstance().update("pnlConteido");
+        RequestContext.getCurrentInstance().update("pnlContenido");
+        RequestContext.getCurrentInstance().update("pnlDetalles");
+    }
+
+    public void verListaProducto() {
+        setearOpciones();
+        setearDetalles();
+        opcionVerProducto = 1;
+        RequestContext.getCurrentInstance().update("pnlContenido");
+        RequestContext.getCurrentInstance().update("pnlDetalles");
     }
 
     public void verSuministro() {
         setearOpciones();
+        setearDetalles();
         opcionSuministro = 1;
-        RequestContext.getCurrentInstance().update("pnlConteido");
+        RequestContext.getCurrentInstance().update("pnlContenido");
+        RequestContext.getCurrentInstance().update("pnlDetalles");
+    }
+
+    public void verListaSuministro() {
+        setearOpciones();
+        setearDetalles();
+        opcionVerSuministro = 1;
+        RequestContext.getCurrentInstance().update("pnlContenido");
+        RequestContext.getCurrentInstance().update("pnlDetalles");
+    }
+
+    public void verInfoSuministro() {
+        setearDetalles();
+        opcionInfoSuministro = 1;
+        RequestContext.getCurrentInstance().update("pnlDetalles");
     }
 
     public void setearOpciones() {
         opcionPaquete = 0;
         opcionProducto = 0;
         opcionSuministro = 0;
+        opcionVerProducto = 0;
+        opcionVerSuministro = 0;
+    }
+
+    public void setearDetalles() {
+        opcionInfoSuministro = 0;
     }
 
     /**
@@ -108,6 +145,48 @@ public class OpcionBean implements Serializable {
      */
     public void setOpcionSuministro(int opcionSuministro) {
         this.opcionSuministro = opcionSuministro;
+    }
+
+    /**
+     * @return the opcionVerProducto
+     */
+    public int getOpcionVerProducto() {
+        return opcionVerProducto;
+    }
+
+    /**
+     * @param opcionVerProducto the opcionVerProducto to set
+     */
+    public void setOpcionVerProducto(int opcionVerProducto) {
+        this.opcionVerProducto = opcionVerProducto;
+    }
+
+    /**
+     * @return the opcionVerSuministro
+     */
+    public int getOpcionVerSuministro() {
+        return opcionVerSuministro;
+    }
+
+    /**
+     * @param opcionVerSuministro the opcionVerSuministro to set
+     */
+    public void setOpcionVerSuministro(int opcionVerSuministro) {
+        this.opcionVerSuministro = opcionVerSuministro;
+    }
+
+    /**
+     * @return the opcionInfoSuministro
+     */
+    public int getOpcionInfoSuministro() {
+        return opcionInfoSuministro;
+    }
+
+    /**
+     * @param opcionInfoSuministro the opcionInfoSuministro to set
+     */
+    public void setOpcionInfoSuministro(int opcionInfoSuministro) {
+        this.opcionInfoSuministro = opcionInfoSuministro;
     }
 
 }

@@ -21,6 +21,7 @@ public interface PaqueteDAO {
     
     public int ultimoId () throws Exception;
 
+    
     public ArrayList<PaqueteVO> buscar(String parametro) throws Exception;
     
     public String validarPaquete(String nombre) throws Exception;
