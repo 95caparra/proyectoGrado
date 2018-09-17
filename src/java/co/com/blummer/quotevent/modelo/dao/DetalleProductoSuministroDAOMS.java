@@ -48,8 +48,41 @@ public class DetalleProductoSuministroDAOMS extends ConexionMySQL implements Det
     }
 
     @Override
-    public ArrayList<DetalleProductoSuministroVO> listarSuministros() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<DetalleProductoSuministroVO> listarDetalleProductoSuministroPorId(long idProducto) throws Exception {
+        ArrayList<DetalleProductoSuministroVO> lista = new ArrayList<DetalleProductoSuministroVO>();
+        DetalleProductoSuministroVO detalleProductoSuministroVO;
+        int c = 0;
+        try {
+            this.conectar();
+            StringBuffer sql = new StringBuffer();
+            sql.append(" select id_detalle_producto_suministro, id_producto, id_suministro, cantidad, estado "
+                    + "from detalle_producto_suministro where id_producto = ? ");
+            
+            PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
+
+            pstm.setLong(1, idProducto);
+            
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                c = 1;
+                detalleProductoSuministroVO = new DetalleProductoSuministroVO();
+
+                detalleProductoSuministroVO.setIdDetalleProductoSuministro(rs.getInt(c++));
+                detalleProductoSuministroVO.getProductoVO().setIdProducto(rs.getInt(c++));
+                detalleProductoSuministroVO.getSuministroVO().setIdSuministro(rs.getInt(c++));
+                detalleProductoSuministroVO.setCantidad(rs.getInt(c++));
+                detalleProductoSuministroVO.setEstado(rs.getString(c++));
+                
+                lista.add(detalleProductoSuministroVO);
+            }
+
+        } catch (Exception e) {
+            System.out.println("DetalleProductoSuministroDAOMS : se presento un error al listar: " + e.getMessage());
+            Archivos.escribirLog("Se presnto un error " + e.getMessage());
+        } finally {
+            this.desconectar();
+        }
+        return lista;
     }
 
     @Override

@@ -59,17 +59,12 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
         try {
             this.conectar();
             StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT ");
-            sql.append(" id_producto,");
-            sql.append(" nombre,");
-            sql.append(" foto, ");
-            sql.append(" tipo, ");
-            sql.append(" cantidad, ");
-            sql.append(" medida,");
-            sql.append(" precio_unidad, ");
-            sql.append(" observaciones, ");
-            sql.append(" estado ");
-            sql.append(" FROM producto order by 1 ");
+            sql.append(" SELECT p.id_producto, p.nombre, p.foto, "
+                    + " p.tipo, tp.nombre,  p.cantidad, p.medida, mp.nombre, "
+                    + " p.precio_unidad, p.observaciones, p.estado FROM producto p "
+                    + " LEFT JOIN tipo_producto tp ON (tp.id_tipo_producto = p.tipo) "
+                    + " LEFT JOIN medida_producto mp ON (mp.id_medida = p.medida) "
+                    + " order by 1  ");
             PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
 
             ResultSet rs = pstm.executeQuery();
@@ -81,8 +76,10 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
                 productoVO.setNombre(rs.getString(c++));
                 productoVO.setFoto(rs.getString(c++));
                 productoVO.getTipoProductoVO().setIdTipoPriducto(rs.getInt(c++));
+                productoVO.getTipoProductoVO().setNombre(rs.getString(c++));
                 productoVO.setCantidad(rs.getInt(c++));
                 productoVO.getMedidaProductoVO().setMedidaProducto(rs.getInt(c++));
+                productoVO.getMedidaProductoVO().setNombreMedida(rs.getString(c++));
                 productoVO.setPrecioUnidad(rs.getDouble(c++));
                 productoVO.setObservaciones(rs.getString(c++));
                 productoVO.setEstado(rs.getString(c++));
@@ -150,26 +147,20 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
         try {
             this.conectar();
             StringBuffer sql = new StringBuffer();
-            sql.append(" SELECT ");
-            sql.append(" id_suministro,");
-            sql.append("	nombre,");
-            sql.append("	foto, ");
-            sql.append("	tipo,");
-            sql.append("	cantidad_minima,");
-            sql.append("	medida,");
-            sql.append("	precio_unidad, ");
-            sql.append("	observaciones, ");
-            sql.append("	estado ");
-            sql.append(" FROM suinistro ");
+            sql.append(" SELECT p.id_producto, p.nombre, p.foto, "
+                    + " p.tipo, tp.nombre,  p.cantidad, p.medida, mp.nombre, "
+                    + " p.precio_unidad, p.observaciones, p.estado FROM producto p "
+                    + " LEFT JOIN tipo_producto tp ON (tp.id_tipo_producto = p.tipo) "
+                    + " LEFT JOIN medida_producto mp ON (mp.id_medida = p.medida) ");
             sql.append(" WHERE ");
-            sql.append(" id_suministro = ? ");
+            sql.append(" p.id_producto = ? ");
             sql.append(" order by 1 ");
 
             PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
             pstm.setLong(1, idProducto);
 
             ResultSet rs = pstm.executeQuery();
-            while (rs.next()) {
+           while (rs.next()) {
                 c = 1;
                 productoVO = new ProductoVO();
 
@@ -177,12 +168,14 @@ public class ProductoDAOMS extends ConexionMySQL implements ProductoDAO {
                 productoVO.setNombre(rs.getString(c++));
                 productoVO.setFoto(rs.getString(c++));
                 productoVO.getTipoProductoVO().setIdTipoPriducto(rs.getInt(c++));
+                productoVO.getTipoProductoVO().setNombre(rs.getString(c++));
                 productoVO.setCantidad(rs.getInt(c++));
                 productoVO.getMedidaProductoVO().setMedidaProducto(rs.getInt(c++));
+                productoVO.getMedidaProductoVO().setNombreMedida(rs.getString(c++));
                 productoVO.setPrecioUnidad(rs.getDouble(c++));
                 productoVO.setObservaciones(rs.getString(c++));
                 productoVO.setEstado(rs.getString(c++));
-
+                
             }
 
         } catch (Exception e) {

@@ -33,6 +33,10 @@
                         <ui:include src="../producto/insertarProducto.xhtml" />
                     </c:if>
                     
+                    <c:if test="#{opcionBean.opcionVerProducto == 1 }">
+                        <ui:include src="../producto/listarProducto.xhtml" />
+                    </c:if>
+                    
                     <c:if test="#{opcionBean.opcionVerSuministro == 1 }">
                         <ui:include src="../suministro/listarSuministro.xhtml" />
                     </c:if>
@@ -41,6 +45,10 @@
                 <p:panel id="pnlDetalles">
                     <c:if test="#{opcionBean.opcionInfoSuministro == 1 }">
                         <ui:include src="../suministro/informacionSuministro.xhtml" />
+                    </c:if>
+                    
+                    <c:if test="#{opcionBean.opcionInfoProducto == 1 }">
+                        <ui:include src="../producto/informacionProducto.xhtml" />
                     </c:if>
                     
                 </p:panel>
@@ -61,7 +69,10 @@
 
                         <p:submenu label="Productos">
                             <p:menuitem value="Insertar Producto" actionListener="#{opcionBean.verProducto}" 
-                                        update="growl" icon="ui-icon-disk" />                            
+                                        update="growl" icon="ui-icon-disk" />     
+                            <p:menuitem value="Listar Producto" actionListener="#{opcionBean.verListaProducto}" 
+                                        update="growl" icon="ui-icon-disk" />
+                            
                         </p:submenu>
                         
                         <p:submenu label="Paquetes">

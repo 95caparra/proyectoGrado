@@ -25,12 +25,25 @@ public class DetalleProductoSuministroService {
         try {
             resultado = detalleProductoSuministroDAO.insertarDetalleProductoSuministro(detalleProductoSuministroVO);
         } catch (Exception e) {
-            System.out.println("SuministroService: Se presento un error al "
+            System.out.println("DetalleProductoSuministroService: Se presento un error al "
                     + "insertar un suministro: " + e.getMessage());
 
         } finally {
             return resultado;
         }
+    }
+    
+    public ArrayList<DetalleProductoSuministroVO> listarPorId(long idProducto) throws Exception {
 
+        ArrayList<DetalleProductoSuministroVO> lista = new ArrayList<DetalleProductoSuministroVO>();
+        try {
+            lista = detalleProductoSuministroDAO.listarDetalleProductoSuministroPorId(idProducto);
+        } catch (Exception e) {
+            System.out.println("DetalleProductoSuministroService: Se presento un error al "
+                    + "listar la tabla producto: " + e.getMessage());
+
+        } finally {
+            return lista;
+        }
     }
 }

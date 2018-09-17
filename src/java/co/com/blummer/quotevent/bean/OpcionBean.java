@@ -26,6 +26,7 @@ public class OpcionBean implements Serializable {
     private int opcionVerProducto;
     private int opcionVerSuministro;
     private int opcionInfoSuministro;
+    private int opcionInfoProducto;
     private int opcionSuministro;
 
     @PostConstruct
@@ -78,6 +79,12 @@ public class OpcionBean implements Serializable {
         opcionInfoSuministro = 1;
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
+    
+    public void verInfoProducto() {
+        setearDetalles();
+        opcionInfoProducto = 1;
+        RequestContext.getCurrentInstance().update("pnlDetalles");
+    }
 
     public void setearOpciones() {
         opcionPaquete = 0;
@@ -89,6 +96,7 @@ public class OpcionBean implements Serializable {
 
     public void setearDetalles() {
         opcionInfoSuministro = 0;
+        opcionInfoProducto = 0;
     }
 
     /**
@@ -187,6 +195,20 @@ public class OpcionBean implements Serializable {
      */
     public void setOpcionInfoSuministro(int opcionInfoSuministro) {
         this.opcionInfoSuministro = opcionInfoSuministro;
+    }
+
+    /**
+     * @return the opcionInfoProducto
+     */
+    public int getOpcionInfoProducto() {
+        return opcionInfoProducto;
+    }
+
+    /**
+     * @param opcionInfoProducto the opcionInfoProducto to set
+     */
+    public void setOpcionInfoProducto(int opcionInfoProducto) {
+        this.opcionInfoProducto = opcionInfoProducto;
     }
 
 }

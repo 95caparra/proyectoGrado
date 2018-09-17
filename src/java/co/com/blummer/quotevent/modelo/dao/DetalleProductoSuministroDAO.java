@@ -16,7 +16,7 @@ public interface DetalleProductoSuministroDAO {
     
     public int insertarDetalleProductoSuministro(DetalleProductoSuministroVO detalleProductoSuministroVO) throws Exception;
     
-    public ArrayList<DetalleProductoSuministroVO> listarSuministros() throws Exception;
+    public ArrayList<DetalleProductoSuministroVO> listarDetalleProductoSuministroPorId(long idProducto) throws Exception;
     
     public int actualizarDetalleProductoSuministro(DetalleProductoSuministroVO detalleProductoSuministroVO) throws Exception;
     

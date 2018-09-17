@@ -62,6 +62,7 @@ public class ProductoBean implements Serializable {
     private DetalleProductoSuministroVO detalleProductoSuministroVO;
     private DetalleProductoSuministroService detalleProductoSuministroService;
     private List<SuministroVO> droppedSuministros;
+    private List<DetalleProductoSuministroVO> detalleProductoSuministros;
 
     private ProductoVO productoVO;
     private ProductoService productoService;
@@ -86,7 +87,8 @@ public class ProductoBean implements Serializable {
 
     private LoginBean login;
     private ClasificacionBean clasificacionBean;
-
+    private OpcionBean opcionBean;
+    
     @PostConstruct
     public void init() {
         if (FacesContext.getCurrentInstance() != null) {
@@ -94,7 +96,8 @@ public class ProductoBean implements Serializable {
             Application application = context.getApplication();
 
             setLogin(application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class));
-
+            
+            opcionBean = application.evaluateExpressionGet(context, "#{opcionBean}", OpcionBean.class);
             try {
                 medidaService = new MedidaService();
                 tipoProductoService = new TipoProductoService();
@@ -159,6 +162,34 @@ public class ProductoBean implements Serializable {
 
         }
 
+    }
+    
+    public void verInformacionProducto(Integer id) throws Exception {
+        try {
+           productoVO = productoService.consultarPorId(id);
+           
+           nombre = productoVO.getNombre();
+           nombreFoto = productoVO.getFoto();
+           selectedTipoProducto = productoVO.getTipoProductoVO().getIdTipoPriducto();
+           cantidad = productoVO.getCantidad();
+           selectedMedidaProducto = productoVO.getMedidaProductoVO().getMedidaProducto();
+           precioUnidad = productoVO.getPrecioUnidad();
+           observaciones = productoVO.getObservaciones();
+           
+           opcionBean.verInfoProducto();
+           
+           detalleProductoSuministros = detalleProductoSuministroService.listarPorId(id);
+           
+           for(DetalleProductoSuministroVO dps: detalleProductoSuministros){
+               
+                   droppedSuministros.add(suministroService.consultarPorId(dps.getSuministroVO().getIdSuministro()));
+           }
+           
+        } catch (Exception e) {
+            e.getStackTrace();
+        } finally {
+
+        }
     }
 
     /**
@@ -621,6 +652,34 @@ public class ProductoBean implements Serializable {
      */
     public void setDetalleProductoSuministroService(DetalleProductoSuministroService detalleProductoSuministroService) {
         this.detalleProductoSuministroService = detalleProductoSuministroService;
+    }
+
+    /**
+     * @return the opcionBean
+     */
+    public OpcionBean getOpcionBean() {
+        return opcionBean;
+    }
+
+    /**
+     * @param opcionBean the opcionBean to set
+     */
+    public void setOpcionBean(OpcionBean opcionBean) {
+        this.opcionBean = opcionBean;
+    }
+
+    /**
+     * @return the detalleProductoSuministros
+     */
+    public List<DetalleProductoSuministroVO> getDetalleProductoSuministros() {
+        return detalleProductoSuministros;
+    }
+
+    /**
+     * @param detalleProductoSuministros the detalleProductoSuministros to set
+     */
+    public void setDetalleProductoSuministros(List<DetalleProductoSuministroVO> detalleProductoSuministros) {
+        this.detalleProductoSuministros = detalleProductoSuministros;
     }
 
 }

@@ -11,6 +11,7 @@ package co.com.blummer.quotevent.modelo.vo;
  */
 public class DetalleProductoSuministroVO {
 
+    private int idDetalleProductoSuministro;
     private ProductoVO productoVO;
     private SuministroVO suministroVO;
     private int cantidad;
@@ -51,6 +52,20 @@ public class DetalleProductoSuministroVO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the idDetalleProductoSuministro
+     */
+    public int getIdDetalleProductoSuministro() {
+        return idDetalleProductoSuministro;
+    }
+
+    /**
+     * @param idDetalleProductoSuministro the idDetalleProductoSuministro to set
+     */
+    public void setIdDetalleProductoSuministro(int idDetalleProductoSuministro) {
+        this.idDetalleProductoSuministro = idDetalleProductoSuministro;
     }
     
     
