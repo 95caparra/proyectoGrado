@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+	<h:form id="frmDatosCliente">
+				<p:panelGrid columns="1" style="width:160px;    table-layout: fixed">
+					<p:outputLabel value="Nombre:" />
+					<p:outputLabel value="${clienteBean.cliente.nombre}"
+						style="width:125px" />
+					<p:outputLabel value="Identificacion:" />
+					<p:outputLabel value="${clienteBean.cliente.identificacion}" />
+					<p:outputLabel value="Id Cliente:" />
+					<p:outputLabel value="${clienteBean.cliente.idcliente}" />
+					<p:outputLabel value="Ciudad:" />
+					<p:outputLabel value="${clienteBean.cliente.ciudad}" />
+					<p:outputLabel value="Direcci&oacute;n:" />
+					<p:outputLabel value="${clienteBean.cliente.direccion}"
+						style="width:125px" />
+					<p:outputLabel value="Correo:" />
+					<p:outputLabel value="${clienteBean.cliente.correo}"
+						style="width:125px;word-wrap: break-word;" />
+					<p:outputLabel value="Tramo:" />
+					<p:outputLabel value="${clienteBean.cliente.tramo}" />
+					<p:outputLabel value="Cartera:" />
+					<p:outputLabel value="${clienteBean.cliente.tipoCartera}" />
+					<p:outputLabel value="Kam"
+						rendered="#{clienteBean.cliente.kam != null}" />
+					<p:outputLabel value="#{clienteBean.cliente.quita}"
+						rendered="#{clienteBean.cliente.quita != null}" />
+					<ui:insert name="left">Left</ui:insert>
+					<p:commandButton action="#{clienteBean.memo}" value="Memo"
+						onclick="PF('statusDialog').show();"
+						oncomplete="PF('statusDialog').hide();PF('dlg2').show();"
+						style="width:120px;" />
+					<p:commandButton action="#{DatosAdicionalesBean.telefonos}"
+						onclick="PF('statusDialog').show();" value="Telefonos"
+						oncomplete="PF('statusDialog').hide(); PF('dlgTelefono').show();"
+						style="width:120px;" />
+					<p:commandButton action="#{DatosAdicionalesBean.datosAdicionales}"
+						value="Datos Adicionales" onclick="PF('statusDialog').show();"
+						oncomplete="PF('statusDialog').hide(); PF('dlgDatosAdicionales').show();"
+						style="width:120px;" />
+					<p:commandButton
+						action="#{DatosAdicionalesBean.informacionComplementaria}"
+						value="Info Complementaria" onclick="PF('statusDialog').show();"
+						oncomplete="PF('statusDialog').hide(); PF('dlgInformacionComplementaria').show();"
+						style="width:120px;" />
+
+					<p:commandButton value="Mensaje SMS"
+						onclick="PF('statusDialog').show();"
+						action="#{smsBean.actualizarTels}"
+						oncomplete="PF('statusDialog').hide(); PF('dlgSMS').show();"
+						style="width:120px;" />
+
+					<c:choose>
+						<c:when
+							test="${SolicitudFacturaBean.estado_solicitud != null and  SolicitudFacturaBean.estado_solicitud == 1}">
+							<p:commandButton value="Solicitud Factura"
+								oncomplete="PF('dlgSolicitudFacturaRealizada').show();" />
+						</c:when>
+						<c:otherwise>
+							<p:commandButton
+								action="#{SolicitudFacturaBean.mostrarFacturasCliente}"
+								value="Solicitud Factura" onclick="PF('statusDialog').show();"
+								oncomplete="PF('statusDialog').hide();PF('dlgSolicitudFactura').show();"
+								style="width:120px;" />
+						</c:otherwise>
+					</c:choose>
+
+
+				</p:panelGrid>
+				
+			</h:form>
+
+</ui:composition>

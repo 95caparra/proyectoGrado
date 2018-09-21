@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <body>        
+        <h:form id="informacionSolicitud">
+            <p:panel id="pnlInformacionSolicitud">
+                <f:facet name="header">
+                    <h:outputText value="Informacion Solicitud" />
+                </f:facet>
+
+                <div class="ui-g">
+                    <div class="ui-g-12 ui-md-10 ui-g-nopad">
+                        <div class="ui-g-12 ui-g-nopad">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-4"><h:outputText value="Nombre cliente:" /><h:outputText value="#{solicitudBean.nombreCliente}" /></div>
+                                <div class="ui-g-12 ui-md-4"><h:outputText value="Telefono cliente:" /><h:outputText value="#{solicitudBean.telefonoCliente}" /></div>
+                                <div class="ui-g-12 ui-md-4"><h:outputText value="Correo cliente:" /><h:outputText value="#{solicitudBean.email}" /></div>
+                               </div>
+
+                            <div class="ui-g">
+                                <div class="ui-g-6 ui-md-3">
+                                    <p:graphicImage library="imagenesProductos" name="#{solicitudBean.nombreFoto}"
+                                                style="width:100%"/>
+                                    <div class="ui-g-12 ui-md-4"><h:outputText value="Nombre Paquete: " /><h:outputText value="#{solicitudBean.nombrePaquete}" /></div>
+                                    <div class="ui-g-12 ui-md-4"><h:outputText value="Precio Paquete: " /><h:outputText value="#{solicitudBean.precioPaquete}" /></div>
+                                    <div class="ui-g-12 ui-md-4"><h:outputText value="Cantidad personas Paquete: " /><h:outputText value="#{solicitudBean.cantidadPersonasPaquete}" /></div>
+                                </div>  
+                               </div>
+
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-6"><h:outputText value="Fecha: " /><h:outputText value="#{solicitudBean.fecha}" /></div>
+                                <div class="ui-g-12 ui-md-6"><h:outputText value="Observaciones: " /><h:outputText value="#{solicitudBean.observaciones}" /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+
+                <br/>
+                <br/>
+
+
+            </p:panel>
+        </h:form>
+    </body>
+</html>
