@@ -67,7 +67,7 @@ public class GenerarPDF {
             document.add(getHeader(header));
 
             Image imagen = Image.getInstance(rutaImagen);
-            imagen.scaleAbsolute(300, 300);
+            imagen.scaleAbsolute(250, 250);
             imagen.setAlignment(Element.ALIGN_CENTER);
 
             document.add(imagen);
