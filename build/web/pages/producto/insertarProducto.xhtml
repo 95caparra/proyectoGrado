@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <body>        
+        <script type="text/javascript">
+            function handleDrop(event, ui) {
+                var droppedCar = ui.draggable;
+
+                droppedCar.fadeOut('fast');
+            }
+        </script>
+        <h:form enctype="multipart/form-data" id="insertarProducto">
+            <p:panel id="pnlInsertarProducto">
+                <f:facet name="header">
+                    <h:outputText value="Insertar Producto" />
+                </f:facet>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Nombre: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{productoBean.nombre}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Foto: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:fileUpload value="#{productoBean.foto}"
+                                      auto="true"
+                                      mode="advanced"
+                                      fileUploadListener="#{archivoBean.fileUploadListenerFoto}"
+                                      skinSimple="true" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Tipo suministro: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{productoBean.selectedTipoProducto}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione el tipo suministro" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="t"
+                                           value="#{productoBean.tiposProducto}"
+                                           itemValue="#{t.idTipoPriducto}"
+                                           itemLabel="#{t.nombre}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Cantidad: " />
+                    </p:column>
+                    <br/>
+                    <p:column>  
+                        <p:inputNumber value="#{productoBean.cantidad}" 
+                                       decimalPlaces="0"/>
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Medida: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{productoBean.selectedMedidaProducto}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione medida" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="m"
+                                           value="#{productoBean.medidas}"
+                                           itemValue="#{m.medidaProducto}"
+                                           itemLabel="#{m.nombreMedida}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Precio unidad:" />
+                    </p:column>
+                    <br/>
+                    <p:column>  
+                        <p:inputNumber value="#{productoBean.precioUnidad}" 
+                                       decimalPlaces="0"/>
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Observaciones: " />
+                    </p:column>
+                    <br/>
+                    <p:column>  
+                        <p:inputTextarea  value="#{productoBean.observaciones}" />
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:fieldset id="availableSuministrosField" legend="Suministros" >
+                    <p:dataGrid paginator="true"  rows="6" id="availableSuministros" var="suministro" value="#{productoBean.suministros}" columns="3">
+                        <p:panel id="pnl" header="#{suministro.nombre}" style="text-align:center">
+                            <h:panelGrid columns="1" style="width:100%">
+                                <p:graphicImage library="imagenesProductos" name="#{suministro.foto}"
+                                                    style="width:280px"/>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
+                    </p:dataGrid>
+                </p:fieldset>
+                
+                <br/>
+                <br/>
+
+                <p:fieldset id="selectedSuministros" legend="Selected" style="margin-top:20px">
+                    <p:outputPanel id="dropArea">
+                        <h:outputText value="!!!Drop here!!!" rendered="#{empty productoBean.droppedSuministros}" style="font-size:24px;" />
+                        <p:dataTable id="selectedSuministrosTable" var="suministro" value="#{productoBean.droppedSuministros}" rendered="#{not empty productoBean.droppedSuministros}">
+
+                            <p:column headerText="Foto">
+                                <p:graphicImage library="imagenesProductos" name="#{suministro.foto}"
+                                                style="width:280px; height: 280px"/>
+                            </p:column>                            
+                            <p:column headerText="Id">
+                                <h:outputText value="#{suministro.idSuministro}" />
+                            </p:column>
+                            <p:column headerText="Nombre Producto">
+                                <h:outputText value="#{suministro.nombre}" />
+                            </p:column>
+                            <p:column headerText="Precio Unidad">
+                                <h:outputText value="#{suministro.precioUnidad}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+                </p:fieldset>
+
+                <br/>
+                <br/>
+
+                <p:droppable for="selectedSuministros" tolerance="touch" activeStyleClass="ui-state-highlight" datasource="availableSuministros" onDrop="handleDrop">
+                    <p:ajax listener="#{productoBean.onDrop}" update="dropArea availableSuministros" />
+                </p:droppable>
+                
+                <br/>
+
+               <p:commandButton value="Guardar" 
+                                action="#{productoBean.insertarProducto}"
+                                icon="ui-icon-disk">
+                </p:commandButton>
+            </p:panel>
+        </h:form>
+    </body>
+</html>

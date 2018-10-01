@@ -1,0 +1,113 @@
+ul.navigation {
+	width: 270px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+	text-align: left;
+}
+
+ul.navigation li {
+    display: inline-block;
+    margin: 0px;
+	padding: 5px;
+}
+
+ul.navigation li ul{
+	display: none;
+	width: 200px;
+	position: absolute;
+	margin-left: 220px;
+	margin-top: -30px;
+}
+
+ul.navigation li ul li{
+	text-align: center;
+	width: 200px;
+	background-color: #cccccc;
+	color: #8a8980;
+	
+}
+
+ul.navigation li ul li:first-child{
+	border-radius: 8px 8px 0px 0px;
+	-webkit-border-radius:8px 8px 0px 0px;
+	-moz-border-radius:8px 8px 0px 0px;
+	-o-border-radius:8px 8px 0px 0px;
+}
+
+ul.navigation li ul li:last-child{
+	border-radius: 0px 0px 8px 8px;
+	-webkit-border-radius:0px 0px 8px 8px;
+	-moz-border-radius:0px 0px 8px 8px;
+	-o-border-radius:0px 0px 8px 8px;
+}
+
+ul.navigation li:hover > ul{
+	display: block;
+}
+
+ul.navigation li:hover > ul li:hover{
+	background-color: #993399;
+	cursor: pointer;
+	color: #ffffff;
+}
+
+ul.navigation a {
+	display: block;
+	width: 190px;
+	height: 33px;
+	padding: 12px 0 0 80px;
+	margin-bottom: 5px;
+	color: #8a8980;
+	font-size: 16px;
+	font-weight: normal;
+    text-decoration: none;
+	position: relative;
+}
+
+ul.navigation a .ui_icon { position: absolute; top: 0; left: 15px; width: 40px; height: 40px; }
+
+ul.navigation a .solicitud { background: url(../img/solicitud.png) no-repeat; }
+ul.navigation a .evento { background: url(../img/eventos.png) no-repeat; }
+ul.navigation a .cliente { background: url(../img/clientes.png)  no-repeat; }
+ul.navigation a .paquete { background:  url(../img/paquetes.png) no-repeat; }
+ul.navigation a .catalogo { background:  url(../img/catalogos.png) no-repeat; }
+ul.navigation a .producto { background:  url(../img/productos.png) no-repeat; }
+ul.navigation a .proveedor { background:  url(../img/proveedores.png) no-repeat; }
+ul.navigation a .empleado { background:  url(../img/empleados.png) no-repeat; }
+
+ul.navigation  a:hover, ul.navigation a.selected{
+	background: url(../img/menu_hover.png) no-repeat left;
+	color:#ffffff;
+}
+
+ul.navigation a:hover .solicitud, ul.navigation a.selected .solicitud {
+	background: url(../img/solicitud_hover.png) no-repeat;
+}
+ul.navigation a:hover .evento, ul.navigation a.selected .evento {
+	background: url(../img/eventos_hover.png) no-repeat;
+}
+ul.navigation a:hover .cliente, ul.navigation a.selected .cliente {
+	background: url(../img/clientes_hover.png) no-repeat;
+}
+ul.navigation a:hover .paquete, ul.navigation a.selected .paquete {
+	background: url(../img/paquetes_hover.png) no-repeat;
+}
+ul.navigation a:hover .catalogo, ul.navigation a.selected .catalogo {
+	background: url(../img/catalogos_hover.png) no-repeat;
+}
+ul.navigation a:hover .producto, ul.navigation a.selected .producto {
+	background: url(../img/productos_hover.png) no-repeat;
+}
+ul.navigation a:hover .proveedor, ul.navigation a.selected .proveedor {
+	background: url(../img/proveedores_hover.png) no-repeat;
+}
+ul.navigation a:hover .empleado, ul.navigation a.selected .empleado {
+	background: url(../img/empleados_hover.png) no-repeat;
+}
+
+ul.navigation a:focus {
+    outline: none;
+}
+
+

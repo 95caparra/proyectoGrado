@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <body>     
+        <h:form id="informacionProducto" enctype="multipart/form-data">
+            <p:panel id="pnlInformacionProducto">
+
+                <p:fieldset id="selectedProductos" legend="Selected" style="margin-top:20px">
+                    <p:outputPanel id="dropArea">
+                        <h:outputText value="!!!Drop here!!!" rendered="#{empty paqueteBean.droppedProductos}" style="font-size:24px;" />
+                        <p:dataTable id="selectedProductosTable" var="producto" value="#{paqueteBean.droppedProductos}" rendered="#{not empty paqueteBean.droppedProductos}">
+
+                            <p:column headerText="Foto">
+                                <p:graphicImage library="imagenesProductos" name="#{producto.foto}"
+                                                style="width:280px"/>
+                            </p:column>                            
+                            <p:column headerText="Id">
+                                <h:outputText value="#{producto.idProducto}" />
+                            </p:column>
+                            <p:column headerText="Nombre Producto">
+                                <h:outputText value="#{producto.nombre}" />
+                            </p:column>
+                            <p:column headerText="Precio Unidad">
+                                <h:outputText value="#{producto.precioUnidad}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+                </p:fieldset>
+
+                <br/>
+                <br/>
+
+                <p:commandButton value="Cotizar paquete" 
+                                 action="#{solicitudBean.formularioDatos}"
+                                 onclick="PF('dlgCliente').show();"
+                                 icon="fa fa-send" />
+            </p:panel>       
+        </h:form>
+
+        
+    </body>
+</html>

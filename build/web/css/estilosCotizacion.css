@@ -1,0 +1,43 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+div#contenedor{
+   width: 900px;
+   min-height: 1000px;
+   border: 1px solid black;
+   border-radius: 10px;
+   -webkit-border-radius: 10px;
+   -moz-border-radius: 10px;
+   -o-border-radius: 10px; 
+   margin: 0 auto;
+}
+
+div#contenedor h1{
+    text-align: center;
+    color:#993399;
+}
+div#contenedor fieldset{
+    width: 800px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+div#contenedor fieldset legend{
+    color: #ffffff;
+    background-color: #993399;
+    width: 800px;
+    height: 30px;
+    margin-left: -14px;
+    padding-left: 30px;
+    vertical-align: middle;
+    font-family: verdana,tahoma,sans-serif;
+    font-size: 20px;
+}
+
+duv#contenedor .observaciones {
+    width: 800px;
+}
+
+
