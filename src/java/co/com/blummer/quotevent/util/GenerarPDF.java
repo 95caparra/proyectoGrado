@@ -59,7 +59,7 @@ public class GenerarPDF {
         // Creamos el documento e indicamos el nombre del fichero.
         try {
             Document document = new Document(PageSize.A4, 36, 36, 10, 10);
-
+            
             PdfWriter.getInstance(document, new FileOutputStream(salida));
 
             document.open();
@@ -68,8 +68,8 @@ public class GenerarPDF {
 
             Image imagen = Image.getInstance(rutaImagen);
             imagen.scaleAbsolute(250, 250);
-            imagen.setAlignment(Element.ALIGN_CENTER);
-
+            imagen.setAlignment(Element.ALIGN_LEFT);
+            
             document.add(imagen);
             document.add(getInfo(info));
             document.add(getFooter(footer));
@@ -90,17 +90,19 @@ public class GenerarPDF {
         Chunk c = new Chunk();
         p.setAlignment(Element.ALIGN_CENTER);
         c.append(texto);
-        c.setFont(blueFont);
+        c.setFont(chapterFont);
         p.add(c);
         return p;
     }
 
     private Paragraph getInfo(String texto) {
         Paragraph p = new Paragraph();
-        Chunk c = new Chunk();
         p.setAlignment(Element.ALIGN_CENTER);
+        
+        Chunk c = new Chunk();
+        c.setBackground(BaseColor.BLUE);
         c.append(texto);
-        c.setFont(blueFont);
+        c.setFont(chapterFont);
         p.add(c);
         return p;
     }
@@ -110,7 +112,7 @@ public class GenerarPDF {
         Chunk c = new Chunk();
         p.setAlignment(Element.ALIGN_CENTER);
         c.append(texto);
-        c.setFont(blueFont);
+        c.setFont(chapterFont);
         p.add(c);
         return p;
     }

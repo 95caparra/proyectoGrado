@@ -92,7 +92,7 @@ public class SolicitudBean implements Serializable {
     private LoginBean login;
     private ClasificacionBean clasificacionBean;
     private PaqueteBean paqueteBean;
-    
+
     private GenerarPDF generarPDF;
     private Mail mail;
 
@@ -132,25 +132,26 @@ public class SolicitudBean implements Serializable {
         }
     }
 
-    public void generarPDF() {        
+    public void generarPDF() {
         try {
             generarPDF = new GenerarPDF();
             mail = new Mail();
-            
-            String rutaImagen =  Path.getPathArchivos()+"\\"+"imagenesProductos"+"\\"+"matrimonio.jpg";
-            
-            String salida = Path.getPathArchivos()+"\\"+"imagenesProductos"+"\\"+"prueba.pdf";
-            
-            generarPDF.createPDF("Titulo", "Información", "Pie de pagina",rutaImagen, salida);
-            
+
+            String rutaImagen = Path.getPathArchivos() + "\\" + "imagenesProductos" + "\\" + "matrimonio.jpg";
+
+            String salida = Path.getPathArchivos() + "\\" + "imagenesProductos" + "\\" + "prueba.pdf";
+
+            String contenido = " ";
+            generarPDF.createPDF("Titulo", contenido, "Pie de pagina", rutaImagen, salida);
+
             mail.envioCorreoCliente("95camilo.ochoa@gmail.com", "cotización", "esta es una preuba", salida);
-            
+
         } catch (Exception e) {
             e.getMessage();
             e.getStackTrace();
             e.printStackTrace();
         }
-        
+
     }
 
     public void consultarPorId() {
@@ -816,8 +817,5 @@ public class SolicitudBean implements Serializable {
     public void setMail(Mail mail) {
         this.mail = mail;
     }
-
-    
-    
 
 }
