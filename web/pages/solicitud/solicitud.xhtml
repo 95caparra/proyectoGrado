@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <link rel="stylesheet" type="text/css"
+              href="../../resources/css/style.css"></link>
+        <title>Proyecto</title>
+    </h:head>
+    <h:body>
+        <ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        template="../../resources/templates/templateGestion.xhtml">
+
+            <ui:define name="content">
+                <p:panel id="pnlContenido">                  
+                    <c:if test="#{opcionBean.opcionVerPaquete == 1 }">
+                        <ui:include src="../paquete/listarPaquete.xhtml" />
+                    </c:if>
+                    
+                      <c:if test="#{opcionBean.opcionPaquete == 1 }">
+                          <ui:include src="../solicitud/datosPersonalizacionPaquete.xhtml" />
+                    </c:if>
+                </p:panel>
+
+
+                <p:panel id="pnlDetalles">                             
+                    <c:if test="#{opcionBean.opcionInfoPaquete == 1 }">
+                        <ui:include src="../solicitud/datosPaquete.xhtml" />
+                    </c:if>                    
+                </p:panel>
+
+                <p:dialog header="Solicitud" widgetVar="dlgCliente" dynamic="true">
+                    <p:panel id="pnlDatosSolicitud">     
+                        <ui:include src="../solicitud/insertarDatosSolicitud.xhtml" />
+                    </p:panel>
+                </p:dialog>
+
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form id="frmOpciones">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <p:menu toggleable="true">       
+
+                        <p:submenu label="Paquetes">
+                            <p:menuitem value="Listar Paquete" actionListener="#{opcionBean.verListaPaquete}" 
+                                        update="growl" icon="ui-icon-disk" />
+                            
+                            <p:menuitem value="Crear Paquete"  actionListener="#{opcionBean.verPaquete}" 
+                                        update="growl" icon="ui-icon-disk" />
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+
+    </h:body>
+</html>

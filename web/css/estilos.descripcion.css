@@ -1,0 +1,7 @@
+div#contenedorDescripcion{
+    margin: 30px;
+}
+
+div#contenedorDescripcion table{
+    float:right;
+}
