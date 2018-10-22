@@ -1,0 +1,17 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
+table{
+    margin: 0 auto;
+    border: 1px solid black;
+    margin-top: 130px;
+}
+
+table thead th{
+    background-color: #993399;
+    color: #FFFFFF;
+    width: 130px;
+}
+
