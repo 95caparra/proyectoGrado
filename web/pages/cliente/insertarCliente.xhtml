@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="../../resources/css/estilos.css"></link>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>        
+        
+        <h:form enctype="multipart/form-data" id="insertarCliente">
+            <p:panel id="pnlInsertarCliente">
+                <f:facet name="header">
+                    <h:outputText value="Insertar Cliente" />
+                </f:facet>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Identificacion cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.idCliente}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Tipo de Documento: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{clienteBean.selectedTiposDocumento}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione el tipo de documento" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="c"
+                                           value="#{clienteBean.tiposDocumentos}"
+                                           itemValue="#{c.idTipoDocumento}"
+                                           itemLabel="#{c.nombreDocumento}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Nombre Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.nombreCliente}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Apellido Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.apellidoCLiente}" />
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Telefono Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.telefonoCliente}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Celular Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.celularCliente}"/>
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Direccion Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.direccionCliente}"/>
+                    </p:column>              
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Ciudad: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{clienteBean.selectedCiudad}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione la ciudad" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="c"
+                                           value="#{clienteBean.ciudades}"
+                                           itemValue="#{c.idCiudad}"
+                                           itemLabel="#{c.nombreCiudad}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Correo Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{clienteBean.correoCliente}"/>
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:commandButton value="Guardar" 
+                                 action="#{clienteBean.insertarCliente}"
+                                 icon="ui-icon-disk">
+                </p:commandButton>
+            </p:panel>
+        </h:form>
+    </body>
+</html>
