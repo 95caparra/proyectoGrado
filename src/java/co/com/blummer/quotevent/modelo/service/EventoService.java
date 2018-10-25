@@ -54,8 +54,32 @@ public class EventoService {
             return lista;
         }
     }
+
+    public ArrayList<EventoVO> listarEventosMeses() throws Exception {
+        ArrayList<EventoVO> lista = new ArrayList<EventoVO>();
+        try {
+            lista = eventoDAO.listarEventosMeses();
+        } catch (Exception e) {
+            System.out.println(" EventoService: Se presento un error al "
+                    + "listar la tabla evento:  " + e.getMessage());
+        } finally {
+            return lista;
+        }
+    }
     
-     public ArrayList<EventoVO> listarEventosVivos() throws Exception {
+    public ArrayList<EventoVO> listarEventosEstado() throws Exception {
+        ArrayList<EventoVO> lista = new ArrayList<EventoVO>();
+        try {
+            lista = eventoDAO.listarEventosEstado();
+        } catch (Exception e) {
+            System.out.println(" EventoService: Se presento un error al "
+                    + "listar la tabla evento:  " + e.getMessage());
+        } finally {
+            return lista;
+        }
+    }
+
+    public ArrayList<EventoVO> listarEventosVivos() throws Exception {
         ArrayList<EventoVO> lista = new ArrayList<EventoVO>();
         try {
             lista = eventoDAO.listarEventosVivos();
@@ -66,7 +90,6 @@ public class EventoService {
             return lista;
         }
     }
-
 
     public EventoVO consultarPorId(long idEvento) throws Exception {
         EventoVO eventoVO = null;
@@ -136,25 +159,38 @@ public class EventoService {
         try {
             lista = eventoDAO.buscar(parametro);
         } catch (Exception e) {
-            System.out.println("solicitudService: Se presento un error al buscar en la tabla Solicitudes" + e.getMessage());
+            System.out.println("eventoService: Se presento un error al buscar en la tabla Solicitudes" + e.getMessage());
         } finally {
             return lista;
         }
     }
-    
-    public boolean validarFecha(int mes, int anio) throws Exception{
+
+    public boolean validarFecha(int mes, int anio) throws Exception {
         Date fecha = null;
         boolean bandera = false;
         try {
             fecha = eventoDAO.validarFecha(mes, anio);
-            if(fecha != null){
+            if (fecha != null) {
                 bandera = true;
-            }            
+            }
         } catch (Exception e) {
-            System.out.println("solicitudService: Se presento un error al buscar en la tabla Solicitudes" + e.getMessage());
-        }finally{
+            System.out.println("eventoService: Se presento un error al buscar en la tabla Solicitudes" + e.getMessage());
+        } finally {
             return bandera;
         }
-                
-    } 
+    }
+
+    public int ultimoId() throws Exception {
+        int id = -1;
+        try {
+            id = eventoDAO.ultimoId();
+
+        } catch (Exception e) {
+            System.out.println("EventoService:"
+                    + "Se presento un error al buscar el id del producto "
+                    + e.getMessage());
+        } finally {
+            return id;
+        }
+    }
 }

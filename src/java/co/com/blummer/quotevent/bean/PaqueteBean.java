@@ -216,7 +216,7 @@ public class PaqueteBean implements Serializable {
             
             opcionBean.verInfoPaquete();
 
-            detallePaqueteProductos = detallePaqueteProductoService.listarPorId(id);
+            detallePaqueteProductos = detallePaqueteProductoService.listarPorId(idPaquete);
 
             for (DetallePaqueteProductoVO dpp : detallePaqueteProductos) {
 
@@ -224,6 +224,7 @@ public class PaqueteBean implements Serializable {
             }
 
         } catch (Exception e) {
+            e.getMessage();
         }
     }
 

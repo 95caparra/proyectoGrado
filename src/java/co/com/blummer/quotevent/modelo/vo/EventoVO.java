@@ -13,6 +13,10 @@ import java.sql.Date;
  * @author Danny
  */
 public class EventoVO {
+    
+    private int cantidadEventos;
+    private String mesEventos;
+    
     private int idEvento;
     private SolicitudVO solicitudVO;
     private ClienteVO clienteVO;
@@ -160,6 +164,34 @@ public class EventoVO {
      */
     public void setLugarVO(LugarVO lugarVO) {
         this.lugarVO = lugarVO;
+    }
+
+    /**
+     * @return the cantidadEventos
+     */
+    public int getCantidadEventos() {
+        return cantidadEventos;
+    }
+
+    /**
+     * @param cantidadEventos the cantidadEventos to set
+     */
+    public void setCantidadEventos(int cantidadEventos) {
+        this.cantidadEventos = cantidadEventos;
+    }
+
+    /**
+     * @return the mesEventos
+     */
+    public String getMesEventos() {
+        return mesEventos;
+    }
+
+    /**
+     * @param mesEventos the mesEventos to set
+     */
+    public void setMesEventos(String mesEventos) {
+        this.mesEventos = mesEventos;
     }
     
 }

@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 public class DetallePaqueteService {
 
-    private DetallePaqueteDAO detallePaqueteDAO;
+    private static DetallePaqueteDAO detallePaqueteDAO;
     private boolean bandera;
 
     public DetallePaqueteService() {

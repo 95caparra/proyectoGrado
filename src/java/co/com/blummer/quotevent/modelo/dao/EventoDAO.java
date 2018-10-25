@@ -19,6 +19,10 @@ public interface EventoDAO {
 
     public ArrayList<EventoVO> listar() throws Exception;
     
+    public ArrayList<EventoVO> listarEventosMeses() throws Exception;
+    
+    public ArrayList<EventoVO> listarEventosEstado() throws Exception;
+    
     public ArrayList<EventoVO> listarEventosVivos() throws Exception;
 
     public EventoVO consultarPorId(long idEvento) throws Exception;
@@ -34,4 +38,6 @@ public interface EventoDAO {
     public int disponibilidadFecha(Date fecha) throws Exception; 
     
     public Date validarFecha(int dia, int anio) throws Exception;
+    
+    public int ultimoId () throws Exception;
 }

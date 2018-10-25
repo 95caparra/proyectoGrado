@@ -3,15 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/webservices/Medidas.java</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/bean/SuministroBean.java</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/modelo/vo/ClasificacionVO.java</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/webservices/ServicioMedidaProducto.java</file>
+            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/web/pages/evento/insertarEvento.xhtml</file>
             <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/bean/OpcionBean.java</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/web/pages/suministro/insertarSuministro.xhtml</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/bean/PaqueteBean.java</file>
-            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/modelo/service/MedidaService.java</file>
+            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/src/java/co/com/blummer/quotevent/bean/EventoBean.java</file>
+            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/web/pages/inicio/inicio.xhtml</file>
+            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/web/pages/evento/detalleEvento.xhtml</file>
+            <file>file:/C:/Users/CAMILO/Documents/NetBeansProjects/GRADO%20NUEVO/proyectoGrado-septimaVersion/web/pages/evento/graficaEventosEstado.xhtml</file>
         </group>
     </open-files>
 </project-private>

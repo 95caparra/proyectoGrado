@@ -31,7 +31,7 @@ public class EmpleadoService {
             resultado = empleadoDAO.insertar(empleadoVO);
         } catch (Exception e) {
             System.out.println(" EmpleadoService: Se presento un error al "
-                    + "actualizar un cliente:  " + e.getMessage());
+                    + "actualizar un empleado:  " + e.getMessage());
         } finally {
             return resultado;
         }
@@ -43,7 +43,7 @@ public class EmpleadoService {
             resultado = empleadoDAO.actualizar(empleadoVO);
         } catch (Exception e) {
             System.out.println(" EmpleadoService: Se presento un error al "
-                    + "actualizar un cliente:  " + e.getMessage());
+                    + "actualizar un empleado:  " + e.getMessage());
         } finally {
             return resultado;
         }
@@ -55,9 +55,23 @@ public class EmpleadoService {
             resultado = empleadoDAO.validarExistenciaEmpleado(idEmpleado);
         } catch (Exception e) {
             System.out.println(" EmpleadoService: Se presento un error al "
-                    + "actualizar un cliente:  " + e.getMessage());
+                    + "actualizar un empleado:  " + e.getMessage());
         } finally {
             return resultado;
+        }
+    }
+    
+    public EmpleadoVO consultarPorId(long idEmpleado) throws Exception {
+
+        EmpleadoVO empleadoVO = null;
+        try {
+            empleadoVO = empleadoDAO.consultarPorId(idEmpleado);
+        } catch (Exception e) {
+            System.out.println("EmpleadoService: Se presento un error al realizar la"
+                    + "consulta: " + e.getMessage());
+
+        } finally {
+            return empleadoVO;
         }
     }
     

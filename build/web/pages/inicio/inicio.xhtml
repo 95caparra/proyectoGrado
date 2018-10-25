@@ -71,6 +71,15 @@
                         <ui:include src="../usuario/listarUsuario.xhtml" />
                     </c:if>
                     
+                    <c:if test="#{opcionBean.opcionEventoPorMes == 1 }">
+                        <ui:include src="../evento/graficaEventosMeses.xhtml" />
+                    </c:if>
+                    
+                    <c:if test="#{opcionBean.opcionEventoPorEstado == 1 }">
+                        <ui:include src="../evento/graficaEventosEstado.xhtml" />
+                    </c:if>
+                    
+                    
                 </p:panel>
 
 
@@ -89,6 +98,11 @@
 
                     <c:if test="#{opcionBean.opcionInfoPaquete == 1 }">
                         <ui:include src="../paquete/informacionPaquete.xhtml" />
+                    </c:if>                    
+                    
+                    
+                    <c:if test="#{opcionBean.opcionDetalleEvento == 1 }">
+                        <ui:include src="../evento/detalleEvento.xhtml" />
                     </c:if>                    
                 </p:panel>
                 
@@ -133,6 +147,11 @@
                                         update="growl" icon="ui-icon-disk" />   
                             <p:menuitem value="Administrar Eventos" actionListener="#{opcionBean.verListaEvento}" 
                                         update="growl" icon="ui-icon-disk" />
+                            <p:menuitem value="Eventos Por Mes" actionListener="#{opcionBean.verGraficaEventoMes}" 
+                                        update="growl" icon="ui-icon-disk" />
+                            <p:menuitem value="Eventos Por Estado" actionListener="#{opcionBean.verGraficaEventoEstado}" 
+                                        update="growl" icon="ui-icon-disk" />
+                            
                         </p:submenu>
                         
                         <p:submenu label="Clientes">

@@ -25,7 +25,8 @@
                             <p:inputText id="globalFilter" onkeyup="PF('eventoTable').filter()" style="width:150px" placeholder="Buscar.."/>
                         </p:outputPanel>
                     </f:facet>
-
+                    
+                    <p:ajax event="rowSelect" listener="#{eventoBean.consultarPorId}" />
                     <p:ajax event="rowEdit" listener="#{eventoBean.onRowEdit}" />
                     <p:ajax event="rowEditCancel" listener="#{eventoBean.onRowCancel}"  />
 

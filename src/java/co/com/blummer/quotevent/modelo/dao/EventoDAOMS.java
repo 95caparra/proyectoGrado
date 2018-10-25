@@ -123,6 +123,71 @@ public class EventoDAOMS extends ConexionMySQL implements EventoDAO {
         }
     }
     
+    @Override
+    public ArrayList<EventoVO> listarEventosMeses() throws Exception {
+        ArrayList<EventoVO> lista = new ArrayList<EventoVO>();
+        EventoVO eventoVO;
+        try {
+            this.conectar();
+            String colsulta = " SELECT COUNT(e.id_evento) as cantidad, MONTH(e.fecha) as mes " 
+                    +" FROM evento e "
+                    +" group by MONTH(e.fecha) ";
+                    
+            PreparedStatement pstm = this.conection.prepareStatement(colsulta);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int t = 1;
+                eventoVO = new EventoVO();
+                
+                eventoVO.setCantidadEventos(rs.getInt(t++));
+                eventoVO.setMesEventos(rs.getString(t++));
+                
+                lista.add(eventoVO);
+            }
+
+        } catch (Exception e) {
+            System.out.println("EventoDAOMS : se presento un error al listar: " + e.getMessage());
+        } finally {
+            this.desconectar();
+            return lista;
+
+        }
+    }
+    
+    @Override
+    public ArrayList<EventoVO> listarEventosEstado() throws Exception {
+        ArrayList<EventoVO> lista = new ArrayList<EventoVO>();
+        EventoVO eventoVO;
+        try {
+            this.conectar();
+            String colsulta = " SELECT COUNT(e.id_evento) as cantidad, ete.nombre "
+                    +" FROM evento e " 
+                    +" JOIN estado_evento ete ON ete.id_estado_evento = e.estado_evento "
+                    +" group by ete.nombre ";
+                    
+            PreparedStatement pstm = this.conection.prepareStatement(colsulta);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int t = 1;
+                eventoVO = new EventoVO();
+                
+                eventoVO.setCantidadEventos(rs.getInt(t++));
+                eventoVO.getEstadoEvento().setNombre(rs.getString(t++));
+                
+                lista.add(eventoVO);
+            }
+
+        } catch (Exception e) {
+            System.out.println("EventoDAOMS : se presento un error al listar: " + e.getMessage());
+        } finally {
+            this.desconectar();
+            return lista;
+
+        }
+    }
+    
+    
+    
       @Override
     public ArrayList<EventoVO> listarEventosVivos() throws Exception {
         ArrayList<EventoVO> lista = new ArrayList<EventoVO>();
@@ -180,32 +245,40 @@ public class EventoDAOMS extends ConexionMySQL implements EventoDAO {
         EventoVO eventoVO = null;
         try {
             this.conectar();
-            String consulta = "SELECT evento.id_evento, evento.solicitud_id_solicitud, cliente.nombre, cliente.apellido, evento.tipo_evento,tipo_evento.nombre,evento.lugar, evento.cantidad_personas,"
-                    + "evento.cantidad_meseros, evento.hora_inicio, evento.hora_fin, evento.fecha, evento.precio, evento.pedido_id_pedido, estado_evento.nombre "
-                    + "FROM ((evento  inner join cliente  on evento.cliente_id_cliente = cliente.n_identificacion)inner join estado_evento ON estado_evento.id_estado_evento = evento.estado_evento) "
-                    + "inner join tipo_evento ON tipo_evento.id_tipo_evento = evento.tipo_evento "
-                    + "WHERE evento.id_evento = ? ";
+            String colsulta = " SELECT s.id_solicitud, cl.n_identificacion, cl.nombre, te.nombre, lu.nombre, "
+                    +" e.cantidad_personas, e.cantidad_meseros, e.hora_inicio, e.hora_fin, e.fecha, "
+                    +" e.precio, e.observaciones, ete.nombre, p.id_paquete "
+                    +" FROM evento  e "
+                    +" JOIN cliente cl ON cl.n_identificacion = e.cliente_id_cliente "
+                    +" JOIN tipo_evento te ON te.id_tipo_evento = e.tipo_evento "
+                    +" JOIN lugar lu ON lu.id_lugar = e.id_lugar "
+                    +" JOIN solicitud s ON s.id_solicitud = e.solicitud_id_solicitud "
+                    +" JOIN paquete p ON p.id_paquete = s.id_paquete "
+                    +" JOIN clasificacion cla	ON cla.id_clasificacion = p.clasificacion "
+                    +" JOIN estado_evento ete ON ete.id_estado_evento = e.estado_evento "
+                    +" WHERE e.id_evento = ? ";
 
-            PreparedStatement pstm = this.conection.prepareStatement(consulta);
+            PreparedStatement pstm = this.conection.prepareStatement(colsulta);
             pstm.setLong(1, idEvento);
             ResultSet rs = pstm.executeQuery();
             if (rs.next()) {
                 eventoVO = new EventoVO();
-                eventoVO.setIdEvento(rs.getInt(1));
-                eventoVO.getSolicitudVO().setIdSolicitud(rs.getInt(2));
-                eventoVO.getClienteVO().setNombre(rs.getString(3));
-                eventoVO.getClienteVO().setApellido(rs.getString(4));
-                eventoVO.getTipoEventoVO().setIdTipoEvento(rs.getInt(5));
-                eventoVO.getTipoEventoVO().setNombreTipoEvento(rs.getString(6));
-                eventoVO.getLugarVO().setIdLugar(rs.getInt(7));
-                eventoVO.setCantidadPersonas(rs.getInt(8));
-                eventoVO.setCantidadMeseros(rs.getInt(9));
-                eventoVO.setHoraInicio(rs.getTime(10));
-                eventoVO.setHoraFin(rs.getTime(11));
-                eventoVO.setFecha(rs.getDate(12));
-                eventoVO.setPrecio(rs.getDouble(13));
-                eventoVO.getPedidoVO().setIdPedido(rs.getInt(14));
-                eventoVO.getEstadoEvento().setNombre(rs.getString(15));
+                int t = 1;
+                
+                eventoVO.getSolicitudVO().setIdSolicitud(rs.getInt(t++));
+                eventoVO.getClienteVO().setNumeroIdentificacion(rs.getLong(t++));
+                eventoVO.getClienteVO().setNombre(rs.getString(t++));
+                eventoVO.getTipoEventoVO().setNombreTipoEvento(rs.getString(t++));
+                eventoVO.getLugarVO().setNombre(rs.getString(t++));
+                eventoVO.setCantidadPersonas(rs.getInt(t++));
+                eventoVO.setCantidadMeseros(rs.getInt(t++));
+                eventoVO.setHoraInicio(rs.getTime(t++));
+                eventoVO.setHoraFin(rs.getTime(t++));
+                eventoVO.setFecha(rs.getDate(t++));
+                eventoVO.setPrecio(rs.getDouble(t++));
+                eventoVO.setObservaciones(rs.getString(t++));
+                eventoVO.getEstadoEvento().setNombre(rs.getString(t++));
+                eventoVO.getSolicitudVO().getPaqueteVO().setIdPaquete(rs.getInt(t++));
 
             }
 
@@ -353,7 +426,7 @@ public class EventoDAOMS extends ConexionMySQL implements EventoDAO {
 
             }
         } catch (Exception e) {
-            System.out.println(" ProductoDAOMS: Se presento un ERROR al buscar en la tabla"
+            System.out.println(" EventoDAOMS: Se presento un ERROR al buscar en la tabla"
                     + " producto: " + e.getMessage());
             throw e;
         } finally {
@@ -383,12 +456,37 @@ public class EventoDAOMS extends ConexionMySQL implements EventoDAO {
             }
 
         } catch (Exception e) {
-            System.out.println(" ProductoDAOMS: Se presento un ERROR al buscar en la tabla"
+            System.out.println(" EventoDAOMS: Se presento un ERROR al buscar en la tabla"
                     + " evento: " + e.getMessage());
             throw e;
         } finally {
             this.desconectar();
             return fecha;
+        }
+    }
+
+    @Override
+    public int ultimoId() throws Exception {
+        int id = -1;
+        try {
+            this.conectar();
+            String consulta = "SELECT id_evento "
+                    + "FROM evento ORDER BY 1 DESC LIMIT 1 ";
+
+            PreparedStatement pstm = this.conection.prepareStatement(consulta);
+            ResultSet rs = pstm.executeQuery();
+
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.out.println("EventoDAOMS: Se presento un ERROR al consultar el id del producto "
+                    + e.getMessage());
+            throw e;
+        } finally {
+            this.desconectar();
+            return id;
         }
     }
 

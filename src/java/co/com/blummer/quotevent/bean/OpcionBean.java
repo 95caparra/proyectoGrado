@@ -30,6 +30,8 @@ public class OpcionBean implements Serializable {
     private int opcionEvento;
     private int opcionVerEvento;
     private int opcionVerCliente;
+    private int opcionEventoPorMes;
+    private int opcionEventoPorEstado;
     private int opcionVerEmpleado;
     private int opcionVerProveedor;
     private int opcionVerUsuario;
@@ -37,6 +39,7 @@ public class OpcionBean implements Serializable {
     private int opcionInfoSuministro;
     private int opcionInfoSolicitud;
     private int opcionInfoPaquete;
+    private int opcionDetalleEvento;
     private int opcionSuministro;
 
     private SuministroBean suministroBean;
@@ -55,7 +58,7 @@ public class OpcionBean implements Serializable {
                 //suministroBean = application.evaluateExpressionGet(context, "#{suministroBean}", SuministroBean.class);
                 ///productoBean = application.evaluateExpressionGet(context, "#{productoBean}", ProductoBean.class);
                 //paqueteBean = application.evaluateExpressionGet(context, "#{paqueteBean}", PaqueteBean.class);
-                
+
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -72,7 +75,7 @@ public class OpcionBean implements Serializable {
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
-    
+
     public void verEvento() {
         setearOpciones();
         setearDetalles();
@@ -91,43 +94,51 @@ public class OpcionBean implements Serializable {
         RequestContext.getCurrentInstance().update("pnlDetalles");
 
     }
-    
+
+       
     public void verListaEvento() {
         setearOpciones();
         setearDetalles();
-        opcionVerEvento = 1;   
+        opcionVerEvento = 1;
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
-    
-    public void verListaCliente() {
+
+    public void verGraficaEventoMes() {
         setearOpciones();
         setearDetalles();
-        opcionVerCliente = 1;   
+        opcionEventoPorMes = 1;
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
-    
+
+    public void verGraficaEventoEstado() {
+        setearOpciones();
+        setearDetalles();
+        opcionEventoPorEstado = 1;
+        RequestContext.getCurrentInstance().update("pnlContenido");
+        RequestContext.getCurrentInstance().update("pnlDetalles");
+    }
     public void verListaEmpleado() {
         setearOpciones();
         setearDetalles();
-        opcionVerEmpleado = 1;   
+        opcionVerEmpleado = 1;
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
-    
+
     public void verListaProveedor() {
         setearOpciones();
         setearDetalles();
-        opcionVerProveedor = 1;   
+        opcionVerProveedor = 1;
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
-    
+
     public void verListaUsuario() {
         setearOpciones();
         setearDetalles();
-        opcionVerUsuario = 1;   
+        opcionVerUsuario = 1;
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
@@ -136,6 +147,13 @@ public class OpcionBean implements Serializable {
         setearDetalles();
         opcionInfoPaquete = 1;
         //paqueteBean.init();
+        RequestContext.getCurrentInstance().update("pnlDetalles");
+        RequestContext.getCurrentInstance().update("pnlInformacionProductosSolicitud");
+    }
+
+    public void verDetalleEvento() {
+        setearDetalles();
+        opcionDetalleEvento = 1;
         RequestContext.getCurrentInstance().update("pnlDetalles");
         RequestContext.getCurrentInstance().update("pnlInformacionProductosSolicitud");
     }
@@ -161,7 +179,7 @@ public class OpcionBean implements Serializable {
     public void verInfoProducto() {
         setearDetalles();
         opcionInfoProducto = 1;
-       // productoBean.init();
+        // productoBean.init();
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
 
@@ -169,7 +187,7 @@ public class OpcionBean implements Serializable {
         setearOpciones();
         setearDetalles();
         opcionSuministro = 1;
-       // suministroBean.init();
+        // suministroBean.init();
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
@@ -186,10 +204,10 @@ public class OpcionBean implements Serializable {
     public void verInfoSuministro() {
         setearDetalles();
         opcionInfoSuministro = 1;
-       // suministroBean.init();
+        // suministroBean.init();
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
-    
+
     public void verInfoSolicitud() {
         setearDetalles();
         opcionInfoSolicitud = 1;
@@ -208,13 +226,16 @@ public class OpcionBean implements Serializable {
         opcionVerProveedor = 0;
         opcionVerEmpleado = 0;
         opcionVerCliente = 0;
-        setOpcionVerUsuario(0);
+        opcionEventoPorMes = 0;
+        opcionEventoPorEstado = 0;
+        opcionVerUsuario = 0;
     }
 
     public void setearDetalles() {
         opcionInfoSuministro = 0;
         opcionInfoProducto = 0;
         opcionInfoPaquete = 0;
+        opcionDetalleEvento = 0;
         opcionInfoSolicitud = 0;
         opcionEvento = 0;
     }
@@ -534,6 +555,46 @@ public class OpcionBean implements Serializable {
         this.opcionVerUsuario = opcionVerUsuario;
     }
 
-    
+    /**
+     * @return the opcionDetalleEvento
+     */
+    public int getOpcionDetalleEvento() {
+        return opcionDetalleEvento;
+    }
+
+    /**
+     * @param opcionDetalleEvento the opcionDetalleEvento to set
+     */
+    public void setOpcionDetalleEvento(int opcionDetalleEvento) {
+        this.opcionDetalleEvento = opcionDetalleEvento;
+    }
+
+    /**
+     * @return the opcionEventoPorMes
+     */
+    public int getOpcionEventoPorMes() {
+        return opcionEventoPorMes;
+    }
+
+    /**
+     * @param opcionEventoPorMes the opcionEventoPorMes to set
+     */
+    public void setOpcionEventoPorMes(int opcionEventoPorMes) {
+        this.opcionEventoPorMes = opcionEventoPorMes;
+    }
+
+    /**
+     * @return the opcionEventoPorEstado
+     */
+    public int getOpcionEventoPorEstado() {
+        return opcionEventoPorEstado;
+    }
+
+    /**
+     * @param opcionEventoPorEstado the opcionEventoPorEstado to set
+     */
+    public void setOpcionEventoPorEstado(int opcionEventoPorEstado) {
+        this.opcionEventoPorEstado = opcionEventoPorEstado;
+    }
 
 }

@@ -109,7 +109,7 @@ public class EmpleadoDAOMS extends ConexionMySQL implements EmpleadoDAO {
         EmpleadoVO empleadoVO;
         try {
             this.conectar();
-            String consulta = "SELECT e.n_identificacion, td.id_tipo_documento, td.descripcion_documento, "
+            String consulta = " SELECT e.n_identificacion, td.id_tipo_documento, td.descripcion_documento, "
                     + " e.nombre,e.apellido, r.id_rol, r.nombre as rol, e.correo, e.direccion, e.telefono,e.barrio, "
                     + " e.estado FROM empleado e "
                     + " JOIN tipo_documento td on td.id_tipo_documento = e.id_tipo_documento "
@@ -155,29 +155,32 @@ public class EmpleadoDAOMS extends ConexionMySQL implements EmpleadoDAO {
         try {
             this.conectar();
 
-            String consulta = "SELECT e.n_identificacion,td.id_tipo_documento,td.descripcion_documento,"
-                    + "e.nombre,e.apellido,e.cargo_id_cargo,c.nombre,e.correo,e.direccion,e.telefono,e.barrio "
-                    + "FROM (empleado e INNER JOIN tipo_documento td ON e.id_tipo_documento = td.id_tipo_documento) "
-                    + "INNER JOIN cargo c ON e.cargo_id_cargo = c.id_cargo WHERE  e.n_identificacion = ? ";
+            String consulta = " SELECT td.id_tipo_documento, td.descripcion_documento, "
+                    + " e.nombre,e.apellido, r.id_rol, r.nombre as rol, e.correo, e.direccion, e.telefono,e.barrio, "
+                    + " e.estado FROM empleado e "
+                    + " JOIN tipo_documento td on td.id_tipo_documento = e.id_tipo_documento "
+                    + " JOIN rol r on r.id_rol = e.cargo_id_cargo "
+                    + " WHERE estado = 'Activo' AND e.n_identificacion = ? ";
+            
             PreparedStatement pstm = this.conection.prepareStatement(consulta);
             pstm.setLong(1, idEmpleado);
             ResultSet rs = pstm.executeQuery();
 
             if (rs.next()) {
+                int t = 1;
                 empleadoVO = new EmpleadoVO();
-                empleadoVO.setIdentificacionEmpleado(rs.getLong(1));
-                empleadoVO.getDocumentoVO().setIdTipoDocumento(rs.getInt(2));
-                empleadoVO.getDocumentoVO().setNombreDocumento(rs.getString(3));
-                empleadoVO.setNombre(rs.getString(4));
-                empleadoVO.setApellido(rs.getString(5));
-                empleadoVO.getCargoVO().setIdCargo(rs.getInt(6));
-                empleadoVO.getCargoVO().setNombreCargo(rs.getString(7));
-                empleadoVO.setCorreo(rs.getString(8));
-                empleadoVO.setDireccion(rs.getString(9));
-                empleadoVO.setTelefono(rs.getString(10));
-                System.out.println(rs.getString(10));
-                System.out.println(empleadoVO.getTelefono());
-                empleadoVO.setBarrio(rs.getString(11));
+
+                empleadoVO.getDocumentoVO().setIdTipoDocumento(rs.getInt(t++));
+                empleadoVO.getDocumentoVO().setNombreDocumento(rs.getString(t++));
+                empleadoVO.setNombre(rs.getString(t++));
+                empleadoVO.setApellido(rs.getString(t++));
+                empleadoVO.getRolVO().setIdRol(rs.getInt(t++));
+                empleadoVO.getRolVO().setNombreRolString(rs.getString(t++));
+                empleadoVO.setCorreo(rs.getString(t++));
+                empleadoVO.setDireccion(rs.getString(t++));
+                empleadoVO.setTelefono(rs.getString(t++));
+                empleadoVO.setBarrio(rs.getString(t++));
+                empleadoVO.setEstado(rs.getString(t++));
             }
 
         } catch (Exception e) {

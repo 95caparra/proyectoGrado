@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class DetalleProductoSuministroService {
 
-    private DetalleProductoSuministroDAO detalleProductoSuministroDAO;
+    private static DetalleProductoSuministroDAO detalleProductoSuministroDAO;
     private boolean bandera;
 
     public DetalleProductoSuministroService() {
