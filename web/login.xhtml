@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <link rel="stylesheet" type="text/css"
+              href="resources/css/estilos_login.css"></link>
+        <title>Proyecto</title>
+    </h:head>
+    <body>
+        <p:dialog widgetVar="statusDialog" id="statusDialog" modal="true"
+                  draggable="false" closable="false" resizable="false"
+                  showHeader="false">
+            <p:graphicImage library="img" name="cargando.gif" width="20%" height="20%"/>
+        </p:dialog>
+
+        <div class="login-page">
+            <div class="form">
+                <div class="login-triangle"></div>
+                <h2 class="login-header">LOGIN</h2>
+
+                <h:form class="login-form" id="login_form">
+                    <p:growl id="growl" showDetail="true" sticky="true" />
+                    <p>
+                        <p:inputText id="usuario" value="#{loginBean.usuario}" />
+                    </p>
+                    <p>
+                        <p:password id="password" value="#{loginBean.password}" />
+                    </p>
+                    <p>
+                        <p:commandButton action="#{loginBean.doLogin}"
+                                         value="Ingresar"
+                                         onclick="PF('statusDialog').show();"
+                                         style="width: 100%;padding: 8px;font-weight: bold" 
+                                         update="@form,growl">
+                        </p:commandButton>
+                    </p>
+                </h:form>
+            </div>
+        </div>
+    </body>
+</html>
