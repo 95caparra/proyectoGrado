@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import co.com.blummer.quotevent.modelo.vo.ClienteVO;
+import co.com.blummer.quotevent.util.Archivos;
 
 public class ClienteDAOMS extends ConexionMySQL implements ClienteDAO {
 
@@ -173,6 +174,31 @@ public class ClienteDAOMS extends ConexionMySQL implements ClienteDAO {
             this.desconectar();
             return resultado;
         }
+    }
+
+    @Override
+    public long consultarUltimoId() throws Exception {
+        long id = 0;
+        int c = 0;
+        try {
+            this.conectar();
+            StringBuffer sql = new StringBuffer();
+            sql.append(" SELECT n_identificacion FROM cliente order by 1 desc LIMIT 1 " );
+            PreparedStatement pstm = this.conection.prepareStatement(sql.toString());
+
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                c = 1;                
+                id = rs.getInt(c++);
+            }
+
+        } catch (Exception e) {
+            System.out.println("ClienteDAOMS : se presento un error al listar: " + e.getMessage());
+            Archivos.escribirLog("Se presnto un error " + e.getMessage());
+        } finally {
+            this.desconectar();
+        }
+        return id;
     }
     
     

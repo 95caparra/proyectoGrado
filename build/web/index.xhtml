@@ -8,6 +8,9 @@
 
     <h:head>
         <title>Proyecto</title>
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="resources/css/default.css"></link>
+        <link rel="stylesheet" type="text/css" href="resources/css/cssLayout.css"></link>
 
         <meta charset="utf-8"/>
         <title>BLUMMER</title>
@@ -108,207 +111,194 @@
         </script>
     </h:head>
     <h:body>
-        <p:dialog widgetVar="statusDialog" id="statusDialog" modal="true"
-                  draggable="false" closable="false" resizable="false"
-                  showHeader="false">
-            <p:graphicImage library="img" name="cargando.gif" width="20%" height="20%"/>
-        </p:dialog>
+        <!-- Navigation Bar -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <!--<a class="logo" href="#">RESTAURANT</a>-->
+                    <div class="social-container">
 
-        <p:dialog header="Evento" widgetVar="dlgEvento" dynamic="true" 
-                  height="550" width="758"  responsive="true" >         
-            <p:panel id="pnlDatosEvento">    
-                <ui:include src="pages/solicitud/insertarDatosSolicitud.xhtml"></ui:include>
-            </p:panel>
-        </p:dialog>
-        <h:form>
-
-
-            <!-- Navigation Bar -->
-            <div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="navbar-inner">
-                    <div class="container">
-                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </a>
-                        <!--<a class="logo" href="#">RESTAURANT</a>-->
-                        <div class="social-container">
-
-                            <a class="s-icon" id="login" href="login.xhtml">Login</a>
-                            <a class="s-icon-instagram" href="#"><img src="resources/img/instagram.png"/></a>
-                            <a class="s-icon-twitter" href="#"><img src="resources/img/twitter.png"/></a>
-                            <a class="s-icon-facebook" href="#"><img src="resources/img/facebook.png"/></a>         
-                        </div>
-                        <div class="nav-collapse pull-left collapse">
-                            <ul class="nav">
-                                <li><a href="#">Inicio</a></li>
-                                <li><a href="#quienessomos">Quienes Somos</a></li>
-                                <li><a href="#menus">Servicios</a></li>
-                                <li><a href="#contact">Contactenos</a></li>
-                                <li><a href="pages/solicitud/solicitud.xhtml">Crea tu paquete</a></li>
-                            </ul>
-                        </div><!--/.nav-collapse -->
+                        <a class="s-icon" id="login" href="login.xhtml">Login</a>
+                        <a class="s-icon-instagram" href="#"><img src="resources/img/instagram.png"/></a>
+                        <a class="s-icon-twitter" href="#"><img src="resources/img/twitter.png"/></a>
+                        <a class="s-icon-facebook" href="#"><img src="resources/img/facebook.png"/></a>         
                     </div>
+                    <div class="nav-collapse pull-left collapse">
+                        <ul class="nav">
+                            <li><a href="#">Inicio</a></li>
+                            <li><a href="#quienessomos">Quienes Somos</a></li>
+                            <li><a href="#menus">Servicios</a></li>
+                            <li><a href="#contact">Contactenos</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
                 </div>
             </div>
+        </div>
 
-            <!-- Header Image and Logo -->
-            <div id="headerwrap">
-                <header class="clearfix">
-                    <div class="container">
-                        <div id="titulo">
-                            <hgroup>
-                                <h1>BLUMMER</h1>
-                                <h2>Casa de Eventos</h2>
-                            </hgroup>
-                        </div>
-                    </div>
-                </header>
-            </div>
-
-            <!-- Welcome -->
-            <div id="quienessomos">
-                <header class="clearfix">
-                    <div class="container">
-                        <div class="span12">
-                            <h2 id="bienvenida">Sean Bienvenidos a nuestro  sitio  web, un lugar  ideal en el cual encontrarás las mejores opciones para realizar  tus eventos. </h2>
-                        </div>
-                    </div>
-                </header>
-            </div>
-
-            <!-- Section Services Begins -->
-            <section id="services"><br/><br/></section>
-
-            <div id="menuwrap" style="margin-left: 100px;">
-                <header class="clearfix">
-                    <div class="container">
-                        <div class="span12">
-                            <div class="boxcolor">
-                                <h1>PAQUETES</h1>
-                            </div>
-                        </div><!-- span12 -->
-                    </div><!-- container -->
-                </header>
-            </div>
-
-            <div id="servicewrap">
+        <!-- Header Image and Logo -->
+        <div id="headerwrap">
+            <header class="clearfix">
                 <div class="container">
-                    <div class="row">
-                        <p:dataScroller value="#{paqueteBean.paquetes}" var="paquete" >                   
-                            <p:row>
-                                <p:column colspan="3">
-                                    <div class="view view-ninth">                                
-                                        <img src="resources/imagenesProductos/${paquete.foto}"  />
-                                        <div class="mask mask-1"></div>
-                                        <div class="mask mask-2"></div>
-                                        <div class="content">
-                                            <h2>${paquete.nombre}</h2> 
-                                            <p>${paquete.descripcion}</p>
-                                        </div>
-                                        <p:commandButton value="Crear evento" 
-                                                         action="#{eventoBean.formularioDatos}"
-                                                         onclick="PF('statusDialog').show();PF('dlgEvento').show();"
-                                                         icon="fa fa-send" >
-                                        </p:commandButton>
-                                    </div>
-                                </p:column>
-                            </p:row>                   
-                        </p:dataScroller>
-                    </div><!-- row -->
-                </div><!-- container -->
-            </div><!-- servicewrap -->
+                    <div id="titulo">
+                        <hgroup>
+                            <h1>BLUMMER</h1>
+                            <h2>Casa de Eventos</h2>
+                        </hgroup>
+                    </div>
+                </div>
+            </header>
+        </div>
 
-            <!-- Formulario para insertar -->
-
-
-
-            <!-- Single Item Image -->
-            <div id="example">
+        <!-- Welcome -->
+        <div id="quienessomos">
+            <header class="clearfix">
                 <div class="container">
-                    <br/>
-                    <h2>Galería</h2>
+                    <div class="span12">
+                        <h2 id="bienvenida">Sean Bienvenidos a nuestro  sitio  web, un lugar  ideal en el cual encontrarás las mejores opciones para realizar  tus eventos. </h2>
+                    </div>
+                </div>
+            </header>
+        </div>
 
-                    <div class="row">
-                        <div class="span12">
-                            <div id="myCarousel" class="carousel slide" style="width: 850px ; height: 900px; margin-left: 150px;">
-                                <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img src="resources/img/portada.png" alt=""/>
-                                    </div>
-                                    <div class="item">
-                                        <img src="resources/imagenes/f2.png" alt=""/>
-                                    </div>
-                                    <div class="item">
-                                        <img src="resources/imagenes/f3.png" alt=""/>
-                                    </div>
-                                </div>
-                                <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a><!-- Carousel Control -->
-                                <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-                            </div><!-- myCarousel -->
+        <!-- Section Services Begins -->
+        <section id="services"><br/><br/></section>
+
+        <div id="menuwrap" style="margin-left: 100px;">
+            <header class="clearfix">
+                <div class="container">
+                    <div class="span12">
+                        <div class="boxcolor">
+                            <h1>PAQUETES</h1>
                         </div>
-
-                    </div><!-- End row -->
-                    <br/>
+                    </div><!-- span12 -->
                 </div><!-- container -->
-            </div><!-- example -->
-            <br/>
-            <br/>
+            </header>
+        </div>
 
-            <!-- Menu  -->
-            <section id="menus"></section>
-
-            <div id="menuwrap" style="margin-left: 100px;">
-                <header class="clearfix">
-                    <div class="container">
-                        <div class="span12">
-                            <div class="boxcolor">
-                                <h1>PRODUCTOS O SERVICIOS</h1>
-                            </div>
-                        </div><!-- span12 -->
-                    </div><!-- container -->
-                </header>
-            </div>
-            <!-- Menus Fotos -->
-
-
+        <div id="servicewrap">
             <div class="container">
+                <div class="row">
+                    <p:panel id="pnlContenido">
+                        <h:form id="listarPaquete">
+                            <p:panel id="pnlListarPaquete">
+                                <p:dataScroller value="#{paqueteBean.paquetes}" var="paquete" >                   
+                                    <p:row>
+                                        <p:column colspan="3">
+                                            <div class="view view-ninth">
+                                                <img src="resources/imagenesProductos/#{paquete.foto}" />
+                                                <div class="mask mask-1"></div>
+                                                <div class="mask mask-2"></div>
+                                                <div class="content">
+                                                    <h2>${paquete.nombre}</h2>              
+                                                    <p>${paquete.descripcion}</p> 
+                                                </div>
+                                                <p:commandButton icon="fa fa-search" 
+                                                                 action="#{loginBean.doLoginPaquetes(paquete.idPaquete)}"
+                                                                 update="@form"/>
+                                            </div>
+                                        </p:column>
+                                    </p:row>  
+                                </p:dataScroller>
+                            </p:panel>
+                        </h:form>                        
+                    </p:panel>
+                </div><!-- row -->
+            </div><!-- container -->
+        </div><!-- servicewrap -->
 
-                <div class="main" style="margin-left: 80px">
-                    <!-- NINTH EXAMPLE -->
-                    <p:dataScroller value="#{paqueteBean.productos}" var="producto" >                   
-                        <p:row>
-                            <p:column colspan="3">
-                                <div class="view view-ninth">
-                                    <img src="resources/imagenesProductos/#{producto.foto}" />
-                                    <div class="mask mask-1"></div>
-                                    <div class="mask mask-2"></div>
-                                    <div class="content">
-                                        <h2>${producto.nombre}</h2>              
-                                    </div>
+        <!-- Formulario para insertar -->
+
+
+
+        <!-- Single Item Image -->
+        <div id="example">
+            <div class="container">
+                <br/>
+                <h2>Galería</h2>
+
+                <div class="row">
+                    <div class="span12">
+                        <div id="myCarousel" class="carousel slide" style="width: 850px ; height: 900px; margin-left: 150px;">
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="resources/img/portada.png" alt=""/>
                                 </div>
-                            </p:column>
-                        </p:row>  
-                    </p:dataScroller>
-                </div>
+                                <div class="item">
+                                    <img src="resources/imagenes/f2.png" alt=""/>
+                                </div>
+                                <div class="item">
+                                    <img src="resources/imagenes/f3.png" alt=""/>
+                                </div>
+                            </div>
+                            <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a><!-- Carousel Control -->
+                            <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                        </div><!-- myCarousel -->
+                    </div>
+
+                </div><!-- End row -->
+                <br/>
+            </div><!-- container -->
+        </div><!-- example -->
+        <br/>
+        <br/>
+
+        <!-- Menu  -->
+        <section id="menus"></section>
+
+        <div id="menuwrap" style="margin-left: 100px;">
+            <header class="clearfix">
+                <div class="container">
+                    <div class="span12">
+                        <div class="boxcolor">
+                            <h1>PRODUCTOS O SERVICIOS</h1>
+                        </div>
+                    </div><!-- span12 -->
+                </div><!-- container -->
+            </header>
+        </div>
+        <!-- Menus Fotos -->
+
+
+        <div class="container">
+
+            <div class="main" style="margin-left: 80px">
+                <!-- NINTH EXAMPLE -->
+                <p:dataScroller value="#{paqueteBean.productos}" var="producto" >                   
+                    <p:row>
+                        <p:column colspan="3">
+                            <div class="view view-ninth">
+                                <img src="resources/imagenesProductos/#{producto.foto}" />
+                                <div class="mask mask-1"></div>
+                                <div class="mask mask-2"></div>
+                                <div class="content">
+                                    <h2>${producto.nombre}</h2>              
+                                </div>
+                            </div>
+                        </p:column>
+                    </p:row>  
+                </p:dataScroller>
             </div>
-            <script type="text/javascript" src="resources/js/jquery.min.js"></script>
-            <!-- Menus Fotos -->		
+        </div>
+        <script type="text/javascript" src="resources/js/jquery.min.js"></script>
+        <!-- Menus Fotos -->		
 
 
-            <!-- Contact Section Begins -->
-            <section id="contact"><br/><br/></section>
+        <!-- Contact Section Begins -->
+        <section id="contact"><br/><br/></section>
 
-            <!-- Bottom Map -->
-            <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63617.48203922678!2d-74.0855312!3d4.753930100000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f84eb69303c49%3A0x2618009c7a8f6bb4!2sSuba%2C+Bogot%C3%A1%2C+Colombia!5e0!3m2!1ses!2ses!4v1408581538759" width="700" height="476" frameborder="0" style="border:0"></iframe><br /><small>ÐÑÐ¾ÑÐ¼Ð¾ÑÑÐµÑÑ <a href="https://maps.google.com/maps/ms?ie=UTF8&amp;oe=UTF8&amp;msa=0&amp;msid=216545906525293155641.0004622c5d252f318c2f1&amp;t=m&amp;ll=55.599344,13.00214&amp;spn=0.035799,0.053339&amp;source=embed" style="color:#0000FF;text-align:left">Sunfleet MalmÃ¶</a>;-)</small></div>
+        <!-- Bottom Map -->
+        <div id="map"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63617.48203922678!2d-74.0855312!3d4.753930100000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f84eb69303c49%3A0x2618009c7a8f6bb4!2sSuba%2C+Bogot%C3%A1%2C+Colombia!5e0!3m2!1ses!2ses!4v1408581538759" width="700" height="476" frameborder="0" style="border:0"></iframe><br /><small>ÐÑÐ¾ÑÐ¼Ð¾ÑÑÐµÑÑ <a href="https://maps.google.com/maps/ms?ie=UTF8&amp;oe=UTF8&amp;msa=0&amp;msid=216545906525293155641.0004622c5d252f318c2f1&amp;t=m&amp;ll=55.599344,13.00214&amp;spn=0.035799,0.053339&amp;source=embed" style="color:#0000FF;text-align:left">Sunfleet MalmÃ¶</a>;-)</small></div>
 
-            <!-- Le javascript
-            ================================================== -->
-            <!-- Placed at the end of the document so the pages load faster -->
-            <script type="text/javascript" src="resources/js/bootstrap.js"></script>
-            <script type="text/javascript" src="resources/js/jquery.prettyPhoto.js"></script>
-            <script type="text/javascript" src="resources/js/theme.js"></script>
-        </h:form>
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript" src="resources/js/jquery.prettyPhoto.js"></script>
+        <script type="text/javascript" src="resources/js/theme.js"></script>
     </h:body>
 </html>

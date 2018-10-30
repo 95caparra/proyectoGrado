@@ -60,6 +60,7 @@ public class ProductoBean implements Serializable {
     private String observaciones;
     private String estado;
     private Double totalProducto;
+    private Integer totalCantidadProducto;
 
     private ProductoVO selectedProducto;
     private DetalleProductoSuministroVO detalleProductoSuministroVO;
@@ -91,6 +92,7 @@ public class ProductoBean implements Serializable {
     private LoginBean login;
     private ClasificacionBean clasificacionBean;
     private OpcionBean opcionBean;
+    private List<Integer> cantidades;
 
     @PostConstruct
     public void init() {
@@ -125,31 +127,49 @@ public class ProductoBean implements Serializable {
     }
 
     public void handleKeyEvent() {
-        cantidadesProducto = cantidadesProducto.intValue();
-        System.out.println("handleKeyEvent... cantidadesProducto = " + cantidadesProducto);
-        System.out.println("handleKeyEvent... totalProducto = " + totalProducto);
+        cantidades = new ArrayList<>();
+        for (SuministroVO cant : droppedSuministros) {
+            cantidadesProducto = cant.getCantidad();
+            
+            cantidades.add(cantidadesProducto);
+            System.out.println("handleKeyEvent... cantidadesProducto = " + cantidadesProducto);
+            //System.out.println("handleKeyEvent... totalProducto = " + totalProducto);
+            for (Integer can : cantidades) {
+                System.out.println("cantidades " + can);
+            }
+        }
+        RequestContext.getCurrentInstance().update("insertarProducto");
     }
 
     public void onDrop(DragDropEvent ddEvent) {
         suministroVO = ((SuministroVO) ddEvent.getData());
-        droppedSuministros.add(suministroVO);        
+        droppedSuministros.add(suministroVO);
         calculo();
         suministros.remove(suministroVO);
     }
 
     public Double calculo() {
-        List<SuministroVO>  suminis = droppedSuministros;
+        List<SuministroVO> suminis = droppedSuministros;
         totalProducto = 0.0;
+        totalCantidadProducto = 0;
         if (!suminis.isEmpty()) {
             System.out.println("Esta lleno");
             for (SuministroVO dps : suminis) {
                 System.out.println("Producto Nombre " + dps.getNombre());
                 System.out.println("precio u. " + dps.getPrecioUnidad());
-                System.out.println("cantidad u. " + cantidadesProducto);
-                totalProducto += ((dps.getPrecioUnidad() * cantidadesProducto));
+                System.out.println("cantidad u. " + dps.getCantidad());
+                totalProducto += ((dps.getPrecioUnidad() * dps.getCantidad()));
+                totalCantidadProducto += dps.getCantidad();
                 System.out.println("totalProducto  " + totalProducto);
+                System.out.println("Total Cant. Producto  " + totalCantidadProducto);
             }
         }
+        
+        cantidad = totalCantidadProducto;
+        precioUnidad = totalProducto;
+        RequestContext.getCurrentInstance().update("insertarProducto:cantidadProducto");
+        RequestContext.getCurrentInstance().update("insertarProducto:precioProducto");
+        RequestContext.getCurrentInstance().update("insertarProducto:pnlTotal");
         return totalProducto;
     }
 
@@ -174,7 +194,7 @@ public class ProductoBean implements Serializable {
 
                 detalleProductoSuministroVO.getProductoVO().setIdProducto(ultimoId);
                 detalleProductoSuministroVO.getSuministroVO().setIdSuministro(s.getIdSuministro());
-                detalleProductoSuministroVO.setCantidad(5);
+                detalleProductoSuministroVO.setCantidad(s.getCantidad());
 
                 detalleProductoSuministroService.insertar(detalleProductoSuministroVO);
             }
@@ -795,6 +815,34 @@ public class ProductoBean implements Serializable {
      */
     public void setTotalProducto(Double totalProducto) {
         this.totalProducto = totalProducto;
+    }
+
+    /**
+     * @return the cantidades
+     */
+    public List<Integer> getCantidades() {
+        return cantidades;
+    }
+
+    /**
+     * @param cantidades the cantidades to set
+     */
+    public void setCantidades(List<Integer> cantidades) {
+        this.cantidades = cantidades;
+    }
+
+    /**
+     * @return the totalCantidadProducto
+     */
+    public Integer getTotalCantidadProducto() {
+        return totalCantidadProducto;
+    }
+
+    /**
+     * @param totalCantidadProducto the totalCantidadProducto to set
+     */
+    public void setTotalCantidadProducto(Integer totalCantidadProducto) {
+        this.totalCantidadProducto = totalCantidadProducto;
     }
 
 }

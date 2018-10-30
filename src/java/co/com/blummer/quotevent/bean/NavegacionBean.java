@@ -25,8 +25,9 @@ public class NavegacionBean implements Serializable {
 	private boolean render;
 
 	public static final String redireccionInicio = "/pages/inicio/inicio.xhmtl?faces-redirect=true";
+        public static final String redireccionGestion = "pages/solicitud/solicitud.xhtml";
         //public static final String redireccionInicio = "/pages/paquete/insertarPaquete.xhmtl?faces-redirect=true";
-	public static final String redireccionGestion = "/pages/inicio/inicio.xhmtl?faces-redirect=true";
+	//public static final String redireccionGestion = "/pages/inicio/inicio.xhmtl?faces-redirect=true";
 	public static final String redireccionUrl = "/pages/obligacion/obligacion.xhtml?faces-redirect=true";
 	public static final String redireccionUrlNoExiste = "/pages/cliente/clienteNoExiste.xhtml?faces-redirect=true";
 
@@ -37,91 +38,11 @@ public class NavegacionBean implements Serializable {
 		render = false;
 	}
         
-	public void redireccionFinGestion() throws Exception {
-		tipificacion = 0;
-		FacesContext context = FacesContext.getCurrentInstance();
-		Application application = context.getApplication();
-		LoginBean loginBean = application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class);
-		FacesContext.getCurrentInstance().getExternalContext()
-				.redirect("../../pages/finGestion/finGestion.xhtml?faces-redirect=true");
-		// FacesContext.getCurrentInstance().getExternalContext().redirect("http://"+loginBean.getIpCliente()+":80/apiagentbox?action=chur&cod=LE&comm=FIN_LLAMADA");
-
+        public void redireccionarDatosPaquete(Integer id) throws Exception{
+	    FacesContext.getCurrentInstance().getExternalContext().redirect(redireccionGestion+"?idPaquete="+id);
 	}
-
-	public void redireccionRegresar() throws Exception {
-		tipificacion = 0;
-		FacesContext context = FacesContext.getCurrentInstance();
-		Application application = context.getApplication();
-		LoginBean loginBean = application.evaluateExpressionGet(context, "#{loginBean}", LoginBean.class);
-		
-		FacesContext.getCurrentInstance().getExternalContext().redirect("../../pages/obligacion/obligacion.xhtml");
-		// FacesContext.getCurrentInstance().getExternalContext().redirect("http://"+loginBean.getIpCliente()+":80/apiagentbox?action=chur&cod=LE&comm=FIN_LLAMADA");
-
-	}
-
-	public void redireccionBusquueda() throws Exception {
-		pagina = 1;
-		RequestContext.getCurrentInstance().update("frmBuscar:contenidoBusqueda");
-	}
-
-	public void redireccionFinNC() throws Exception {
-		pagina = 8;
-		RequestContext.getCurrentInstance().update("frmNoContacto:pnlNoContacto");
-	}
-
-	public void redireccionObligacion() throws Exception {
-		pagina = 2;
-		RequestContext.getCurrentInstance().update("contenido");
-	}
-
-	public void redireccionGestionNoContacto() throws Exception {
-		tipificacion = 1;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionGestionPromesa() throws Exception {
-		tipificacion = 2;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionGestionYaPago() throws Exception {
-		tipificacion = 3;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionReclamo() throws Exception {
-		tipificacion = 4;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionGestionOtro() throws Exception {
-		tipificacion = 5;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionGestionTercero() throws Exception {
-		tipificacion = 6;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionGestionAcuerdoComite() throws Exception {
-		tipificacion = 7;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
-	public void redireccionGestionComite() throws Exception {
-		tipificacion = 8;
-		RequestContext.getCurrentInstance().update("pnlTipificacion");
-		render = true;
-	}
-
+        
+	
 	public String getRuta() {
 		return ruta;
 	}
@@ -160,10 +81,6 @@ public class NavegacionBean implements Serializable {
 
 	public void setTabActivo(Integer tabActivo) {
 		this.tabActivo = tabActivo;
-	}
-
-	public void clienteNoExiste() throws IOException{
-		FacesContext.getCurrentInstance().getExternalContext().redirect("../../pages/obligacion/obligacion.xhtml");
 	}
 
         

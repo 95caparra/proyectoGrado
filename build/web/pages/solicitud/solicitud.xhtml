@@ -9,8 +9,6 @@
 
     <h:head>
         <link rel="stylesheet" type="text/css" href="../../resources/css/style.css"></link>
-        <link rel="stylesheet" type="text/css" href="../../resources/css/estilos.css"></link>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Proyecto</title>
     </h:head>
     <h:body>
@@ -19,47 +17,25 @@
 
             <ui:define name="content">
                 <p:panel id="pnlContenido">                  
-                    <c:if test="#{opcionBean.opcionVerPaquete == 1 }">
-                        <ui:include src="../paquete/listarPaquete.xhtml" />
-                    </c:if>
-                    
-                      <c:if test="#{opcionBean.opcionPaquete == 1 }">
-                          <ui:include src="../solicitud/datosPersonalizacionPaquete.xhtml" />
+                    <ui:include src="../paquete/listarPaquete.xhtml" />
+
+                    <c:if test="#{opcionBean.opcionPaquete == 1 }">
+                        <ui:include src="../solicitud/datosPersonalizacionPaquete.xhtml" />
                     </c:if>
                 </p:panel>
 
 
-                <p:panel id="pnlDetalles">                             
-                    <c:if test="#{opcionBean.opcionInfoPaquete == 1 }">
-                        <ui:include src="../solicitud/datosPaquete.xhtml" />
-                    </c:if>                    
+                <p:panel id="pnlDetalles">        
+                    <ui:include src="../solicitud/datosPaquete.xhtml" />
                 </p:panel>
 
                 <p:dialog header="Solicitud" widgetVar="dlgCliente" dynamic="true">
                     <p:panel id="pnlDatosSolicitud">     
                         <ui:include src="../solicitud/insertarDatosSolicitud.xhtml" />
                     </p:panel>
-                </p:dialog>
-
+                </p:dialog>                
             </ui:define>
 
-            <ui:define name="left">
-                <h:form id="frmOpciones">
-                    <p:growl id="growl" showDetail="true" sticky="true" />
-                    <p:menu toggleable="true">       
-
-                        <p:submenu label="Paquetes">
-                            <p:menuitem value="Listar Paquete" actionListener="#{opcionBean.verListaPaquete}" 
-                                        update="growl" icon="ui-icon-disk" />
-                            
-                            <p:menuitem value="Crear Paquete"  actionListener="#{opcionBean.verPaquete}" 
-                                        update="growl" icon="ui-icon-disk" />
-                        </p:submenu>
-                    </p:menu>
-                </h:form>
-            </ui:define>
         </ui:composition>
-
-
     </h:body>
 </html>

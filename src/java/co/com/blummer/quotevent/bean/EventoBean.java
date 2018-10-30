@@ -45,9 +45,6 @@ import javax.faces.context.FacesContext;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
-import org.joda.time.DateTime;
-import org.joda.time.LocalTime;
-import org.primefaces.event.TransferEvent;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.DragDropEvent;
 import org.primefaces.event.RowEditEvent;
@@ -59,20 +56,14 @@ import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import org.primefaces.model.UploadedFile;
-import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.ChartSeries;
-import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
-import org.primefaces.model.chart.LineChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 
 @ManagedBean(name = "eventoBean")
@@ -98,6 +89,15 @@ public class EventoBean implements Serializable {
     private String nombreFoto;
     private String nombrePdf;
 
+    private Long idCliente;
+    private Integer selectedTiposDocumento;
+    private String apellidoCLiente;
+    private String telefonoCliente;
+    private String celularCliente;
+    private String direccionCliente;
+    private Integer selectedCiudad;
+    private String correoCliente;
+
     private Date horaInicioEvento;
     private Date horaFinEvento;
     private Integer cantidadMeseros;
@@ -122,6 +122,7 @@ public class EventoBean implements Serializable {
     private Integer idPaquete;
     private PaqueteVO paqueteVO;
     private EventoVO eventoVO;
+    private ClienteVO clienteVO;
     private SolicitudVO solicitudVO;
     private Integer idEvento;
     private Integer idSolicitud;
@@ -143,7 +144,7 @@ public class EventoBean implements Serializable {
     private List<ClasificacionVO> clasificaciones;
     private List<PaqueteVO> paquetes;
     private ClienteService clienteService;
-    private Integer selectedCliente;
+    private Long selectedCliente;
     private Integer selectedEstadoEvento;
     private List<ClienteVO> clientes;
     private List<EventoVO> eventos;
@@ -520,7 +521,7 @@ public class EventoBean implements Serializable {
         } catch (Exception e) {
         }
     }
-    
+
     public void formularioDatosCliente() {
         try {
             RequestContext.getCurrentInstance().update("pnlAdicionarCliente");
@@ -537,11 +538,53 @@ public class EventoBean implements Serializable {
 
     public void insertarEvento() throws Exception {
         try {
+            clienteVO = new ClienteVO();
             eventoVO = new EventoVO();
+            boolean bandera = false;
+
+            clienteVO.setNumeroIdentificacion(idCliente);
+
+            if (selectedTiposDocumento == null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Seleccione el tipo de documento"));
+                bandera = true;
+            } else {
+                clienteVO.getDocumentoVO().setIdTipoDocumento(selectedTiposDocumento);
+            }
+
+            clienteVO.setNombre(solicitudBean.getNombreCliente());
+            clienteVO.setApellido(apellidoCLiente);
+            clienteVO.setTelefono(solicitudBean.getTelefono());
+            clienteVO.setCelular(celularCliente);
+            clienteVO.setDireccion(direccionCliente);
+
+            if (selectedCiudad == null) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Seleccione la ciudad"));
+                bandera = true;
+            } else {
+                clienteVO.getCiudadVO().setIdCiudad(selectedCiudad);
+            }
+
+            clienteVO.setCorreo(solicitudBean.getEmail());
+
+            if (bandera == false) {
+                int resultado = clienteService.insertar(clienteVO);
+
+                if (resultado >= 1) {
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Cliente insertado"));
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Se produjo un error"));
+                }
+            }
+
+            selectedCliente = clienteService.consultarUltimoId();
+
             detalleEventoEmpleadoVO = new DetalleEventoEmpleadoVO();
 
             eventoVO.getSolicitudVO().setIdSolicitud(solicitudBean.getIdSolicitud());
-            boolean bandera = false;
 
             if (selectedCliente == null) {
                 FacesContext.getCurrentInstance().addMessage(null,
@@ -568,6 +611,7 @@ public class EventoBean implements Serializable {
             }
 
             if (bandera == false) {
+
                 eventoVO.setCantidadPersonas(solicitudBean.getCantidadPersonasSolicitud());
                 eventoVO.setCantidadMeseros(cantidadMeseros);
                 eventoVO.setHoraInicio(new java.sql.Time(getHoraInicioEvento().getTime()));
@@ -638,7 +682,6 @@ public class EventoBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Por favor diligencie todos los campos"));
         } finally {
-
         }
     }
 
@@ -1119,14 +1162,14 @@ public class EventoBean implements Serializable {
     /**
      * @return the selectedCliente
      */
-    public Integer getSelectedCliente() {
+    public Long getSelectedCliente() {
         return selectedCliente;
     }
 
     /**
      * @param selectedCliente the selectedCliente to set
      */
-    public void setSelectedCliente(Integer selectedCliente) {
+    public void setSelectedCliente(Long selectedCliente) {
         this.selectedCliente = selectedCliente;
     }
 
@@ -2041,6 +2084,132 @@ public class EventoBean implements Serializable {
      */
     public void setEventosGraficaMeseEstado(List<EventoVO> eventosGraficaMeseEstado) {
         this.eventosGraficaMeseEstado = eventosGraficaMeseEstado;
+    }
+
+    /**
+     * @return the clienteVO
+     */
+    public ClienteVO getClienteVO() {
+        return clienteVO;
+    }
+
+    /**
+     * @param clienteVO the clienteVO to set
+     */
+    public void setClienteVO(ClienteVO clienteVO) {
+        this.clienteVO = clienteVO;
+    }
+
+    /**
+     * @return the idCliente
+     */
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    /**
+     * @param idCliente the idCliente to set
+     */
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    /**
+     * @return the selectedTiposDocumento
+     */
+    public Integer getSelectedTiposDocumento() {
+        return selectedTiposDocumento;
+    }
+
+    /**
+     * @param selectedTiposDocumento the selectedTiposDocumento to set
+     */
+    public void setSelectedTiposDocumento(Integer selectedTiposDocumento) {
+        this.selectedTiposDocumento = selectedTiposDocumento;
+    }
+
+    /**
+     * @return the apellidoCLiente
+     */
+    public String getApellidoCLiente() {
+        return apellidoCLiente;
+    }
+
+    /**
+     * @param apellidoCLiente the apellidoCLiente to set
+     */
+    public void setApellidoCLiente(String apellidoCLiente) {
+        this.apellidoCLiente = apellidoCLiente;
+    }
+
+    /**
+     * @return the telefonoCliente
+     */
+    public String getTelefonoCliente() {
+        return telefonoCliente;
+    }
+
+    /**
+     * @param telefonoCliente the telefonoCliente to set
+     */
+    public void setTelefonoCliente(String telefonoCliente) {
+        this.telefonoCliente = telefonoCliente;
+    }
+
+    /**
+     * @return the celularCliente
+     */
+    public String getCelularCliente() {
+        return celularCliente;
+    }
+
+    /**
+     * @param celularCliente the celularCliente to set
+     */
+    public void setCelularCliente(String celularCliente) {
+        this.celularCliente = celularCliente;
+    }
+
+    /**
+     * @return the direccionCliente
+     */
+    public String getDireccionCliente() {
+        return direccionCliente;
+    }
+
+    /**
+     * @param direccionCliente the direccionCliente to set
+     */
+    public void setDireccionCliente(String direccionCliente) {
+        this.direccionCliente = direccionCliente;
+    }
+
+    /**
+     * @return the correoCliente
+     */
+    public String getCorreoCliente() {
+        return correoCliente;
+    }
+
+    /**
+     * @param correoCliente the correoCliente to set
+     */
+    public void setCorreoCliente(String correoCliente) {
+        this.correoCliente = correoCliente;
+    }
+
+    /**
+     * @return the selectedCiudad
+     */
+    public Integer getSelectedCiudad() {
+        return selectedCiudad;
+    }
+
+    /**
+     * @param selectedCiudad the selectedCiudad to set
+     */
+    public void setSelectedCiudad(Integer selectedCiudad) {
+        this.selectedCiudad = selectedCiudad;
     }
 
 }

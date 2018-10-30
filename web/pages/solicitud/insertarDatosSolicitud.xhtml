@@ -33,7 +33,7 @@
                     </p:column>
                     <br/>
                     <p:column>
-                        <p:inputNumber value="#{solicitudBean.cantidadPersonas}" />
+                        <p:inputNumber value="#{solicitudBean.cantidadPersonas}"  decimalPlaces="0"/>
                     </p:column>                
                 </p:row>
 
@@ -107,6 +107,7 @@
                 <br/>
 
                 <p:commandButton value="Eniviar solicitud " 
+                                 onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
                                  action="#{solicitudBean.insertarSolicitud}"
                                  icon="fa fa-send">
                 </p:commandButton>

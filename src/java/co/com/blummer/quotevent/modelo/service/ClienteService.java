@@ -17,7 +17,7 @@ public class ClienteService {
         try {
             listaClientes = clienteDAO.listarClientes();
         } catch (Exception e) {
-            System.out.println(" ClasificacionService: Se presento un error al "
+            System.out.println(" ClienteService: Se presento un error al "
                     + "listar la tabla clasificacion:  " + e.getMessage());
 
         } finally {
@@ -30,7 +30,7 @@ public class ClienteService {
         try {
             resultado = clienteDAO.insertar(clienteVO);
         } catch (Exception e) {
-            System.out.println(" ClasificacionService: Se presento un error al "
+            System.out.println(" ClienteService: Se presento un error al "
                     + "actualizar un cliente:  " + e.getMessage());
         } finally {
             return resultado;
@@ -42,7 +42,7 @@ public class ClienteService {
         try {
             resultado = clienteDAO.actualizar(clienteVO);
         } catch (Exception e) {
-            System.out.println(" ClasificacionService: Se presento un error al "
+            System.out.println(" ClienteService: Se presento un error al "
                     + "actualizar un cliente:  " + e.getMessage());
         } finally {
             return resultado;
@@ -54,10 +54,22 @@ public class ClienteService {
         try {
             resultado = clienteDAO.validarExistenciaCliente(idCliente);
         } catch (Exception e) {
-            System.out.println(" ClasificacionService: Se presento un error al "
+            System.out.println(" ClienteService: Se presento un error al "
                     + "actualizar un cliente:  " + e.getMessage());
         } finally {
             return resultado;
+        }
+    }
+    
+    public long consultarUltimoId() throws Exception {
+        long id = 0;
+        try {
+            id = clienteDAO.consultarUltimoId();
+        } catch (Exception e) {
+            System.out.println("ClienteService: Se presento un error al "
+                    + "listar la tabla producto: " + e.getMessage());
+        } finally {
+            return id;
         }
     }
     

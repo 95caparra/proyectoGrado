@@ -7,11 +7,6 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <h:head>
-        <link rel="stylesheet" type="text/css" href="../../resources/css/estilos.css"></link>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-
     <body>        
         <script type="text/javascript">
             function handleDrop(event, ui) {
@@ -144,14 +139,24 @@
                 <br/>
                 <br/>
 
-                <div id="infoIzquierdo">
+                <div id="infoIzquierdo" style=" width: 500px;height: 500px;float: left;margin: 15px 20px 0px 0px;background-color: #ffffff;border: 1px solid black;border-radius: 10px;">
                     <p:fieldset id="availableSuministrosField" legend="Suministros" >
-                        <p:dataGrid paginator="true"  rows="4" id="availableSuministros" var="suministro" value="#{productoBean.suministros}" columns="2">
+                        <p:dataGrid paginator="true"  rows="2" id="availableSuministros" var="suministro" value="#{productoBean.suministros}" columns="2">
                             <p:panel id="pnl" header="#{suministro.nombre}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:50%">
                                     <p:graphicImage library="imagenesProductos" name="#{suministro.foto}"
                                                     style="width:100px"/>
-                                </h:panelGrid>                                
+                                    <h:outputLabel value="Medida"></h:outputLabel>
+                                    <h:outputText value="#{suministro.medidaProductoVO.nombreMedida}"></h:outputText>
+                                    <h:outputLabel value="Cantidad"></h:outputLabel>
+                                    <p:inputNumber value="#{suministro.cantidad}" 
+                                                   decimalPlaces="0" >
+                                        <p:ajax event="keyup" listener="#{productoBean.handleKeyEvent}" />
+                                    </p:inputNumber>
+                                    <h:outputLabel value="Precio Unidad"></h:outputLabel>
+                                    <h:outputText value="#{suministro.precioUnidad}"/>
+                                </h:panelGrid>
+
                             </p:panel>
 
                             <p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar" stack=".ui-panel"/>
@@ -159,28 +164,40 @@
                     </p:fieldset>
                 </div>
 
-                <div id="infoDerecho" style="overflow-y: scroll;">
+
+                <div id="infoDerecho" style="overflow-y: scroll; width: 500px;height: 500px;float: right;margin: 15px 20px 0px 0px;background-color: #ffffff;border: 1px solid black;border-radius: 10px; ">                   
                     <p:fieldset id="selectedSuministros" legend="Selected" style="margin-top:20px">
                         <p:outputPanel id="dropArea">
                             <h:outputText value="!!!Arrastre aqui!!!" rendered="#{empty productoBean.droppedSuministros}" style="font-size:24px;" />
                             <p:dataTable id="selectedSuministrosTable" var="suministro" value="#{productoBean.droppedSuministros}" rendered="#{not empty productoBean.droppedSuministros}">
-
                                 <p:column headerText="Foto">
                                     <p:graphicImage library="imagenesProductos" name="#{suministro.foto}"
                                                     style="width:100px; height: 100px"/>
-                                </p:column>                            
-                                <p:column headerText="Id">
-                                    <h:outputText value="#{suministro.idSuministro}" />
-                                </p:column>
+                                </p:column>                 
                                 <p:column headerText="Nombre Producto">
-                                    <h:outputText value="#{suministro.nombre}" />
+                                    <h:outputText value="${suministro.nombre}" />
                                 </p:column>
                                 <p:column headerText="Precio Unidad">
-                                    <h:outputText value="#{suministro.precioUnidad}" />
+                                    <h:outputText value="${suministro.precioUnidad}" />
+                                </p:column>
+                                <p:column headerText="Cantidad Unidad">
+                                    <h:outputText id="cant" value="${suministro.cantidad}" />
                                 </p:column>
                             </p:dataTable>
                         </p:outputPanel>
                     </p:fieldset>
+
+                    <p:panel id="pnlTotal">
+                        <p:outputLabel value="Cantidad Total: " style=" font-size: 1.5em;"></p:outputLabel>
+                        <p:outputLabel value="${productoBean.totalCantidadProducto}" style="font-size: 1.5em;color: limegreen;" />
+                        <p:outputLabel value=" " style=""></p:outputLabel>
+                        <p:outputLabel value=" " style=""></p:outputLabel>
+                        <p:outputLabel value="Total: " style=" font-size: 1.5em;"></p:outputLabel>
+                        <p:outputLabel value="${productoBean.totalProducto}"
+                                       style="font-size: 1.5em;color: limegreen;">
+                            <f:convertNumber pattern="#,##0.00" currencySymbol="$" />
+                        </p:outputLabel>
+                    </p:panel>
                 </div>
 
                 <br/>

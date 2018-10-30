@@ -26,34 +26,7 @@
                 </p:row>
                 <br/>
                 <br/>
-                <p:row>
-                    <p:column>
-                        <h:outputText value="Nombre Cliente: " />
-                    </p:column>
-                    <br/>
-                    <p:column>
-                        <p:selectOneMenu
-                            value="#{eventoBean.selectedCliente}"
-                            style="width:150px">
-                            <f:selectItem itemLabel="Selecione cliente" itemValue=""
-                                          noSelectionOption="true" />
-                            <f:selectItems var="c"
-                                           value="#{eventoBean.clientes}"
-                                           itemValue="#{c.numeroIdentificacion}"
-                                           itemLabel="#{c.numeroIdentificacion} - #{c.nombre}" />
-                        </p:selectOneMenu>    
-                        
-                        <p:commandButton value="Adicionar Cliente" 
-                                         action="#{eventoBean.formularioDatosCliente()}"
-                                         onclick="PF('dlgCliente').show();"
-                                         icon="ui-icon-disk">
-                        </p:commandButton>
-                    </p:column>           
-                </p:row>
-
-                <br/>
-                <br/>
-
+                
                 <p:row>
                     <p:column>
                         <h:outputText value="Clasificacion: " />
@@ -63,9 +36,7 @@
                         <p:selectOneMenu
                             value="#{eventoBean.selectedClasificacion}"
                             style="width:150px">
-                            <f:selectItem itemLabel="#{solicitudBean.nombreTipoEvento}" 
-                                          itemValue="#{solicitudBean.idTipoEvento}"
-                                          noSelectionOption="true" />
+                            <f:selectItem itemLabel="Seleccione la clasificacion"/>
                             <f:selectItems var="c"
                                            value="#{eventoBean.clasificaciones}"
                                            itemValue="#{c.idClasificacion}"
@@ -144,7 +115,7 @@
                     </p:column>
                     <br/>
                     <p:column>
-                         <p:calendar value="#{eventoBean.horaFinEvento}" pattern="HH:mm" timeOnly="true"  />
+                        <p:calendar value="#{eventoBean.horaFinEvento}" pattern="HH:mm" timeOnly="true"  />
                     </p:column>
                 </p:row>
 
@@ -170,7 +141,7 @@
                     </p:column>
                     <br/>
                     <p:column>
-                        <p:inputText value="#{solicitudBean.precioPaquete}" />
+                        <p:inputNumber value="#{solicitudBean.precioPaquete}" decimalPlaces="0" />
                     </p:column>
                 </p:row>
 
@@ -185,6 +156,141 @@
                     <p:column>
                         <p:inputTextarea value="#{solicitudBean.observaciones}" 
                                          style="width:400px" cols="30" maxlength="800"/>
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Identificacion cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{eventoBean.idCliente}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Tipo de Documento: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{eventoBean.selectedTiposDocumento}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione el tipo de documento" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="c"
+                                           value="#{clienteBean.tiposDocumentos}"
+                                           itemValue="#{c.idTipoDocumento}"
+                                           itemLabel="#{c.nombreDocumento}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Nombre Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{solicitudBean.nombreCliente}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Apellido Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{eventoBean.apellidoCLiente}" />
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Telefono Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{solicitudBean.telefono}" />
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Celular Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{eventoBean.celularCliente}"/>
+                    </p:column>                
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Direccion Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{eventoBean.direccionCliente}"/>
+                    </p:column>              
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Ciudad: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:selectOneMenu
+                            value="#{eventoBean.selectedCiudad}"
+                            style="width:150px">
+                            <f:selectItem itemLabel="Selecione la ciudad" itemValue=""
+                                          noSelectionOption="true" />
+                            <f:selectItems var="c"
+                                           value="#{clienteBean.ciudades}"
+                                           itemValue="#{c.idCiudad}"
+                                           itemLabel="#{c.nombreCiudad}" />
+                        </p:selectOneMenu>     
+                    </p:column>
+                </p:row>
+
+                <br/>
+                <br/>
+
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Correo Cliente: " />
+                    </p:column>
+                    <br/>
+                    <p:column>
+                        <p:inputText value="#{solicitudBean.email}"/>
                     </p:column>                
                 </p:row>
 
@@ -216,7 +322,8 @@
                 <br/>
 
 
-                <p:commandButton value="Hacer Evento "    
+                <p:commandButton value="Hacer Evento "  
+                                 onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
                                  action="#{eventoBean.insertarEvento}"
                                  icon="fa fa-send">
                 </p:commandButton>

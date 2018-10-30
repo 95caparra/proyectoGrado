@@ -23,8 +23,10 @@ import javax.faces.context.FacesContext;
 
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -49,8 +51,10 @@ public class PaqueteBean implements Serializable {
     private UploadedFile foto;
     private String nombreFoto;
     private String nombrePdf;
-    
-    
+
+    private Double totalPaquete;
+    private Integer totalCantidadPaquete;
+
     private Integer idPaquete;
     private PaqueteVO paqueteVO;
 
@@ -74,6 +78,10 @@ public class PaqueteBean implements Serializable {
 
     private LoginBean login;
     private ClasificacionBean clasificacionBean;
+    private List<Integer> cantidades;
+
+    @ManagedProperty(value = "#{navegacionBean}")
+    private NavegacionBean navegacionBean;
 
     @PostConstruct
     public void init() {
@@ -86,6 +94,10 @@ public class PaqueteBean implements Serializable {
 
             opcionBean = application.evaluateExpressionGet(context, "#{opcionBean}", OpcionBean.class);
             try {
+
+                //HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+                //String idPa = (String) request.getParameter("idPaquete");
+                //verInformacionPaquete(Integer.parseInt(idPa));
                 //   FacesContext.getCurrentInstance().getExternalContext().redirect("/Paquetes/pages/inicio/inicio.xhtml?faces-redirect=true");
                 clasificacionService = new ClasificacionService();
                 lugarService = new LugarService();
@@ -100,23 +112,75 @@ public class PaqueteBean implements Serializable {
 
                 droppedProductos = new ArrayList<ProductoVO>();
 
+                this.http();
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
     }
-    
+
+    public void http() {
+        try {
+            HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String idPa = (String) request.getParameter("idPaquete");
+
+            System.out.println("Request " + request.toString());
+            System.out.println("Request get parameter " + request.getParameter("idPaquete"));
+            if (idPa != null) {
+                System.out.println("idPa " + idPa);
+                verInformacionPaquete(Integer.parseInt(idPa));
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
     public void handleKeyEvent() {
-        cantidadesPaquete = cantidadesPaquete.intValue();
-        System.out.println("handleKeyEvent... cantidadesPaquete = " + cantidadesPaquete);
-        System.out.println("handleKeyEvent... totalProducto = " + cantidadesPaquete);
+        cantidades = new ArrayList<>();
+        for (ProductoVO cant : droppedProductos) {
+            cantidadesPaquete = cant.getCantidad();
+
+            cantidades.add(cantidadesPaquete);
+            System.out.println("handleKeyEvent... cantidadesPaquete = " + cantidadesPaquete);
+            //System.out.println("handleKeyEvent... totalProducto = " + totalProducto);
+            for (Integer can : cantidades) {
+                System.out.println("cantidades " + can);
+            }
+        }
+        RequestContext.getCurrentInstance().update("insertarPaquete");
     }
 
     public void onDrop(DragDropEvent ddEvent) {
         productoVO = ((ProductoVO) ddEvent.getData());
         droppedProductos.add(productoVO);
+        calculo();
         productos.remove(productoVO);
+    }
+
+    public Double calculo() {
+        List<ProductoVO> paquetes = droppedProductos;
+        totalPaquete = 0.0;
+        totalCantidadPaquete = 0;
+        if (!paquetes.isEmpty()) {
+            System.out.println("Esta lleno");
+            for (ProductoVO dps : paquetes) {
+                System.out.println("Producto Nombre " + dps.getNombre());
+                System.out.println("precio u. " + dps.getPrecioUnidad());
+                System.out.println("cantidad u. " + dps.getCantidad());
+                totalPaquete += ((dps.getPrecioUnidad() * dps.getCantidad()));
+                totalCantidadPaquete += dps.getCantidad();
+                System.out.println("totalPaquete  " + totalPaquete);
+                System.out.println("totalCantidadPaquete  " + totalCantidadPaquete);
+            }
+        }
+
+        cantidadPersonas = totalCantidadPaquete;
+        precio = totalPaquete;
+        RequestContext.getCurrentInstance().update("insertarPaquete:cantidadProducto");
+        RequestContext.getCurrentInstance().update("insertarPaquete:precioProducto");
+        RequestContext.getCurrentInstance().update("insertarPaquete:pnlTotal");
+        return totalPaquete;
     }
 
     public void insertarPaquete() throws Exception {
@@ -142,7 +206,7 @@ public class PaqueteBean implements Serializable {
 
                 detallePaqueteProductoVO.getPaqueteVO().setIdPaquete(ultimoId);
                 detallePaqueteProductoVO.getProductoVO().setIdProducto(p.getIdProducto());
-                detallePaqueteProductoVO.setCantidad(5);
+                detallePaqueteProductoVO.setCantidad(p.getCantidad());
 
                 detallePaqueteProductoService.insertar(detallePaqueteProductoVO);
             }
@@ -160,11 +224,11 @@ public class PaqueteBean implements Serializable {
 
         }
     }
-    
+
     public void actualizarPaquete() throws Exception {
         try {
             paqueteVO = new PaqueteVO();
-            
+
             paqueteVO.setIdPaquete(idPaquete);
             paqueteVO.setNombre(nombre);
             paqueteVO.getClasificacionVO().setIdClasificacion(selectedClasificacion);
@@ -206,8 +270,11 @@ public class PaqueteBean implements Serializable {
     }
 
     public void verInformacionPaquete(Integer id) throws Exception {
+
         idPaquete = id;
+
         try {
+
             paqueteVO = paqueteService.consultarPorId(idPaquete);
 
             nombre = paqueteVO.getNombre();
@@ -218,9 +285,6 @@ public class PaqueteBean implements Serializable {
             precio = paqueteVO.getPrecio();
             nombrePdf = paqueteVO.getPdf();
             nombreFoto = paqueteVO.getFoto();
-            
-            
-            opcionBean.verInfoPaquete();
 
             detallePaqueteProductos = detallePaqueteProductoService.listarPorId(idPaquete);
 
@@ -228,6 +292,10 @@ public class PaqueteBean implements Serializable {
 
                 droppedProductos.add(productoService.consultarPorId(dpp.getProductoVO().getIdProducto()));
             }
+
+            opcionBean.verInfoPaquete();
+            RequestContext.getCurrentInstance().update("informacionProducto");
+            RequestContext.getCurrentInstance().update("pnlDetalles");
 
         } catch (Exception e) {
             e.getMessage();
@@ -653,6 +721,76 @@ public class PaqueteBean implements Serializable {
      */
     public void setClasificacionBean(ClasificacionBean clasificacionBean) {
         this.clasificacionBean = clasificacionBean;
+    }
+
+    /**
+     * @return the cantidades
+     */
+    public List<Integer> getCantidades() {
+        return cantidades;
+    }
+
+    /**
+     * @param cantidades the cantidades to set
+     */
+    public void setCantidades(List<Integer> cantidades) {
+        this.cantidades = cantidades;
+    }
+
+    /**
+     * @return the totalPaquete
+     */
+    public Double getTotalPaquete() {
+        return totalPaquete;
+    }
+
+    /**
+     * @param totalPaquete the totalPaquete to set
+     */
+    public void setTotalPaquete(Double totalPaquete) {
+        this.totalPaquete = totalPaquete;
+    }
+
+    /**
+     * @return the totalCantidadPaquete
+     */
+    public Integer getTotalCantidadPaquete() {
+        return totalCantidadPaquete;
+    }
+
+    /**
+     * @param totalCantidadPaquete the totalCantidadPaquete to set
+     */
+    public void setTotalCantidadPaquete(Integer totalCantidadPaquete) {
+        this.totalCantidadPaquete = totalCantidadPaquete;
+    }
+
+    /**
+     * @return the paqueteVO
+     */
+    public PaqueteVO getPaqueteVO() {
+        return paqueteVO;
+    }
+
+    /**
+     * @param paqueteVO the paqueteVO to set
+     */
+    public void setPaqueteVO(PaqueteVO paqueteVO) {
+        this.paqueteVO = paqueteVO;
+    }
+
+    /**
+     * @return the navegacionBean
+     */
+    public NavegacionBean getNavegacionBean() {
+        return navegacionBean;
+    }
+
+    /**
+     * @param navegacionBean the navegacionBean to set
+     */
+    public void setNavegacionBean(NavegacionBean navegacionBean) {
+        this.navegacionBean = navegacionBean;
     }
 
 }

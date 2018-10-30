@@ -48,6 +48,7 @@ public class OpcionBean implements Serializable {
     private int opcionInfoSuministro;
     private int opcionInfoSolicitud;
     private int opcionInfoPaquete;
+    private int opcionEnviarSolPaquete;
     private int opcionDetalleEvento;
     private int opcionSuministro;
 
@@ -83,6 +84,7 @@ public class OpcionBean implements Serializable {
         //paqueteBean.init();
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
+        RequestContext.getCurrentInstance().update("insertarPaquete");
     }
 
     public void verEvento() {
@@ -90,6 +92,7 @@ public class OpcionBean implements Serializable {
         setearDetalles();
         opcionEvento = 1;
         //paqueteBean.init();
+        RequestContext.getCurrentInstance().update("listarEvento");
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
     }
@@ -101,6 +104,7 @@ public class OpcionBean implements Serializable {
         //paqueteBean.init();
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
+        RequestContext.getCurrentInstance().update("listarPaquete");
 
     }
 
@@ -238,9 +242,14 @@ public class OpcionBean implements Serializable {
     public void verInfoPaquete() {
         setearDetalles();
         opcionInfoPaquete = 1;
-        //paqueteBean.init();
         RequestContext.getCurrentInstance().update("pnlDetalles");
         RequestContext.getCurrentInstance().update("pnlInformacionProductosSolicitud");
+    }
+    
+    public void enviarSolicitudPaquete() {
+        setearDetalles();
+        opcionEnviarSolPaquete = 1;
+        RequestContext.getCurrentInstance().update("pnlDatosSolicitud");
     }
 
     public void verDetalleEvento() {
@@ -265,6 +274,7 @@ public class OpcionBean implements Serializable {
         opcionVerProducto = 1;
         RequestContext.getCurrentInstance().update("pnlContenido");
         RequestContext.getCurrentInstance().update("pnlDetalles");
+        RequestContext.getCurrentInstance().update("listarProducto");
     }
 
     public void verInfoProducto() {
@@ -830,6 +840,20 @@ public class OpcionBean implements Serializable {
      */
     public void setOpcionVerTiposProducto(int opcionVerTiposProducto) {
         this.opcionVerTiposProducto = opcionVerTiposProducto;
+    }
+
+    /**
+     * @return the opcionEnviarSolPaquete
+     */
+    public int getOpcionEnviarSolPaquete() {
+        return opcionEnviarSolPaquete;
+    }
+
+    /**
+     * @param opcionEnviarSolPaquete the opcionEnviarSolPaquete to set
+     */
+    public void setOpcionEnviarSolPaquete(int opcionEnviarSolPaquete) {
+        this.opcionEnviarSolPaquete = opcionEnviarSolPaquete;
     }
 
 }

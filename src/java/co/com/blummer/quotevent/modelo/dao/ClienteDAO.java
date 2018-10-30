@@ -13,4 +13,6 @@ public interface ClienteDAO {
     public int insertar(ClienteVO clienteVO) throws Exception;
     
     public boolean validarExistenciaCliente(long idCliente) throws Exception;
+    
+    public long consultarUltimoId() throws Exception;
 }

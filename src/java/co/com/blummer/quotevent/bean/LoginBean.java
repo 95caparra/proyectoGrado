@@ -48,11 +48,15 @@ public class LoginBean {
     public String doLogin() throws Exception {
         if (estaAutenticado()) {
             return navegacionBean.redireccionInicio;
-        }else{
+        } else {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario o clave incorrecto"));
         }
         return "";
+    }
+
+    public void doLoginPaquetes(Integer id) throws Exception {
+         navegacionBean.redireccionarDatosPaquete(id);
     }
 
     public String getUsuario() {

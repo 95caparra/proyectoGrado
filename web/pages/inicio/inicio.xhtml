@@ -163,7 +163,7 @@
                     <p:growl id="growl" showDetail="true" sticky="true" />
                     <p:menu toggleable="true">                       
 
-                        <p:submenu label="Suministros">
+                        <p:submenu label="Solicitudes">
                             <p:menuitem value="Solicitudes" actionListener="#{opcionBean.verListaSolicitud}" 
                                         onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
                                         update="growl"  />   
@@ -181,7 +181,7 @@
 
                         <p:submenu label="Productos">
                             <p:menuitem value="Insertar Producto" actionListener="#{opcionBean.verProducto}"     
-                                        
+                                        onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"  
                                         update="growl"  />     
                             <p:menuitem value="Listar Producto" actionListener="#{opcionBean.verListaProducto}" 
                                         onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
@@ -191,7 +191,7 @@
 
                         <p:submenu label="Paquetes">
                             <p:menuitem value="Insertar Paquete" actionListener="#{opcionBean.verPaquete}" 
-                                        
+                                        onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();"  
                                         update="growl"  />   
                             <p:menuitem value="Listar Paquete" actionListener="#{opcionBean.verListaPaquete}" 
                                         onclick="PF('statusDialog').show();" oncomplete="PF('statusDialog').hide();" 
