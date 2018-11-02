@@ -1,0 +1,28 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pp="http://primefaces.org/poseidon">
+    
+    <h:form id="menuform"> 
+        <div class="layout-menu-container">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <div class="search-input">
+                    </div>
+                    <pp:menu widgetVar="me">                        
+                        <p:menuitem id="om_db_landing" value="Inicio" icon="fa fa-fw fa-certificate" outcome="/landing"/>
+                        <p:menuitem id="om_default" value="Paquetes" icon="fa fa-fw fa-life-saver" outcome="/pages/paquete/listarPaquete" />                        
+                        <p:menuitem id="om_doc" value="Contacto" icon="fa fa-fw fa-book" outcome="/docs"/>
+                    </pp:menu>
+                    
+                    <div class="layout-menu-footer">                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>
